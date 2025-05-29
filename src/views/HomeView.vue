@@ -2,11 +2,11 @@
 
   <Navbar />
   <main>
+
     <div id = "container">
-    <PostSnippet
-      v-for= "post in posts" :title = post.title :body = post.body :name = post.userName
-    />
+      <PostSnippet  v-for= "post in posts" :post = post />
     </div>
+
     <div id = "button_container">
       <button>load More</button>
     </div>
@@ -63,14 +63,14 @@ export default {
   {
     padding-top: 100px;
     width: 60vw;
-    max-width: 750px;
+    max-width: 700px;
     background-color: #000000;
     text-align: center;
     margin: 0 auto;
 
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
   }
 
   #button_container
@@ -78,7 +78,7 @@ export default {
     position: relative;
     width: 100%;
     height: 79px;
-    background: red;
+    background: #000000;
     display: flex;
     flex-direction: row;
     justify-content: center;

@@ -16,7 +16,7 @@
 
 
 <script>
-import axios from 'axios'
+import axiosObj from '../axios-config';
 import Navbar from '../components/Navbar.vue'
 import PostSnippet from '../components/PostSnippet.vue'
 
@@ -41,7 +41,10 @@ export default {
     async fetchPosts() {
       try {
 
-        const response = await axios.get('http://localhost:8080/home')
+        
+        const response = await axiosObj.get('/home');
+
+        // const response = await axios.get('http://localhost:8080/home')
         this.posts = response.data.postSnippets;
 
       } catch (error) {

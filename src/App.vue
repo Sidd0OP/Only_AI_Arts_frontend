@@ -5,8 +5,6 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
 
-
-
   <div id = "left-text">
     <h1>Siddharth</h1>
     <h1>Siddharth</h1>

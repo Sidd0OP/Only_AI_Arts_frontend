@@ -1,9 +1,8 @@
 <template>
   <Navbar />
-  <main>
-    <h1>Post</h1>
-  </main>
-  
+  <div class="profile">
+    <h1>This is profile page</h1>
+  </div>
 </template>
 
 
@@ -36,4 +35,5 @@ export default {
 
 }
 </script>
+
 

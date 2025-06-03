@@ -1,10 +1,17 @@
 <template>
   <div id ="post-snippet">
-    <h2>{{ title }}</h2>
+    <h2 @click="goToPost">{{ title }}</h2>
+
+
+    <div id="image-container" @click="goToPost">
+      <img :src="url" />
+    </div>
 
     <p>
       {{ body }}
     </p>
+
+    
 
     <hr class="divider" />
 
@@ -14,10 +21,15 @@
       <div id ="meta">
 
         <div id ="left-container">
-          <div id ="profile-image"></div>
-          <div id = "name">
+
+          <div id ="profile-image" @click="goToProfile">
+              <img  :src="profileImage" />
+          </div>
+
+          <div id = "name" @click="goToProfile">
             <span id= "name-text">{{ name }}</span>
           </div>
+
         </div>
 
 
@@ -51,6 +63,14 @@ export default {
     }
   } ,
 
+
+  data() {
+    return {
+      postId: null,
+      userId: null
+    }
+  },
+
   computed: {
     title() {
       return this.post.title
@@ -60,16 +80,27 @@ export default {
     },
     name() {
 
-//      return this.post.userName
-      return "Name"
+     return this.post.userName ?? "Bob"
+
     },
+
+    profileImage()
+    {
+      return this.post.profliePhotoUrl ?? ""
+    } , 
+
+    url()
+    {
+      return this.post.imageUrl ?? ""
+    }
+     ,
 
     formattedCreated() {
       return this.formatDate(this.post.created)
     },
 
     formattedEdited() {
-      return this.post.edited ? this.formatDate(this.post.edited) : '-'
+      return this.post.edited 
     }
   },
 
@@ -79,7 +110,28 @@ export default {
       const d = new Date(isoString)
       const options = { year: 'numeric', month: 'short', day: 'numeric' }
       return d.toLocaleDateString(undefined, options)
+    },
+
+    goToProfile() {
+      if (this.userId) {
+        this.$router.push(`/profile/${this.userId}`)
+      } 
+    }, 
+
+
+    goToPost() {
+      if (this.postId) {
+        this.$router.push(`/post/${this.postId}`)
+      } 
     }
+
+  } , 
+
+  mounted(){
+
+    this.postId = this.post.postId
+    this.userId = this.post.userId
+    console.log('Stored:', this.postId, this.userId);
   }
 
 }
@@ -89,9 +141,10 @@ export default {
   #post-snippet
   {
     width: 100%;
-    background: #0E1217;
+    background: var(--bg-color);
     border-radius: 15px;
-    border: 2px solid #222222;
+    border: 1px solid #222222;
+    z-index: 10;
   }
 
   h2
@@ -103,6 +156,7 @@ export default {
     text-align: left;
     padding-top: 10px;
     padding-left: 15px;
+    cursor: pointer;
   }
 
   p
@@ -113,15 +167,14 @@ export default {
     color: #FFFFFF;
     opacity: 0.55;
     text-align: left;
-    padding-top: 10px;
+    padding-top: 0px;
     padding-left: 15px;
   }
 
   .divider {
     width: 97%;
-    margin: 16px auto;
+    margin: 10px auto;
     opacity: 0.4;
-    height: 1px;
     border-top: 1px solid #999999;
 
   }
@@ -140,8 +193,8 @@ export default {
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      margin-left: 25px;
-      margin-bottom: 20px;
+      margin-left: 20px;
+      margin-bottom: 10px;
   }
 
     #name
@@ -152,13 +205,13 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        margin-left: 25px;
-
+        margin-left: 15px;
+        cursor: pointer;
       }
 
     #name-text
     {
-      font-size: 1.3rem;
+      font-size: 1rem;
       font-weight: bold;
       color: #FFFFFF;
       opacity: 0.55;
@@ -171,16 +224,18 @@ export default {
       align-items: center;
       justify-content: center;
       margin-right: 35px;
-      margin-bottom: 20px;
-      gap: 25px;
+      margin-bottom: 10px;
+      gap: 10px;
     }
 
   #profile-image
   {
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
     background-color: blue;
     border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
   }
 
   #comments-icon {
@@ -217,6 +272,21 @@ export default {
   }
 
 
+  #image-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 60vh;
+    border-radius: 20px;
+    margin: 20px;
+    overflow: hidden;
+    background-color: gray;
+  }
 
+  #image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
 
 </style>

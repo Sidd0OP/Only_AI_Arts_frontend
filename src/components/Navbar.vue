@@ -4,6 +4,7 @@
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/about">About</router-link></li>
       <li><router-link to="/contact">Contact</router-link></li>
+      
     </ul>
   </nav>
 </template>
@@ -28,6 +29,7 @@
   border-style: solid;
   box-sizing: border-box;
   z-index: 1000;
+
 }
 .navbar ul {
   list-style: none;

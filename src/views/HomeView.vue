@@ -40,11 +40,9 @@ export default {
   methods: {
     async fetchPosts() {
       try {
+
         const response = await axios.get('http://localhost:8080/home')
-        this.posts = response.data.postSnippets
-
-
-
+        this.posts = response.data.postSnippets;
 
       } catch (error) {
         console.error('Error fetching posts:', error)
@@ -67,10 +65,11 @@ export default {
     background-color: #000000;
     text-align: center;
     margin: 0 auto;
-
     display: flex;
     flex-direction: column;
     gap: 30px;
+
+
   }
 
   #button_container
@@ -78,13 +77,14 @@ export default {
     position: relative;
     width: 100%;
     height: 79px;
-    background: #000000;
+    background: var(--bg-color);
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 10px;
     padding: 1px 1px 1px 1px;
+
   }
 
 </style>

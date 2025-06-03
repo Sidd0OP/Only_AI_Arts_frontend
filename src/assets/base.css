@@ -5,6 +5,13 @@
   box-sizing: border-box;
 }
 
+:root {
+  --bg-color: black;
+  --text-color: blue;
+  --text-opacity: 5%;
+  --text-rotation: -45deg;
+}
+
 
 body {
   font-family: Poppins, sans-serif;

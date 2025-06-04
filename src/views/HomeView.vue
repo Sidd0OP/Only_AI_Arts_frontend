@@ -8,7 +8,7 @@
     </div>
 
     <div id = "button_container">
-      <button>load More</button>
+      <button id = "load-more-button" @click="loadMorePosts">load More</button>
     </div>
   </main>
 
@@ -29,7 +29,9 @@ export default {
 
   data() {
     return {
-      posts: []
+      posts: [],
+      page: 1,         
+      usingSnippetsApi: false 
     }
   },
 
@@ -44,13 +46,34 @@ export default {
         
         const response = await axiosObj.get('/home');
 
-        // const response = await axios.get('http://localhost:8080/home')
+        
         this.posts = response.data.postSnippets;
 
       } catch (error) {
         console.error('Error fetching posts:', error)
       }
     },
+
+
+    async loadMorePosts() {
+      try {
+        this.usingSnippetsApi = true;
+        const response = await axiosObj.get(`/snippets/${this.page}`);
+        const newPosts = response.data;
+
+        console.log(response);
+
+        this.posts.push(...newPosts);
+        this.page++;
+
+        
+        if (newPosts.length === 0) {
+          this.hasMore = false;
+        }
+      } catch (error) {
+        console.error('Error loading more posts:', error);
+      }
+    }
 
   }
 

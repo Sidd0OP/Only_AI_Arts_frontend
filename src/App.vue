@@ -6,12 +6,12 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
 
   <div id = "left-text">
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
+    <h1>Bob</h1>
+    <h1>Bob</h1>
+    <h1>Bob</h1>
+    <h1>Bob</h1>
+    <h1>Bob</h1>
+    <h1>Bob</h1>
   </div>
 
   <div id = "center-text">
@@ -24,12 +24,12 @@ import { RouterLink, RouterView } from 'vue-router'
   </div>
 
   <div id = "right-text">
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
+    <h1>So</h1>
+    <h1>So</h1>
+    <h1>So</h1>
+    <h1>So</h1>
+    <h1>So</h1>
+    <h1>So</h1>
   </div>
 
   <RouterView />
@@ -57,6 +57,7 @@ import { RouterLink, RouterView } from 'vue-router'
     flex-direction: column;
     align-items: center;
     gap: 50px;
+    overflow: hidden;
     
   }
 
@@ -72,6 +73,7 @@ import { RouterLink, RouterView } from 'vue-router'
     flex-direction: column;
     align-items: center;
     gap: 50px;
+    overflow: hidden;
   }
 
   #right-text {
@@ -86,6 +88,7 @@ import { RouterLink, RouterView } from 'vue-router'
     flex-direction: column;
     align-items: center;
     gap: 50px;
+    overflow: hidden;
   }
 
   #left-text h1,
@@ -94,14 +97,13 @@ import { RouterLink, RouterView } from 'vue-router'
 
 
   transform: rotate(var(--text-rotation));
-  font-size: 10vw; 
-  width: 100%;
+  font-size: 13vw; 
   color: var(--text-color);
   opacity: var(--text-opacity);
   line-height: 1;
   text-align: center;
   white-space: nowrap;
-
+  user-select: none;
 }
 
 </style>

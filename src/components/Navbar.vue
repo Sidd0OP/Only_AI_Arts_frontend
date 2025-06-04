@@ -1,17 +1,56 @@
 <template>
   <nav class="navbar">
     <ul>
-      <li><router-link to="/">Home</router-link></li>
-      <li><router-link to="/about">About</router-link></li>
-      <li><router-link to="/contact">Contact</router-link></li>
       
+      <img src= "/OnlyAiArtLogo.png" @click="goToHomePage">
+
+      <div id = "search-bar-container">
+        
+      </div>
+      
+      <div id = "left-container">
+        <button id = "post-button" type="button" @click="goToCreatePage" hidden>Post</button>
+        <div id = "profile-image-container" @click="goToProfilePage" hidden></div>
+        
+        <button id = "login-button" type="button" @click="goToLoginPage">Log in</button>
+        <button id = "register-button" type="button" @click="goToRegisterPage">Sign up</button>
+      </div>
+
+
     </ul>
   </nav>
 </template>
 
 <script>
+  import axiosObj from '../axios-config';
+
+
+
   export default {
-    name: 'Navbar'
+
+    name: 'Navbar',
+    methods: {
+      goToCreatePage() {
+        this.$router.push('/create');
+      },
+
+      goToProfilePage() {
+        this.$router.push('/profile');
+      },
+
+      goToHomePage() {
+        this.$router.push('/');
+      },
+
+      goToLoginPage() {
+        this.$router.push('/login');
+      },
+
+      goToRegisterPage() {
+        this.$router.push('/register');
+      }
+    }
+
   }
 </script>
 
@@ -23,7 +62,7 @@
   left: 0;
   width: 100%;
   background-color: #000000;
-  padding: 1rem;
+  padding: 0.8rem;
   border-color: #4D4D4D;
   border-width: 0px 0px 2px 0px; 
   border-style: solid;
@@ -34,8 +73,86 @@
 .navbar ul {
   list-style: none;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-left: 30px;
+  padding-right: 20px;
+}
+
+.navbar img {
+  width: 45px; 
+  height: auto; 
+}
+
+#profile-image-container{
+  width: 45px;
+  height: 45px;
+  border-radius: 100px;
+  background-color: gray;
+
+}
+
+
+#left-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   gap: 20px;
 }
+
+
+#post-button {
+
+  background-color: #0F0F0F;
+  color: white;
+  border-radius: 100px;
+  border: 1px solid rgba(107, 107, 107, 0.3);
+  width: 125px;
+  height: 45px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  transition: background-color 0.2s ease;
+}
+
+#login-button{
+
+  background-color: #0F0F0F;
+  color: white;
+  border-radius: 10px;
+  border: 2px solid rgba(107, 107, 107, 0.3);
+  width: 125px;
+  height: 45px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+#register-button{
+
+  background-color: #0F0F0F;
+  color: white;
+  border-radius: 10px;
+  border: 2px solid #FF5C5C;
+  width: 125px;
+  height: 45px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+#search-bar-container{
+
+  height: 45px;
+  width: 40%;
+  background-color: red;
+}
+
 .navbar li a {
   color: white;
   text-decoration: none;

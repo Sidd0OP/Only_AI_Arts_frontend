@@ -9,11 +9,11 @@
       </div>
       
       <div id = "left-container">
-        <button id = "post-button" type="button" @click="goToCreatePage" hidden>Post</button>
-        <div id = "profile-image-container" @click="goToProfilePage" hidden></div>
         
-        <button id = "login-button" type="button" @click="goToLoginPage">Log in</button>
-        <button id = "register-button" type="button" @click="goToRegisterPage">Sign up</button>
+        <div id = "profile-image-container" @click="goToProfilePage" v-if="userLoggedIn"></div>
+        
+        <button id = "login-button" type="button" @click="goToLoginPage" v-if="!userLoggedIn">Log in</button>
+        <button id = "register-button" type="button" @click="goToRegisterPage" v-if="!userLoggedIn">Sign up</button>
       </div>
 
 
@@ -29,13 +29,44 @@
   export default {
 
     name: 'Navbar',
+
+    data() {
+      return {
+        userLoggedIn: false,
+        userId: null
+      }
+    },
+
+    mounted() {
+      this.checkLoginStatus()
+    },
+
     methods: {
-      goToCreatePage() {
-        this.$router.push('/create');
+
+
+      async checkLoginStatus() {
+        try {
+
+          
+          const response = await axiosObj.get('/user');
+
+          if(response.data.userId === null){
+
+            userLoggedIn = false;
+
+          }else{
+
+            this.userId = response.data.userId;
+            this.userLoggedIn = true;
+          }
+
+        } catch (error) {
+          console.error('Error fetching posts:', error)
+        }
       },
 
       goToProfilePage() {
-        this.$router.push('/profile');
+        this.$router.push(`/profile/${this.userId}`);
       },
 
       goToHomePage() {

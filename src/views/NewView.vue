@@ -92,13 +92,7 @@ export default {
     handleSubmission() {
 
       
-      // console.log('Form submitted with:', {
-      //   title: this.title,
-      //   body: this.body,
-      //   file: this.selectedFile
-      // });
-
-      // Example: Set error if file not selected
+      
       if (!this.selectedFile) {
         this.error = 'Please upload a file.';
         return;
@@ -113,14 +107,10 @@ export default {
       formData.append('file', this.selectedFile);
 
       axiosObj.post('/new', formData)
-      .then(response => {
-      console.log('Post created:', response.data);
-        this.title = '';
-        this.body = '';
-        this.selectedFile = null;
-        this.error = null;
-     
-      })
+      .then(()=>{
+          this.$router.push(`/`);
+        }
+      )
       .catch(err => {
         console.error(err);
         this.error = err;
@@ -171,20 +161,20 @@ export default {
  
 
   width: 100vw;
-  height: 100vh;
+  
   z-index: 21;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 100px;
 
   
 }
 
 .create-card {
   background-color: var(--bg-color);
-  width: 60%;
-  max-width: 600px;
+  width: 80%;
   border-radius: 15px;
   border: 1px solid rgba(107, 107, 107, 0.3);
   z-index: 10;
@@ -198,6 +188,7 @@ export default {
 
 
 .create-card form {
+  width: 98%;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -211,7 +202,7 @@ export default {
   padding-left: 20px;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-size: 12px;
+  font-size: 16px;
 
 }
 
@@ -233,6 +224,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+ 
 }
 
 #file-drag-area{
@@ -243,7 +235,7 @@ export default {
   align-items: center;
   gap: 20px;
   width: 95%;
-  height: 40vh;
+  height: 60vh;
   background-color: #0F0F0F;
   border-radius: 20px;
   border: 2px dashed #575757;

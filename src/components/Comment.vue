@@ -1,21 +1,13 @@
 <template>
-  <div id ="post-snippet">
-    <h2 @click="goToPost">{{ title }}</h2>
-
-
-    <div id="image-container" @click="goToPost">
-      <img :src="url" />
-    </div>
+	<div id ="comment-container">
 
     <p>
       {{ body }}
     </p>
 
-    
-
     <hr class="divider" />
 
-    <div id ="post-footer">
+    <div id ="comment-footer">
 
 
       <div id ="meta">
@@ -34,13 +26,13 @@
 
 
         <div id="right-container">
-          <img src="@/assets/message-text.svg" id="comments-icon" alt="Comments">
+          
           <div class="dates">
               <div>
                   <small>Posted</small>
                   <div>{{ formattedCreated }}</div>
               </div>
-              <div v-if="post.edited">
+              <div v-if="comment.edited">
                   <small>Edited</small>
                   <div>{{ formattedEdited }}</div>
               </div>
@@ -53,11 +45,12 @@
 </template>
 
 <script>
-export default {
-  name: 'PostSnippet',
+	export default {
+  name: 'Comment',
+
   props: {
 
-    post: {
+    comment: {
       type: Object,
       required: true
     }
@@ -66,41 +59,35 @@ export default {
 
   data() {
     return {
+
       postId: null,
-      userId: null
+      userId: null,
+      replies: [],
     }
   },
 
   computed: {
-    title() {
-      return this.post.title
-    },
+    
     body() {
-      return this.post.body
+      return this.comment.body
     },
     name() {
 
-     return this.post.userName ?? "Bob"
+     return this.comment.userName ?? "Bob"
 
     },
 
     profileImage()
     {
-      return this.post.profliePhotoUrl ?? ""
+      return this.comment.profliePhotoUrl ?? ""
     } , 
 
-    url()
-    {
-      return this.post.imageUrl ?? ""
-    }
-     ,
-
     formattedCreated() {
-      return this.formatDate(this.post.created)
+      return this.formatDate(this.comment.created)
     },
 
     formattedEdited() {
-      return this.post.edited 
+      return this.comment.edited 
     }
   },
 
@@ -119,18 +106,12 @@ export default {
     }, 
 
 
-    goToPost() {
-      if (this.postId) {
-        this.$router.push(`/post/${this.postId}/${this.post.title}`)
-      } 
-    }
-
-  } , 
+  }, 
 
   mounted(){
 
-    this.postId = this.post.postId
-    this.userId = this.post.userId
+    this.postId = this.comment.postId
+    this.userId = this.comment.userId
     console.log('Stored:', this.postId, this.userId);
   }
 
@@ -138,7 +119,7 @@ export default {
 </script>
 
 <style scoped>
-  #post-snippet
+	#comment-container
   {
     width: 100%;
     background: var(--bg-color);
@@ -147,17 +128,7 @@ export default {
     z-index: 10;
   }
 
-  h2
-  {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 12px;
-    color: #ffffff;
-    text-align: left;
-    padding-top: 10px;
-    padding-left: 15px;
-    cursor: pointer;
-  }
+  
 
   p
   {
@@ -237,56 +208,4 @@ export default {
     overflow: hidden;
     cursor: pointer;
   }
-
-  #comments-icon {
-    width: 22px;
-    height: 22px;
-  }
-
-
-  .dates
-  {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-  }
-
-  .dates div {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      }
-
-  small {
-      font-size: 0.7rem;
-      font-weight: bold;
-      color: #888;
-
-  }
-
-  .dates div div {
-      font-size: 0.5rem;
-      font-weight: bold;
-      color: #fff; /* White text for readability */
-  }
-
-
-  #image-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 60vh;
-    border-radius: 20px;
-    margin: 20px;
-    overflow: hidden;
-    background-color: gray;
-  }
-
-  #image-container img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
 </style>

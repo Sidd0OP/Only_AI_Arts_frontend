@@ -4,20 +4,27 @@
     <div id = "container">
       
       <PostSnippet v-if="post" :post = post />
+      <div id="gap-container"></div>
 
-      <Comment  v-for= "comment in comments" :comment = comment />
-      
-      <div  v-if="similarPosts" id="heading-container">
-        <p>Similar Posts</p>
+      <div v-if = "comments" id = comment-reply-container>
+        <Comment  v-for= "comment in comments" :comments = comment />
       </div>
-
-      <PostSnippet  v-for= "post in similarPosts" :post = post />
-
       
+      <div id="gap-container"></div>
 
-      <div id="heading-container">
-        <p>Trending Posts</p>
+      <div id = "more-post-container">
+
+        <div  v-if="similarPosts" id="heading-container">
+          <p>Similar Posts</p>
+        </div>
+        
+        <PostSnippet  v-for= "post in similarPosts" :post = post />
+
+        <div id="heading-container">
+          <p>Trending Posts</p>
+        </div>
       </div>
+      
 
     </div>
   </main>
@@ -64,16 +71,9 @@ export default {
       this.similarPosts = response.data.similarPosts
       this.comments = response.data.discussion
 
-      console.log(this.comments);
+      
     }
   }
-  
-
-  
-
-  
-
-  
 
 
 }
@@ -81,6 +81,12 @@ export default {
 
 
 <style scoped>
+
+  #gap-container{
+    width: 100%;
+    height: 30px;
+  }
+
   #container
   {
     padding-top: 100px;
@@ -91,10 +97,27 @@ export default {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 30px;
 
   }
 
+  #comment-reply-container{
+
+    width: 100%;
+    background-color: var(--bg-color);
+    z-index: 20;
+    border-radius: 15px;
+    border: 1px solid #222222;
+    overflow: hidden;
+    padding: 20px;
+
+  }
+
+  #more-post-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
   #heading-container{
     background-color: var(--bg-color);

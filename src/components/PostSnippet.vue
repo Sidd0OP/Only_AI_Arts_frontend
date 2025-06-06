@@ -131,7 +131,6 @@ export default {
 
     this.postId = this.post.postId
     this.userId = this.post.userId
-    console.log('Stored:', this.postId, this.userId);
   }
 
 }

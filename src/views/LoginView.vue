@@ -44,6 +44,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import axiosObj from '../axios-config';
 
 const email = ref('')
 const password = ref('')
@@ -59,24 +60,18 @@ const handleLogin = async () => {
   formData.append('remember-me', rememberMe.value)
 
   try {
-    const response = await fetch('http://localhost:8080/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: formData
+    axiosObj.post('/login', formData)
+    .then(() => {
+
+      console.log("login sent");
+
     })
-
-
-   
-
-    console.log(response);
-    
-    router.push('/')
 
   } catch (err) {
     error.value = err || 'Login failed'
   }
+
+  router.push('/')
 }
 </script>
 

@@ -1,34 +1,78 @@
 <template>
   <Navbar />
   <div class="profile">
-    <h1>This is profile page</h1>
-  </div>
+    <div id = "user-data-container">
+
+      <div id = "profile-image-container">
+      </div>
+      <div id = "meta-data-container">
+        <p id = "name">Name</p>
+        <p id = "joined">Joined</p>
+        <p id = "bio">Bio</p>
+      </div>
+      </div>
+    </div>
+    <div id = "user-post-container">
+        <div id = "top-bar">
+          <p :class="{ active: selectedTab === 'Post' }" @click="selectedTab = 'Post'">Post</p>
+          <p :class="{ active: selectedTab === 'Comment' }" @click="selectedTab = 'Comment'">Comment</p>
+          <p :class="{ active: selectedTab === 'Reply' }" @click="selectedTab = 'Reply'">Reply</p>
+        </div>
+        <div id = "container">
+          <PostSnippet v-if="selectedTab === 'Post'" v-for= "post in posts" :post = post />
+          <Comment v-if="selectedTab === 'Comment'" v-for="comment in comments" :comments="comment" />
+          <Reply v-if="selectedTab === 'Reply'" v-for="reply in replies" :reply="reply" />
+        </div>
+        
+    </div>
 </template>
 
 
 <script>
-import axios from 'axios'
+import axiosObj from '../axios-config';
 import Navbar from '../components/Navbar.vue'
 import PostSnippet from '../components/PostSnippet.vue'
+import Comment from '../components/Comment.vue'
+import Reply from '../components/Reply.vue'
+
 
 export default {
   components: {
     Navbar,
-    PostSnippet
+    PostSnippet,
+    Comment,
+    Reply
   },
 
 
   data() {
+    return{
+      posts: [],
+      comments: [],
+      replies: [],
+      selectedTab: 'Post',
+    }
     
   },
 
   mounted() {
     
+    this.fetchPost()
 
   },
 
   methods: {
     
+    async fetchPost() {
+      
+      const response = await axiosObj.get(`/profile/${this.$route.params.id}`);
+      this.posts = response.data.posts
+      this.comments = response.data.comments
+      this.replies = response.data.replies
+      console.log(response.data.replies)
+
+      
+    }
 
   }
 
@@ -36,4 +80,90 @@ export default {
 }
 </script>
 
+<style scoped>
+  .profile{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding-top: 100px;
+    z-index: 20;
+    gap: 30px;
+  }
+
+  #user-data-container{
+    width: 100%;
+    height: 40%;
+    min-height: 250px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    padding-left: 50px;
+    padding-bottom: 50px;
+  }
+
+
+  #profile-image-container{
+    
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 100%;
+    background-color: gray;
+    z-index: 22;
+
+  }
+
+
+  #meta-data-container{
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    padding-left: 50px;
+  }
+
+  #meta-data-container p {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 1000;
+    font-size: 36px;
+  }
+
+  #user-post-container{
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 30;
+  }
+
+  #top-bar{
+    width: 100%;
+    background-color: blue;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
+  #container
+  {
+    padding-top: 30px;
+    width: 60vw;
+    max-width: 700px;
+    text-align: center;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+  }
+</style>
 

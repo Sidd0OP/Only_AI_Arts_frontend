@@ -1,15 +1,16 @@
 <template>
 	<div id ="comment-container">
 
-    <p>
-      {{ body }}
-    </p>
+    <div id = "body-container">
+      <p>
+        {{ body }}
+      </p>
+    </div>
+    
 
-    <hr class="divider" />
+    
 
     <div id ="comment-footer">
-
-
       <div id ="meta">
 
         <div id ="left-container">
@@ -26,31 +27,38 @@
 
 
         <div id="right-container">
-          
           <div class="dates">
               <div>
                   <small>Posted</small>
                   <div>{{ formattedCreated }}</div>
               </div>
-              <div v-if="comment.edited">
+              <div v-if="comments.edited">
                   <small>Edited</small>
                   <div>{{ formattedEdited }}</div>
               </div>
           </div>
         </div>
-
       </div>
     </div>
+    <Reply v-for="reply in replies" :reply="reply" />
+
   </div>
 </template>
 
 <script>
+  import Reply from './Reply.vue'
+
 	export default {
+
+  components: {
+    Reply
+  },
+
   name: 'Comment',
 
   props: {
 
-    comment: {
+    comments: {
       type: Object,
       required: true
     }
@@ -62,36 +70,38 @@
 
       postId: null,
       userId: null,
-      replies: [],
+      replies: []
     }
   },
 
   computed: {
     
     body() {
-      return this.comment.body
+
+      return this.comments.body
     },
     name() {
 
-     return this.comment.userName ?? "Bob"
+     return this.comments.userName ?? "Bob"
 
     },
 
     profileImage()
     {
-      return this.comment.profliePhotoUrl ?? ""
+      return this.comments.profliePhotoUrl ?? ""
     } , 
 
     formattedCreated() {
-      return this.formatDate(this.comment.created)
+      return this.formatDate(this.comments.created)
     },
 
     formattedEdited() {
-      return this.comment.edited 
+      return this.formatDate(this.comments.edited)
     }
   },
 
   methods: {
+
     formatDate(isoString) {
       if (!isoString) return '-'
       const d = new Date(isoString)
@@ -110,9 +120,10 @@
 
   mounted(){
 
-    this.postId = this.comment.postId
-    this.userId = this.comment.userId
-    console.log('Stored:', this.postId, this.userId);
+    this.postId = this.comments.postId
+    this.userId = this.comments.userId
+
+
   }
 
 }
@@ -121,14 +132,24 @@
 <style scoped>
 	#comment-container
   {
+    padding-top: 20px;
+    padding-bottom: 30px;
     width: 100%;
     background: var(--bg-color);
-    border-radius: 15px;
-    border: 1px solid #222222;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
     z-index: 10;
+    gap: 5px;
   }
 
-  
+  #comment-footer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 
   p
   {
@@ -140,6 +161,13 @@
     text-align: left;
     padding-top: 0px;
     padding-left: 15px;
+  }
+
+  #body-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
   }
 
   .divider {
@@ -168,17 +196,17 @@
       margin-bottom: 10px;
   }
 
-    #name
-    {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        margin-left: 15px;
-        cursor: pointer;
-      }
+  #name
+  {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15px;
+    cursor: pointer;
+  }
 
     #name-text
     {
@@ -207,5 +235,33 @@
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+  }
+
+  .dates
+  {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+
+  }
+
+  .dates div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      }
+
+  small {
+      font-size: 0.7rem;
+      font-weight: bold;
+      color: #888;
+
+  }
+
+  .dates div div {
+      font-size: 0.5rem;
+      font-weight: bold;
+      color: #fff; /* White text for readability */
   }
 </style>

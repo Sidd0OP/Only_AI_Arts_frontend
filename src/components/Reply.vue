@@ -26,6 +26,7 @@
 
 
         <div id="right-container">
+          <button v-if = "this.replyEditable" id = "edit-button">Edit</button>
           <div class="dates">
               <div>
                   <small>Posted</small>
@@ -54,6 +55,11 @@
     reply: {
       type: Object,
       required: true
+    },
+
+    listOfEditableReplies: {
+      type: Array,
+      default: () => []  
     }
   } ,
 
@@ -61,7 +67,9 @@
   data() {
     return {
 
-      userId: null
+      userId: null,
+      replyId: null, 
+      replyEditable: false
      
     }
   },
@@ -69,7 +77,6 @@
   computed: {
     
     body() {
-
       return this.reply.body
     },
     name() {
@@ -112,7 +119,8 @@
   mounted(){
 
     this.userId = this.reply.userId
-
+    this.replyId = this.reply.replyId
+    this.replyEditable = this.listOfEditableReplies.includes(this.replyId);
   }
 
 }
@@ -122,10 +130,9 @@
   #reply-container
   {
     padding-top: 20px;
-    width: 90%;
+    width: 85%;
     box-shadow: inset 2px 0 0 #222222;
     z-index: 10;
-
 
   }
 
@@ -151,7 +158,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: -25px;
+    border-bottom: 2px solid #222222;
   }
 
   #left-container
@@ -161,11 +168,8 @@
       align-items: center;
       justify-content: center;
 
-      border-left: 2px solid #222222;
-      border-bottom: 2px solid #222222;
-      border-bottom-left-radius: 25px;
       gap: 10px;
-      padding: 10px;
+      padding-left: 20px;
   }
 
   #name
@@ -230,6 +234,24 @@
       color: #888;
 
   }
+
+  #edit-button {
+  background-color: #0F0F0F;
+  color: white;
+  border-radius: 100px;
+  border: 1px solid rgba(107, 107, 107, 0.3);
+  width: 125px;
+  height: 45px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  transition: background-color 0.2s ease;
+}
+
+#edit-button:hover {
+  background-color: #357bd8;
+}
 
   .dates div div {
       font-size: 0.5rem;

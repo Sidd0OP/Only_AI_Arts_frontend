@@ -5,7 +5,10 @@
       <img src= "/OnlyAiArtLogo.png" @click="goToHomePage">
 
       <div id = "search-bar-container">
-        
+        <div id = "icon-container">
+          <img src="@/assets/search.svg" id="search-icon" alt="Search">
+        </div>
+        <input id = "search-box" type="text" placeholder="Search">
       </div>
       
       <div id = "left-container">
@@ -115,6 +118,7 @@
 .navbar img {
   width: 45px; 
   height: auto; 
+  cursor: pointer;
 }
 
 #profile-image-container{
@@ -122,7 +126,7 @@
   height: 45px;
   border-radius: 100px;
   background-color: gray;
-
+  cursor: pointer;
 }
 
 
@@ -179,10 +183,53 @@
 
 #search-bar-container{
 
-  height: 45px;
+  position: fixed;
   width: 40%;
-  background-color: red;
+  height: 50px;
+  padding-left: 10px;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  border: 1px solid #222222;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+
 }
+
+#icon-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+}
+
+#search-icon{
+  height: 30px;
+  width: 30px;
+}
+
+#search-box{
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  color: white;
+  border: none;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  border-left: 1px solid #222222;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 
 .navbar li a {
   color: white;

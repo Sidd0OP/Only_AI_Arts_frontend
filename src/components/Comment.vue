@@ -1,4 +1,10 @@
 <template>
+
+  <CommentPostBox :visible="showCommentBox" 
+  :postId = "this.postId" 
+  :commentId = "this.commentId" 
+  @close="showCommentBox = false"/>
+
 	<div id ="comment-container">
 
     <div id = "body-container">
@@ -6,9 +12,6 @@
         {{ body }}
       </p>
     </div>
-    
-
-    
 
     <div id ="comment-footer">
       <div id ="meta">
@@ -27,6 +30,10 @@
 
 
         <div id="right-container">
+          <button v-if = "commentEditable" id = "edit-button">Edit</button>
+          <div id = "icon-container">
+            <img src="@/assets/reply.svg" id="reply-icon" alt="Reply" @click="postReply">
+          </div>
           <div class="dates">
               <div>
                   <small>Posted</small>
@@ -40,18 +47,21 @@
         </div>
       </div>
     </div>
-    <Reply v-for="reply in replies" :reply="reply" />
+    <Reply v-for="reply in localReplies" :reply="reply" :listOfEditableReplies = "listOfEditableReplies" />
 
   </div>
 </template>
 
 <script>
   import Reply from './Reply.vue'
+  import CommentPostBox from './CommentPostBox.vue'
+  
 
 	export default {
 
   components: {
-    Reply
+    Reply,
+    CommentPostBox
   },
 
   name: 'Comment',
@@ -61,6 +71,21 @@
     comments: {
       type: Object,
       required: true
+    },
+
+    replies: {
+      type: Array,
+      default: () => []  
+    },
+
+    listOfEditableComments: {
+      type: Array,
+      default: () => []  
+    },
+
+    listOfEditableReplies: {
+      type: Array,
+      default: () => []  
     }
   } ,
 
@@ -70,14 +95,20 @@
 
       postId: null,
       userId: null,
-      replies: []
+      commentId: null,
+      localReplies: [],
+      commentEditable: false,
+      showCommentBox: false
     }
+  },
+
+  created() {
+    this.localReplies = [...this.replies];
   },
 
   computed: {
     
     body() {
-
       return this.comments.body
     },
     name() {
@@ -115,15 +146,22 @@
       } 
     }, 
 
+    postReply(){
+
+      this.showCommentBox = true;
+
+    }
+
 
   }, 
 
   mounted(){
 
-    this.postId = this.comments.postId
+    this.postId = this.$route.params.id;
+    console.log(this.postId)
     this.userId = this.comments.userId
-
-
+    this.commentId = this.comments.commentId
+    this.commentEditable = this.listOfEditableComments.includes(this.commentId);
   }
 
 }
@@ -132,15 +170,15 @@
 <style scoped>
 	#comment-container
   {
+    border-top: 2px solid #222222;
     padding-top: 20px;
-    padding-bottom: 30px;
     width: 100%;
     background: var(--bg-color);
     display: flex;
     flex-direction: column;
     align-items: end;
     z-index: 10;
-    gap: 5px;
+    
   }
 
   #comment-footer{
@@ -149,6 +187,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 2px solid #222222;
   }
 
   p
@@ -159,8 +198,8 @@
     color: #FFFFFF;
     opacity: 0.55;
     text-align: left;
-    padding-top: 0px;
     padding-left: 15px;
+    padding-top: 15px;
   }
 
   #body-container{
@@ -224,8 +263,31 @@
       justify-content: center;
       margin-right: 35px;
       margin-bottom: 10px;
-      gap: 10px;
+      gap: 20px;
     }
+
+  #icon-container{
+
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 100%;
+    transition: background-color 0.3s ease;
+  }
+
+  #icon-container:hover{
+    
+    background-color: rgb(66, 66, 66 , 0.5);
+  }
+
+  #reply-icon {
+    width: 20px;
+    height: 20px;
+  }
 
   #profile-image
   {
@@ -258,6 +320,24 @@
       color: #888;
 
   }
+
+  #edit-button {
+  background-color: #0F0F0F;
+  color: white;
+  border-radius: 100px;
+  border: 1px solid rgba(107, 107, 107, 0.3);
+  width: 125px;
+  height: 45px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  transition: background-color 0.2s ease;
+}
+
+#edit-button:hover {
+  background-color: #357bd8;
+}
 
   .dates div div {
       font-size: 0.5rem;

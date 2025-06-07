@@ -1,9 +1,11 @@
 <template>
+  <CommentPostBox :visible="showCommentBox" :postId = "this.postId" @close="showCommentBox = false"/>
   <div id ="post-snippet">
     <h2 @click="goToPost">{{ title }}</h2>
 
 
-    <div id="image-container" @click="goToPost">
+    <div id="image-container" :style="{ backgroundImage: 'url(' + url + ')' }" @click="goToPost">
+      <div class="image-overlay"></div>
       <img :src="url" />
     </div>
 
@@ -34,7 +36,14 @@
 
 
         <div id="right-container">
-          <img src="@/assets/message-text.svg" id="comments-icon" alt="Comments">
+          <button v-if = "editable" id = "edit-button">Edit</button>
+          <div id = "icon-container">
+            <img src="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart">
+          </div>
+          <div id = "icon-container">
+            <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="postComment">
+          </div>
+          
           <div class="dates">
               <div>
                   <small>Posted</small>
@@ -53,13 +62,23 @@
 </template>
 
 <script>
+import CommentPostBox from './CommentPostBox.vue'
+
 export default {
   name: 'PostSnippet',
+  components: {
+    CommentPostBox
+  },
   props: {
 
     post: {
       type: Object,
       required: true
+    },
+
+    editable: {
+      type: Boolean,
+      default: false
     }
   } ,
 
@@ -67,7 +86,8 @@ export default {
   data() {
     return {
       postId: null,
-      userId: null
+      userId: null,
+      showCommentBox: false
     }
   },
 
@@ -100,7 +120,7 @@ export default {
     },
 
     formattedEdited() {
-      return this.post.edited 
+      return this.formatDate(this.post.edited)
     }
   },
 
@@ -123,6 +143,10 @@ export default {
       if (this.postId) {
         this.$router.push(`/post/${this.postId}/${this.post.title}`)
       } 
+    },
+
+    postComment() {
+      this.showCommentBox = true;
     }
 
   } , 
@@ -237,25 +261,50 @@ export default {
     cursor: pointer;
   }
 
-  #comments-icon {
-    width: 22px;
-    height: 22px;
+  #icon-container{
+
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 100%;
+    transition: background-color 0.3s ease;
   }
 
+  #icon-container:hover{
+    
+    background-color: rgb(66, 66, 66 , 0.5);
+  }
+
+  #comments-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  #heart-icon {
+    width: 20px;
+    height: 20px;
+  }
 
   .dates
   {
     display: flex;
     flex-direction: row;
     align-items: center;
-
+    gap: 20px;
+    margin-left: 10px;
   }
 
   .dates div {
+
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      }
+      
+    }
 
   small {
       font-size: 0.7rem;
@@ -267,11 +316,12 @@ export default {
   .dates div div {
       font-size: 0.5rem;
       font-weight: bold;
-      color: #fff; /* White text for readability */
+      color: #fff; 
   }
 
 
   #image-container{
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -279,13 +329,43 @@ export default {
     border-radius: 20px;
     margin: 20px;
     overflow: hidden;
-    background-color: gray;
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+
   }
 
-  #image-container img {
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(30px);
+  background-color: rgba(0, 0, 0, 0.5);
+  
+}
+
+#image-container img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  z-index: 10;
+}
+
+  #edit-button {
+  background-color: #0F0F0F;
+  color: white;
+  border-radius: 100px;
+  border: 1px solid rgba(107, 107, 107, 0.3);
+  width: 125px;
+  height: 45px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  transition: background-color 0.2s ease;
+}
+
+#edit-button:hover {
+  background-color: #357bd8;
 }
 
 </style>

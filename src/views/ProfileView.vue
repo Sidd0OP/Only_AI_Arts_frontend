@@ -4,6 +4,8 @@
     <div id = "user-data-container">
 
       <div id = "profile-image-container">
+        <img :src="url" />
+        <img src="@/assets/edit-pencil.svg" id="heart-icon" alt="Heart">
       </div>
       <div id = "meta-data-container">
         <p id = "name">Name</p>
@@ -111,6 +113,9 @@ export default {
     border-radius: 100%;
     background-color: gray;
     z-index: 22;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
   }
 
@@ -142,15 +147,34 @@ export default {
   }
 
   #top-bar{
+    position: sticky;
+    top: 50px;
     width: 100%;
-    background-color: blue;
-    height: 50px;
+    background-color: var(--bg-color);
+    border-color: #4D4D4D;
+    border-width: 1px 0px 0px 0px; 
+    border-style: solid;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 200px;
+    padding-right: 200px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    color: var(--text-color);
+    z-index: 150;
+  }
+
+  #top-bar p {
+    cursor: pointer;
+  }
+
+  #top-bar p.active {
+    color: white;
   }
 
   #container

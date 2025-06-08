@@ -7,6 +7,8 @@
 
 :root {
   --bg-color: black;
+  --secondary-color: #0c0910;
+  --tertiary-color: #1d1e2c;
   --text-color: #888;
   --text-opacity: 12%;
   --text-rotation: -45deg;

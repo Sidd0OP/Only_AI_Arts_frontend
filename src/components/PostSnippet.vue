@@ -38,7 +38,8 @@
         <div id="right-container">
           <button v-if = "editable" id = "edit-button">Edit</button>
           <div id = "icon-container">
-            <img src="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart">
+            <img v-if = "!hearted" src ="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart" @click="heartComment">
+            <img v-if = "hearted" src ="@/assets/heart-solid.svg" id="heart-icon" alt="Heart">
           </div>
           <div id = "icon-container">
             <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="postComment">
@@ -63,6 +64,7 @@
 
 <script>
 import CommentPostBox from './CommentPostBox.vue'
+import axiosObj from '../axios-config';
 
 export default {
   name: 'PostSnippet',
@@ -87,7 +89,8 @@ export default {
     return {
       postId: null,
       userId: null,
-      showCommentBox: false
+      showCommentBox: false,
+      hearted: false
     }
   },
 
@@ -102,6 +105,11 @@ export default {
 
      return this.post.userName ?? "Bob"
 
+    },
+
+    heart(){
+
+      return this.post.heart
     },
 
     profileImage()
@@ -147,7 +155,22 @@ export default {
 
     postComment() {
       this.showCommentBox = true;
-    }
+    },
+
+    async heartComment() {
+      try {
+        
+        console.log(this.postId)
+        const response = await axiosObj.post(`/heart/${this.postId}`);
+        this.hearted = true;
+        
+      } catch (error) {
+        console.error('Error hearting', error);
+      }
+    },
+
+
+
 
   } , 
 
@@ -255,7 +278,7 @@ export default {
   {
     width: 25px;
     height: 25px;
-    background-color: blue;
+    background-color: var(--bg-color);
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;

@@ -277,6 +277,7 @@
     cursor: pointer;
     border-radius: 100%;
     transition: background-color 0.3s ease;
+     background-color: rgb(66, 66, 66 , 0.2);
   }
 
   #icon-container:hover{

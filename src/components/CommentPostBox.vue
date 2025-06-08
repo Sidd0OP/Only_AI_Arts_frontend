@@ -1,12 +1,22 @@
 <template>
+	<transition name="slide-up">
 	<div v-if="visible" id = "container">
-		<div id = "input-container">
-			<textarea v-model="body" name="add-comment" placeholder="Write your comment..." class="comment-input"></textarea>
-			<button id = "submit" @click = "sendData">Send</button>
-		</div>
-		<button id = "cancel" @click="$emit('close')">Cancel</button>
 		
+		<div id = "input-container">
+
+			<div id="button-container">
+				<button id = "cancel" @click="$emit('close')">
+					<img src="@/assets/xmark.svg" id="cancel-icon" alt="Cancel" @click="postReply">
+				</button>
+				<button id = "submit" @click = "sendData">
+					Send
+				</button>
+			</div>
+			
+			<textarea v-model="body" name="add-comment" placeholder="Body. . . " class="comment-input"></textarea>
+		</div>
 	</div>
+	</transition>
 </template>
 
 <script>
@@ -89,45 +99,73 @@
 
 <style scoped>
 	#container{
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
 		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100vw;
+		height: 60vh;
 		z-index: 200;
-		backdrop-filter: blur(10px);
-  		-webkit-backdrop-filter: blur(10px); /* For Safari */
 		display: flex;
+		flex-direction: row;
 		align-items: center;
 		justify-content: center;
+		gap: 50px;
+		background-color: var(--bg-color);
+		border: 1px solid rgba(107, 107, 107, 0.3);
+		
 	}
 
 	.comment-input {
+
+	  padding: 20px;
 	  width: 100%;
-	  height: 80%;
-	  padding: 10px 12px;
-	  border: 1px solid #ccc;
-	  border-radius: 8px;
+	  max-width: 100%;
+	  height: 70%;
+	  border-radius: 15px;
 	  font-size: 32px;
 	  color: white;
-	  background-color: var(--bg-color);
+	  background-color: var(--tertiary-color);
+	  color: white;
+	  border: none;
+	  font-family: 'Inter', sans-serif;
+      font-weight: 800;
+	  font-size: px;
 
 	}
 
 	.comment-input:focus {
 	  outline: none;
+	  border: none;
 	}
+
+	
 
 	#input-container{
 		
-		padding: 20px;
+		padding-left: 20px;
+		padding-right: 20px;
+		padding-bottom: 10px;
+		width: 90%;
+		height: 100%;
 		background-color: var(--bg-color);
 		display: flex;
 		flex-direction: column;
-		align-items: start;
+		align-items: end;
+		justify-content: center;
 		gap: 10px;
 		border-radius: 20px;
-		border: 1px solid rgba(107, 107, 107, 0.3);
+
+		
+	}
+
+
+	#button-container{
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: end;
+		gap: 10px;
 	}
 
 
@@ -145,6 +183,51 @@
 		font-size: 12px;
 		transition: background-color 0.2s ease;
 		box-shadow: none;
+	}
+
+	#submit:hover {
+	  background-color: #357bd8;
+	}
+
+	#cancel{
+
+		width: 60px;
+		height: 60px;
+		border: none;
+		padding: 20px;
+		border-radius: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: var(--bg-color);
+		transition: background-color 0.2s ease;
+	}
+
+	#cancel:hover{
+		background-color: var(--tertiary-color);
+	}
+
+	.slide-up-enter-from {
+	transform: translateY(100%);
+	opacity: 0;
+	}
+	.slide-up-enter-active {
+		transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+	}
+	.slide-up-enter-to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	.slide-up-leave-from {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	.slide-up-leave-active {
+		transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+	}
+	.slide-up-leave-to {
+		transform: translateY(100%);
+		opacity: 0;
 	}
 
 </style>

@@ -11,6 +11,7 @@
       
 
       <form id = "form-container" @submit.prevent="handleLogin">
+
         <p>Name</p>
         <input v-model="name" type="name" placeholder="Name" required />
         <p>Email</p>
@@ -18,13 +19,14 @@
         <p>Password</p>
         <input v-model="password" type="password" placeholder="Password" required />
         <p>Confirm Password</p>
-        <input v-model="password" type="password" placeholder="********" required />
+        <input v-model="confirmPassword" type="password" placeholder="Confirm Password" 
+        :class="{ 'input-error': passwordMismatch }" required />
 
 
         <p class="or-text">Or</p>
 
 
-        <button id = "google">Log in with Google</button>
+        <button id = "google" @click = "googleSignUp">Log in with Google</button>
 
         <div id = "option-container">
           <p>Already Registered ?</p>
@@ -32,7 +34,11 @@
         
         <button type="submit">Register</button>
 
-        <p v-if="error" class="error">{{ error }}</p>
+        <div id = "error-container">
+          <p v-if="error" class="error">{{ error }}</p>
+        </div>
+        
+
       </form>
 
     </div>
@@ -43,41 +49,74 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { googleSdkLoaded } from "vue3-google-login";
+import axiosObj from '../axios-config';
+
+
+const confirmPassword = ref('')
+const passwordMatch = ref(false)
 
 const name = ref('')
 const email = ref('')
 const password = ref('')
-const rememberMe = ref(false)
 const error = ref('')
+const rememberMe = ref(false)
+
 const router = useRouter()
 
 const handleLogin = async () => {
   error.value = ''
+
   const formData = new URLSearchParams()
   formData.append('name', name.value)
-  formData.append('username', email.value)
+  formData.append('email', email.value)
   formData.append('password', password.value)
+
+  if (password.value !== confirmPassword.value) {
+    error.value = 'Passwords do not match'
+    passwordMatch.value = false
+    return
+  }
  
 
   try {
-    const response = await fetch('http://localhost:8080/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: formData
-    })
-
-
-   
-
-    console.log(response);
+    const response = await axiosObj.post('/register' , formData);
     
-    router.push('/')
+    
+    router.push('/login')
 
   } catch (err) {
     error.value = err || 'Login failed'
   }
+
+
+
+}
+
+
+const googleSignUp = () => {
+  googleSdkLoaded((google) => {
+    const client = google.accounts.oauth2.initCodeClient({
+      client_id: "595331401098-ivrdldf0i9mtas5tpf6gq0flph3kj1on.apps.googleusercontent.com",
+      scope: "email",
+      // redirect_uri: "http://localhost:5173/",
+      callback: async (response) => {
+        if (response.code) {
+
+          const backResponse = await axiosObj.post('/auth/google' , {
+            code: response.code,
+          });
+
+          console.log(backResponse);
+          
+        } else {
+          console.error("Google auth failed:", response  , backResponse)
+        }
+      },
+    })
+
+    client.requestCode()
+  })
 }
 </script>
 
@@ -153,14 +192,25 @@ input[type="email"],
 input[type="name"],
 input[type="password"] {
 
+  color: white;
   width: 100%;
   background-color: rgba(187, 187, 187, 0.15);  
   padding: 12px;
   border-radius: 10px;
   border: 1px solid rgba(136, 136, 136, 0.1);
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
 }
 
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
 
+input[type="password"].input-error {
+  border: 1px solid red !important;
+}
 
 #option-container{
   width: 100%;
@@ -199,8 +249,17 @@ button:hover {
 
 }
 
+#error-container{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .error {
   color: red;
   margin-top: 0.5rem;
 }
+
+
 </style>

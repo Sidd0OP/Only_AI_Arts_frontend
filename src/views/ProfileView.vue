@@ -4,13 +4,13 @@
     <div id = "user-data-container">
 
       <div id = "profile-image-container">
-        <img :src="url" />
-        <img src="@/assets/edit-pencil.svg" id="heart-icon" alt="Heart">
+        <img :src= "profileImage" alt="Profile Photo" />
+        <img id = "edit-icon" src="@/assets/edit-pencil.svg" alt="Heart">
       </div>
       <div id = "meta-data-container">
-        <p id = "name">Name</p>
-        <p id = "joined">Joined</p>
-        <p id = "bio">Bio</p>
+        <p id = "name">{{ name }}</p>
+        <p id = "joined">{{ formattedCreated }}</p>
+        <p id = "bio">{{ bio }}</p>
       </div>
       </div>
     </div>
@@ -21,9 +21,13 @@
           <p :class="{ active: selectedTab === 'Reply' }" @click="selectedTab = 'Reply'">Reply</p>
         </div>
         <div id = "container">
-          <PostSnippet v-if="selectedTab === 'Post'" v-for= "post in posts" :post = post />
-          <Comment v-if="selectedTab === 'Comment'" v-for="comment in comments" :comments="comment" />
-          <Reply v-if="selectedTab === 'Reply'" v-for="reply in replies" :reply="reply" />
+          <PostSnippet v-if="selectedTab === 'Post'" v-for= "post in posts" :post = post :editable = this.editable />
+          <Comment v-if="selectedTab === 'Comment'" v-for="comment in comments" 
+          :comments="comment"
+          :listOfEditableComments = "listOfEditableComments" />
+          <Reply v-if="selectedTab === 'Reply'" v-for="reply in replies" 
+          :reply="reply" 
+          :listOfEditableReplies = "listOfEditableReplies" />
         </div>
         
     </div>
@@ -53,6 +57,14 @@ export default {
       comments: [],
       replies: [],
       selectedTab: 'Post',
+      editable: false,
+      listOfEditableComments: [],
+      listOfEditableReplies: [],
+      userName: "",
+      bio: "",
+      joined: "",
+      url: ""
+
     }
     
   },
@@ -63,7 +75,43 @@ export default {
 
   },
 
+
+  computed: {
+    
+    bio() {
+      return this.bio ?? "Write something about yourself..."
+    },
+
+    name() {
+
+     return this.userName ?? "Bob"
+
+    },
+
+    profileImage()
+    {
+      return this.url 
+    } , 
+
+    formattedCreated() {
+      return this.formatDate(this.joined)
+    },
+
+    formattedEdited() {
+      return this.formatDate(this.post.edited)
+    }
+
+  },
+
+
   methods: {
+
+    formatDate(isoString) {
+      if (!isoString) return '-'
+      const d = new Date(isoString)
+      const options = { year: 'numeric', month: 'short', day: 'numeric' }
+      return d.toLocaleDateString(undefined, options)
+    },
     
     async fetchPost() {
       
@@ -71,8 +119,20 @@ export default {
       this.posts = response.data.posts
       this.comments = response.data.comments
       this.replies = response.data.replies
-      console.log(response.data.replies)
+      this.editable =  response.data.editable
+      this.userName = response.data.name
+      this.bio = response.data.bio
+      this.joined =  response.data.joined
+      this.url = response.data.profilePhotoUrl
 
+      console.log(this.url)
+
+      if (this.editable) {
+
+        this.listOfEditableComments = this.comments.map(c => c.commentId);
+        this.listOfEditableReplies = this.replies.map(r => r.replyId);
+
+      }
       
     }
 
@@ -116,9 +176,17 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    overflow: hidden;
+    object-fit: contain;
   }
 
+  #edit-icon{
+    position: absolute;
+     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+  }
 
   #meta-data-container{
     height: 80%;

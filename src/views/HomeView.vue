@@ -27,6 +27,7 @@
     </button>
 
     <div id = "latest-container">
+      <p>Recent Posts</p>
       
     </div>
 
@@ -63,6 +64,9 @@ export default {
     this.fetchPosts()
     this.checkLoginStatus()
   },
+
+  
+
 
   methods: {
     async fetchPosts() {
@@ -194,7 +198,7 @@ export default {
     padding-bottom: 1px;
     padding-left: 10px;
     padding-right: 20px;
-    background: var(--bg-color);
+    background: var(--secondary-color);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -207,7 +211,8 @@ export default {
     width: 80px;
     height: 60px;
     background: #833AB4;
-    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, 
+      rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
     border: 1px solid #222222;
     padding: 0px;
     display: flex;
@@ -310,6 +315,19 @@ export default {
     gap: 10px;
     padding: 1px 1px 1px 1px;
 
+  }
+
+
+  #latest-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding-top: 10px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
   }
 
 </style>

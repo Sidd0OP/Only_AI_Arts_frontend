@@ -8,12 +8,14 @@
         <div id = "icon-container">
           <img src="@/assets/search.svg" id="search-icon" alt="Search">
         </div>
-        <input id = "search-box" type="text" placeholder="Search">
+        <input id = "search-box" type="text" placeholder="Dog flying in a jelly sky images...">
       </div>
       
       <div id = "left-container">
         
-        <div id = "profile-image-container" @click="goToProfilePage" v-if="userLoggedIn"></div>
+        <div id = "profile-image-container" @click="goToProfilePage" v-if="userLoggedIn">
+          <img :src = "profileUrl">
+        </div>
         
         <button id = "login-button" type="button" @click="goToLoginPage" v-if="!userLoggedIn">Log in</button>
         <button id = "register-button" type="button" @click="goToRegisterPage" v-if="!userLoggedIn">Sign up</button>
@@ -36,13 +38,26 @@
     data() {
       return {
         userLoggedIn: false,
-        userId: null
+        userId: null,
+
       }
     },
 
     mounted() {
       this.checkLoginStatus()
     },
+
+    computed: {
+
+    profileUrl(){
+
+        
+        return "this.response.data.profilePhotoUrl"
+    
+    }
+
+    },
+
 
     methods: {
 
@@ -52,14 +67,17 @@
 
           
           const response = await axiosObj.get('/user');
-
+          
           if(response.data.userId === null){
 
             userLoggedIn = false;
 
+            console.log(false)
+
           }else{
 
             this.userId = response.data.userId;
+            
             this.userLoggedIn = true;
           }
 
@@ -187,7 +205,7 @@
   width: 40%;
   height: 50px;
   padding-left: 10px;
-  background-color: var(--bg-color);
+  background-color: var(--tertiary-color);
   border-radius: 10px;
   border: 1px solid #222222;
   left: 50%;

@@ -2,8 +2,14 @@
   <Navbar />
   
     <div id="create-page">
+      <div id = "hint-text-container">
+          <p  id = "heading">Important things to follow</p>
+          <li>✅ Supported file formats: <strong>.png</strong>, <strong>.gif</strong>, <strong>.jpeg</strong></li>
+          <li>📏 Maximum file size: <strong>10 MB</strong></li>
+          <li>🖼️ Recommended resolution: <strong>at least 800x600</strong> for best quality</li>
+          <li>🚫 Do not upload offensive or copyrighted material</li>
+        </div>
       <div class="create-card">
-        
         <form id = "form-container" @submit.prevent="handleSubmission">
           <input v-model="title" type="text" placeholder="Title" required />
           <div id = "file-drag-area"
@@ -157,6 +163,9 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 #create-page {
  
 
@@ -168,8 +177,42 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 100px;
+  gap: 20px;
 
   
+}
+
+
+#hint-text-container{
+
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  background-color: var(--bg-color);
+  border-radius: 15px;
+  border: 1px solid rgba(107, 107, 107, 0.3);
+  padding: 20px;
+  gap: 10px;
+
+
+} 
+
+#hint-text-container p {
+  padding-left: 20px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+}
+
+#hint-text-container li {
+  padding-left: 10px;
+  color: var(--text-color);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .create-card {

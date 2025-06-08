@@ -133,6 +133,7 @@
     width: 85%;
     box-shadow: inset 2px 0 0 #222222;
     z-index: 10;
+    background-color: var(--secondary-color);
 
   }
 
@@ -247,6 +248,7 @@
   font-weight: 800;
   font-size: 12px;
   transition: background-color 0.2s ease;
+  
 }
 
 #edit-button:hover {

@@ -4,13 +4,23 @@
     <div id = "user-data-container">
 
       <div id = "profile-image-container">
-        <img :src= "profileImage" alt="Profile Photo" />
-        <img id = "edit-icon" src="@/assets/edit-pencil.svg" alt="Heart">
+        <img :src= "profileImage" alt="Profile Photo" @click = "changeProfileImage"/>
+        <img id = "edit-icon" src="@/assets/edit-pencil.svg" alt="Edit" @click = "changeProfileImage">
+        <input ref="fileInput" type="file" @change="handleFileUpload" accept=".jpg,.png,.gif" hidden />
       </div>
       <div id = "meta-data-container">
-        <p id = "name">{{ name }}</p>
-        <p id = "joined">{{ formattedCreated }}</p>
-        <p id = "bio">{{ bio }}</p>
+        <div id = name-data-container>
+          <p id = "hello">Hello </p>
+          <p id = "name">{{ name }}</p>
+          <img id = "edit-icon-small" src="@/assets/edit-pencil.svg" alt="Edit">
+        </div>
+        
+        <p id = "joined">Joined: {{ formattedCreated }}</p>
+        <div id = name-data-container>
+          <p id = "bio">Bio: {{ bio }}</p>
+          <img id = "edit-icon-small" src="@/assets/edit-pencil.svg" alt="Edit">
+        </div>
+        
       </div>
       </div>
     </div>
@@ -63,7 +73,8 @@ export default {
       userName: "",
       bio: "",
       joined: "",
-      url: ""
+      url: "",
+      selectedFile: null,
 
     }
     
@@ -105,6 +116,37 @@ export default {
 
 
   methods: {
+
+    changeProfileImage(){
+      this.$refs.fileInput.click();
+    },
+
+    handleFileUpload(event) {
+
+      const file = event.target.files[0];
+      this.selectedFile = file;
+
+      if (file && ['image/png', 'image/jpeg', 'image/gif'].includes(file.type)) {
+          
+
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+
+        axiosObj.post('/upload/profile', formData)
+        .then(()=>{
+            console.log("uploaded")
+          }
+        )
+        .catch(err => {
+          console.error(err);
+          this.error = err;
+
+        });
+
+        } else {
+          this.error = 'Unsupported file type';
+        }
+    },
 
     formatDate(isoString) {
       if (!isoString) return '-'
@@ -188,6 +230,13 @@ export default {
     cursor: pointer;
   }
 
+  #edit-icon-small{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+
   #meta-data-container{
     height: 80%;
     display: flex;
@@ -243,6 +292,14 @@ export default {
 
   #top-bar p.active {
     color: white;
+  }
+
+  #name-data-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 20px;
   }
 
   #container

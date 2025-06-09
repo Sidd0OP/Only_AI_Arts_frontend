@@ -1,5 +1,6 @@
 <template>
   <CommentPostBox :visible="showCommentBox" :postId = "this.postId" @close="showCommentBox = false"/>
+  <EditBox :prevText = "body" :type = "'post'" :visible="showEditBox" :id = "this.postId" @close="showEditBox = false"/>
   <div id ="post-snippet">
     <h2 @click="goToPost">{{ title }}</h2>
 
@@ -36,7 +37,7 @@
 
 
         <div id="right-container">
-          <button v-if = "editable" id = "edit-button">Edit</button>
+          <button v-if = "editable" id = "edit-button" @click = "editComment">Edit</button>
           <div id = "icon-container">
             <img v-if = "!hearted" src ="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart" @click="heartComment">
             <img v-if = "hearted" src ="@/assets/heart-solid.svg" id="heart-icon" alt="Heart">
@@ -64,13 +65,16 @@
 
 <script>
 import CommentPostBox from './CommentPostBox.vue'
+import EditBox from './EditBox.vue'
 import axiosObj from '../axios-config';
 
 export default {
   name: 'PostSnippet',
   components: {
-    CommentPostBox
+    CommentPostBox,
+    EditBox
   },
+
   props: {
 
     post: {
@@ -90,6 +94,7 @@ export default {
       postId: null,
       userId: null,
       showCommentBox: false,
+      showEditBox: false,
       hearted: false
     }
   },
@@ -155,6 +160,10 @@ export default {
 
     postComment() {
       this.showCommentBox = true;
+    },
+
+    editComment() {
+      this.showEditBox = true;
     },
 
     async heartComment() {

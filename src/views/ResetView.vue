@@ -10,31 +10,22 @@
       </div>
       
 
-      <form id = "form-container" @submit.prevent="handleLogin">
+      <div id = "form-container">
+
         <p>Email</p>
         <input v-model="email" type="email" placeholder="Email" required />
-        <p>Password</p>
-        <input v-model="password" type="password" placeholder="Password" required />
-        
-        <label class="remember-me">
-          <input type="checkbox" v-model="rememberMe" />
-          Remember Me
-        </label>
-
-        <p class="or-text">Or</p>
-
-
-        <button id = "google">Log in with Google</button>
+        <p v-if="showTokenBox" >Password</p>
+        <input v-if="showTokenBox" v-model="token" type="text-container" placeholder="Token" required />
 
         <div id = "option-container">
-          <p id = "forgot" @click = "forgot" >Forgot Password ?</p>
-          <p>New Here ?</p>
+          <p>Remembered ?</p>
         </div>
         
-        <button type="submit">Login</button>
+        <button @click = "getToken" >Submit</button>
 
         <p v-if="error" class="error">{{ error }}</p>
-      </form>
+
+      </div>
 
     </div>
   </div>
@@ -47,37 +38,31 @@ import { useRouter } from 'vue-router'
 import axiosObj from '../axios-config';
 
 const email = ref('')
-const password = ref('')
-const rememberMe = ref(false)
+const token = ref('')
 const error = ref('')
 const router = useRouter()
+const showTokenBox = ref(false)
 
-const handleLogin = async () => {
+const getToken = async () => {
   error.value = ''
-  const formData = new URLSearchParams()
-  formData.append('username', email.value)
-  formData.append('password', password.value)
-  formData.append('remember-me', rememberMe.value)
 
   try {
-    axiosObj.post('/login', formData)
+    console.log(email.value);
+    axiosObj.post('/token', {email: email.value})
     .then(() => {
-
-      console.log("login sent");
-
+      showTokenBox.value = true
     })
 
   } catch (err) {
+
     error.value = err || 'Login failed'
   }
 
-  router.push('/')
+  
 }
 
 
-const forgot = () => {
-  router.push('/forgot')
-}
+
 </script>
 
 
@@ -146,7 +131,7 @@ const forgot = () => {
 }
 
 input[type="email"],
-input[type="password"] {
+input[type="text-container"] {
 
   width: 100%;
   background-color: rgba(187, 187, 187, 0.15);  
@@ -155,20 +140,7 @@ input[type="password"] {
   border: 1px solid rgba(136, 136, 136, 0.1);
 }
 
-.remember-me {
-  display: flex;
-  align-items: center;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: 12px;
-  color: #888888;
-  
-}
 
-.remember-me input {
-  margin-right: 0.5rem;
-  color: #888888;
-}
 
 #option-container{
   width: 100%;
@@ -205,10 +177,6 @@ button {
 button:hover {
   background-color: rgba(51, 51, 51, 0.85);
 
-}
-
-#forgot{
-  color: blue;
 }
 
 .error {

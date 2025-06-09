@@ -5,6 +5,7 @@
   :commentId = "this.commentId" 
   @close="showCommentBox = false"/>
 
+  <EditBox :prevText = "body" :type = "'comment'" :visible="showEditBox" :id = "this.commentId" @close="showEditBox = false"/>
 	<div id ="comment-container">
 
     <div id = "body-container">
@@ -30,7 +31,7 @@
 
 
         <div id="right-container">
-          <button v-if = "commentEditable" id = "edit-button">Edit</button>
+          <button v-if = "commentEditable" id = "edit-button" @click = "editComment" >Edit</button>
           <div id = "icon-container">
             <img src="@/assets/reply.svg" id="reply-icon" alt="Reply" @click="postReply">
           </div>
@@ -55,13 +56,14 @@
 <script>
   import Reply from './Reply.vue'
   import CommentPostBox from './CommentPostBox.vue'
-  
+  import EditBox from './EditBox.vue'
 
 	export default {
 
   components: {
     Reply,
-    CommentPostBox
+    CommentPostBox,
+    EditBox
   },
 
   name: 'Comment',
@@ -98,7 +100,8 @@
       commentId: null,
       localReplies: [],
       commentEditable: false,
-      showCommentBox: false
+      showCommentBox: false,
+      showEditBox: false,
     }
   },
 
@@ -150,6 +153,10 @@
 
       this.showCommentBox = true;
 
+    },
+
+    editComment() {
+      this.showEditBox = true;
     }
 
 
@@ -158,7 +165,6 @@
   mounted(){
 
     this.postId = this.$route.params.id;
-    console.log(this.postId)
     this.userId = this.comments.userId
     this.commentId = this.comments.commentId
     this.commentEditable = this.listOfEditableComments.includes(this.commentId);

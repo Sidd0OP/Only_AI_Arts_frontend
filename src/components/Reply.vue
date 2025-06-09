@@ -1,4 +1,5 @@
 <template>
+  <EditBox :prevText = "body" :type = "'reply'" :visible="showEditBox" :id = "this.replyId" @close="showEditBox = false"/>
 	<div id ="reply-container">
 
     <p>
@@ -26,7 +27,7 @@
 
 
         <div id="right-container">
-          <button v-if = "this.replyEditable" id = "edit-button">Edit</button>
+          <button v-if = "this.replyEditable" id = "edit-button" @click = "editReply">Edit</button>
           <div class="dates">
               <div>
                   <small>Posted</small>
@@ -46,6 +47,10 @@
 </template>
 
 <script>
+  import EditBox from './EditBox.vue'
+
+  
+
   export default {
 
   name: 'Reply',
@@ -63,13 +68,19 @@
     }
   } ,
 
+  components: {
+    
+    EditBox
+    
+  },
 
   data() {
     return {
 
       userId: null,
       replyId: null, 
-      replyEditable: false
+      replyEditable: false,
+      showEditBox: false
      
     }
   },
@@ -113,6 +124,9 @@
       } 
     }, 
 
+    editReply() {
+      this.showEditBox = true;
+    },
 
   }, 
 

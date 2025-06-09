@@ -99,15 +99,16 @@ const googleSignUp = () => {
     const client = google.accounts.oauth2.initCodeClient({
       client_id: "595331401098-ivrdldf0i9mtas5tpf6gq0flph3kj1on.apps.googleusercontent.com",
       scope: "email",
-      // redirect_uri: "http://localhost:5173/",
       callback: async (response) => {
         if (response.code) {
 
+          console.log(response);
+          
           const backResponse = await axiosObj.post('/auth/google' , {
             code: response.code,
           });
 
-          console.log(backResponse);
+          
           
         } else {
           console.error("Google auth failed:", response  , backResponse)

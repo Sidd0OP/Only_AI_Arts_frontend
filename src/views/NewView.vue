@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar @login-status-checked="onNavbarReady"/>
   
     <div id="create-page">
       <div id = "hint-text-container">
@@ -121,7 +121,9 @@ export default {
         console.error(err);
         this.error = err;
 
-    });
+      });
+
+
     }
   },
 

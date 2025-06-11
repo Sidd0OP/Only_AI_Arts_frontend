@@ -24,7 +24,7 @@
         <p class="or-text">Or</p>
 
 
-        <button id = "google">Log in with Google</button>
+        <button id = "google" @click.prevent = "googleSignUp">Log in with Google</button>
 
         <div id = "option-container">
           <p id = "forgot" @click = "forgot" >Forgot Password ?</p>
@@ -44,6 +44,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { googleSdkLoaded } from "vue3-google-login";
 import axiosObj from '../axios-config';
 
 const email = ref('')
@@ -60,20 +61,92 @@ const handleLogin = async () => {
   formData.append('remember-me', rememberMe.value)
 
   try {
-    axiosObj.post('/login', formData)
-    .then(() => {
+    
+    const backResponse = await axiosObj.post('/login', formData);
+    
+    if(backResponse.data.userId == null)
+    {
+      throw new Error("Invalid login credentials");
+      
+    }else{
 
-      console.log("login sent");
+      router.push('/');
 
-    })
+    }
+
+    
 
   } catch (err) {
+
     error.value = err || 'Login failed'
+
   }
 
-  router.push('/')
+  
 }
 
+const googleSignUp = () => {
+  googleSdkLoaded((google) => {
+    const client = google.accounts.oauth2.initCodeClient({
+      client_id: "595331401098-ivrdldf0i9mtas5tpf6gq0flph3kj1on.apps.googleusercontent.com",
+      scope: "email",
+      callback: async (response) => {
+        if (response.code) {
+
+          // console.log(response);
+
+          try {
+
+            const backResponse = await axiosObj.post('/auth/google' , {
+
+                code: response.code,
+
+            });
+
+            
+
+            const newFormData = new URLSearchParams()
+            newFormData.append('username', backResponse.data.email)
+            newFormData.append('password', backResponse.data.token)
+            newFormData.append('remember-me', "true")
+
+            try {
+    
+                const backResponse = await axiosObj.post('/login', newFormData);
+                
+                // console.log(backResponse.data);
+
+                console.log("redirecting");
+                router.push('/');
+
+
+              } catch (err) {
+
+                error.value = err || 'Login failed'
+                
+          }
+            
+
+          } catch (err) {
+
+            error.value = err || 'Login failed'
+
+          }
+          
+          
+
+          
+          
+        } else {
+          console.error("Google auth failed:", response  , backResponse)
+        }
+      },
+    })
+
+    client.requestCode()
+  })
+
+}
 
 const forgot = () => {
   router.push('/forgot')

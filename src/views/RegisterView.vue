@@ -26,7 +26,7 @@
         <p class="or-text">Or</p>
 
 
-        <button id = "google" @click = "googleSignUp">Log in with Google</button>
+        <button id = "google" @click.prevent = "googleSignUp">Log in with Google</button>
 
         <div id = "option-container">
           <p>Already Registered ?</p>

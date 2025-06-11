@@ -43,8 +43,9 @@
       }
     },
 
-    mounted() {
-      this.checkLoginStatus()
+    async mounted() {
+      await this.checkLoginStatus()
+      this.$emit('login-status-checked')
     },
 
     computed: {

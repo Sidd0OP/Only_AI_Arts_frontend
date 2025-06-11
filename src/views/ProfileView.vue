@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar @login-status-checked="onNavbarReady"/>
   <div class="profile">
     <div id = "user-data-container">
 
@@ -82,7 +82,7 @@ export default {
 
   mounted() {
     
-    this.fetchPost()
+    
 
   },
 
@@ -116,6 +116,11 @@ export default {
 
 
   methods: {
+
+    async onNavbarReady()
+    {
+      this.fetchPost()
+    },
 
     changeProfileImage(){
       this.$refs.fileInput.click();
@@ -167,7 +172,6 @@ export default {
       this.joined =  response.data.joined
       this.url = response.data.profilePhotoUrl
 
-      console.log(this.url)
 
       if (this.editable) {
 

@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar @login-status-checked="onNavbarReady"/>
   <main>
     <button id="post-button" @click="handlePost">
       
@@ -84,12 +84,17 @@ export default {
 
 
 
-  mounted() {
-    const postId = this.$route.params.id;
-    this.fetchPost(postId);
-  },
+  // mounted() {
+    
+  // },
 
   methods: {
+
+    onNavbarReady()
+    {
+      const postId = this.$route.params.id;
+      this.fetchPost(postId);
+    },
 
     async fetchPost(postId) {
       

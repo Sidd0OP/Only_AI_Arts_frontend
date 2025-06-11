@@ -1,6 +1,6 @@
 <template>
 
-  <Navbar />
+  <Navbar @login-status-checked="onNavbarReady" />
   <main>
     <div id = "container">
       <div id="heading-container">
@@ -60,15 +60,23 @@ export default {
     }
   },
 
-  mounted() {
-    this.fetchPosts()
-    this.checkLoginStatus()
+  async mounted() {
+
+    
+    
   },
 
   
 
 
   methods: {
+
+    async onNavbarReady()
+    {
+      await this.checkLoginStatus()
+      await this.fetchPosts()
+    },
+
     async fetchPosts() {
       try {
 
@@ -112,7 +120,7 @@ export default {
 
           if(response.data.userId === null){
 
-            userLoggedIn = false;
+            this.userLoggedIn = false;
 
           }else{
 
@@ -121,7 +129,9 @@ export default {
           }
 
         } catch (error) {
+
           console.error('Error fetching user Data:', error)
+
         }
     },
 
@@ -318,16 +328,6 @@ export default {
   }
 
 
-  #latest-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    padding-top: 10px;
-    color: white;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 16px;
-  }
+  
 
 </style>

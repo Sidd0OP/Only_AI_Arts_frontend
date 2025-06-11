@@ -29,7 +29,7 @@
         <button id = "google" @click.prevent = "googleSignUp">Log in with Google</button>
 
         <div id = "option-container">
-          <p>Already Registered ?</p>
+          <p id = "login-redirect" @click.prevent = "login">Already Registered ?</p>
         </div>
         
         <button type="submit">Register</button>
@@ -82,11 +82,17 @@ const handleLogin = async () => {
   try {
     const response = await axiosObj.post('/register' , formData);
     
+    console.log(response)
+
+    if(response.data === "Created")
+    {
+      router.push('/login')
+    }
     
-    router.push('/login')
+    
 
   } catch (err) {
-    error.value = err || 'Login failed'
+    error.value = 'Invalid Data'
   }
 
 
@@ -102,22 +108,60 @@ const googleSignUp = () => {
       callback: async (response) => {
         if (response.code) {
 
-          console.log(response);
-          
-          const backResponse = await axiosObj.post('/auth/google' , {
-            code: response.code,
-          });
+          try {
+
+            const backResponse = await axiosObj.post('/auth/google' , {
+
+                code: response.code,
+
+            });
+
+            
+
+            const newFormData = new URLSearchParams()
+            newFormData.append('username', backResponse.data.email)
+            newFormData.append('password', backResponse.data.token)
+            newFormData.append('remember-me', "true")
+
+            try {
+    
+                const backResponse = await axiosObj.post('/login', newFormData);
+                
+                console.log("redirecting");
+                router.push('/');
+
+
+              } catch (err) {
+
+                error.value = err || 'Login failed'
+                
+          }
+            
+
+          } catch (err) {
+
+            error.value = err || 'Login failed'
+
+          }
 
           
-          
         } else {
-          console.error("Google auth failed:", response  , backResponse)
+          error.value = "Google auth failed"
+          console.error(response)
         }
       },
     })
 
     client.requestCode()
   })
+
+}
+
+
+const login = () => {
+
+  router.push('/login')
+
 }
 </script>
 
@@ -248,6 +292,10 @@ button {
 button:hover {
   background-color: rgba(51, 51, 51, 0.85);
 
+}
+
+#login-redirect{
+  cursor: pointer;
 }
 
 #error-container{

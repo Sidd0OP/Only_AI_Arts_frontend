@@ -28,7 +28,7 @@
 
         <div id = "option-container">
           <p id = "forgot" @click = "forgot" >Forgot Password ?</p>
-          <p>New Here ?</p>
+          <p id = "new" @click = "register">New Here ?</p>
         </div>
         
         <button type="submit">Login</button>
@@ -64,9 +64,9 @@ const handleLogin = async () => {
     
     const backResponse = await axiosObj.post('/login', formData);
     
-    if(backResponse.data.userId == null)
+    if(!backResponse.data.userId && backResponse.data.userId == null)
     {
-      throw new Error("Invalid login credentials");
+      throw new Error("Validation Failed , wrong Password or Email");
       
     }else{
 
@@ -78,6 +78,7 @@ const handleLogin = async () => {
 
   } catch (err) {
 
+    console.log(err)
     error.value = err || 'Login failed'
 
   }
@@ -114,7 +115,7 @@ const googleSignUp = () => {
     
                 const backResponse = await axiosObj.post('/login', newFormData);
                 
-                // console.log(backResponse.data);
+                
 
                 console.log("redirecting");
                 router.push('/');
@@ -138,7 +139,8 @@ const googleSignUp = () => {
           
           
         } else {
-          console.error("Google auth failed:", response  , backResponse)
+          error.value = "Google auth failed"
+          console.error(response)
         }
       },
     })
@@ -150,6 +152,12 @@ const googleSignUp = () => {
 
 const forgot = () => {
   router.push('/forgot')
+}
+
+const register = () => {
+
+  router.push('/register')
+
 }
 </script>
 
@@ -281,7 +289,12 @@ button:hover {
 }
 
 #forgot{
-  color: blue;
+  cursor: pointer;
+  color: #6495ED;
+}
+
+#new{
+  cursor: pointer;
 }
 
 .error {

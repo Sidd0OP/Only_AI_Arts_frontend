@@ -8,8 +8,9 @@
 				<button id = "cancel" @click="$emit('close')">
 					<img src="@/assets/xmark.svg" id="cancel-icon" alt="Cancel" @click="postReply">
 				</button>
-				<button id = "submit" @click = "sendData">
-					Edit
+				<button id = "submit" @click = "sendData" :disabled="loading">
+					<p v-if="!loading">Edit</p>
+					<div v-if="loading" id="loading"></div>
 				</button>
 			</div>
 			

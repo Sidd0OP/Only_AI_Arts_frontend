@@ -38,17 +38,19 @@
 
       <div id = "more-post-container">
 
-        <div  v-if="similarPosts" id="heading-container">
+        <div  v-if="similarPosts && similarPosts.length > 0" id="heading-container">
           <p>Similar Posts</p>
         </div>
         
         <PostSnippet  v-for= "post in similarPosts" :post = post />
 
-        <div id="heading-container">
-          <p>Trending Posts</p>
-        </div>
+        <div id="heading-container"><p>Some more</p></div>
+
+        <PostSnippet  v-for= "post in posts" :post = post />
+
       </div>
       
+        
 
     </div>
   </main>
@@ -71,6 +73,9 @@ export default {
 
   data() {
     return {
+      posts: [],
+      page: 0,         
+      usingSnippetsApi: false,
       post: null,
       similarPosts: null,
       postData: null,
@@ -94,6 +99,29 @@ export default {
     {
       const postId = this.$route.params.id;
       this.fetchPost(postId);
+      this.loadMorePosts();
+
+    },
+
+    async  loadMorePosts() {
+      try {
+
+        this.usingSnippetsApi = true;
+        const response = await axiosObj.get(`/snippets/${this.page}`);
+        const newPosts = response.data;
+
+        console.log(response)
+
+        this.posts.push(...newPosts);
+        this.page++;
+
+        
+        if (newPosts.length === 0) {
+          this.hasMore = false;
+        }
+      } catch (error) {
+        console.error('Error loading more posts:', error);
+      }
     },
 
     async fetchPost(postId) {
@@ -151,6 +179,14 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
+  }
+
+
+  #more-post-container p{
+    -webkit-text-stroke: 1px #FF2160;
+    color: var(--bg-color);
+    font-family: 'Inter', sans-serif;
+    font-size: 40px;
   }
 
   #heading-container{
@@ -272,11 +308,5 @@ export default {
     align-items: center;
   }
 
-  #heading-container p
-  {
-    color: white;
-    font-family: 'Inter', sans-serif;
-    font-weight: 1000;
-    font-size: 36px;
-  }
+  
 </style>

@@ -14,8 +14,6 @@
       {{ body }}
     </p>
 
-    
-
     <hr class="divider" />
 
     <div id ="post-footer">

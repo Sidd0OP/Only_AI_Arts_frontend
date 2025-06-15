@@ -16,12 +16,41 @@
         <input v-model="name" type="name" placeholder="Name" required />
         <p>Email</p>
         <input v-model="email" type="email" placeholder="Email" required />
-        <p>Password</p>
-        <input v-model="password" type="password" placeholder="Password" required />
-        <p>Confirm Password</p>
-        <input v-model="confirmPassword" type="password" placeholder="Confirm Password" 
-        :class="{ 'input-error': passwordMismatch }" required />
+        
+        
 
+        <p>Password</p>
+
+        <small>
+          *  At least 8 characters long<br>
+          *  At least one uppercase & lowercase English letter<br>
+          *  At least one digit<br>
+          *  At least one special character (e.g., !@#$%^&*)
+        </small>
+
+        <input 
+        v-model="password" 
+        type="password" 
+        placeholder="Password" 
+        required 
+        @focus="isPasswordFocused = true"
+        @blur="isPasswordFocused = false"
+        :class="{ 'input-error': passwordMismatch }"/>
+
+
+
+        <p>Confirm Password</p>
+
+        <input 
+        v-model="confirmPassword" 
+        type="password" 
+        placeholder="Confirm Password" 
+        required
+        @focus="isConfirmFocused = true"
+        @blur="isConfirmFocused = false"
+        :class="{ 'input-error': passwordMismatch }"  />
+
+        <button type="submit">Register</button>
 
         <p class="or-text">Or</p>
 
@@ -32,7 +61,7 @@
           <p id = "login-redirect" @click.prevent = "login">Already Registered ?</p>
         </div>
         
-        <button type="submit">Register</button>
+        
 
         <div id = "error-container">
           <p v-if="error" class="error">{{ error }}</p>
@@ -47,7 +76,7 @@
 
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { googleSdkLoaded } from "vue3-google-login";
 import axiosObj from '../axios-config';
@@ -62,7 +91,20 @@ const password = ref('')
 const error = ref('')
 const rememberMe = ref(false)
 
+const isPasswordFocused = ref(false)
+const isConfirmFocused = ref(false)
+
 const router = useRouter()
+
+
+
+const passwordMismatch = computed(() =>
+  password.value &&
+  confirmPassword.value &&
+  password.value !== confirmPassword.value &&
+  !isPasswordFocused.value &&
+  !isConfirmFocused.value
+)
 
 const handleLogin = async () => {
   error.value = ''
@@ -220,7 +262,7 @@ const login = () => {
   flex-direction: column;
   align-items: start;
   padding: 20px;
-  gap: 14px;
+  gap: 10px;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
   font-size: 12px;
@@ -248,6 +290,15 @@ input[type="password"] {
   font-size: 12px;
 }
 
+small {
+  font-size: 9px;        
+  color: #888888;         
+  line-height: 1.3;
+  display: block;
+  margin-top: 2px;
+}
+
+
 input:focus {
   outline: none;
   box-shadow: none;
@@ -256,6 +307,9 @@ input:focus {
 input[type="password"].input-error {
   border: 1px solid red !important;
 }
+
+
+
 
 #option-container{
   width: 100%;

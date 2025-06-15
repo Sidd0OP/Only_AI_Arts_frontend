@@ -12,6 +12,10 @@
       <div class="create-card">
         <form id = "form-container" @submit.prevent="handleSubmission">
           <input v-model="title" type="text" placeholder="Title" required />
+          <div id = "heading-bar-container">
+            <div :class="['title-bar', { 'over-limit': title.length > 128 }]" :style="barStyle"></div>
+          </div>
+          
           <div id = "file-drag-area"
             @dragover.prevent="isDragOver = true"
             @dragenter.prevent="isDragOver = true"
@@ -31,7 +35,10 @@
           <input id = "body-container" v-model="body" type="text" placeholder="Write something about this image" required />
 
           <div id = "post-button-container">
-              <button type="submit">Post</button>
+              <button id = "post-button" type="submit" :disabled="loading">
+                <p v-if="!loading">Post</p>
+                <div v-if="loading" id="loading"></div>
+              </button>
           </div>
           
 
@@ -59,6 +66,7 @@ export default {
       body: '',
       selectedFile: null,
       error: null,
+      loading: false,
     };
   },
 
@@ -71,7 +79,15 @@ export default {
           this.isDragOver = true;
         } else {
           this.error = 'Unsupported file type';
+          return;
         }
+
+        if (file && file.size > 10 * 1024 * 1024) {
+          this.error = 'File size must be under 10MB';
+          return;
+        }
+
+
     },
 
      handleFileDrop(event) {
@@ -81,6 +97,14 @@ export default {
           this.setFilePreview(file);
         } else {
           this.error = 'Unsupported file type';
+          return;
+        }
+
+
+
+        if (file && file.size > 10 * 1024 * 1024) {
+          this.error = 'File size must be under 10MB';
+          return;
         }
         
     },
@@ -97,20 +121,28 @@ export default {
 
     handleSubmission() {
 
+      if (this.title.length > 128) {
+        this.error = 'Title too Long';
+        return;
+      }
       
       
       if (!this.selectedFile) {
-        this.error = 'Please upload a file.';
+        this.error = 'Upload File to Submit';
         return;
       }
 
       this.error = null;
-
+      this.loading = true;
       
       const formData = new FormData();
       formData.append('title', this.title);
       formData.append('body', this.body);
       formData.append('file', this.selectedFile);
+
+
+
+
 
       axiosObj.post('/new', formData)
       .then(()=>{
@@ -118,8 +150,13 @@ export default {
         }
       )
       .catch(err => {
+
         console.error(err);
         this.error = err;
+
+      }).finally(() => {
+
+        this.loading = false; 
 
       });
 
@@ -135,6 +172,15 @@ export default {
             backgroundColor: '#1a1a1a',  
           }
         : {};
+    },
+
+    barStyle() {
+      const maxLen = 128;
+      const percent = Math.min((this.title.length / maxLen) * 100, 100);
+      return {
+        width: percent + '%',
+        backgroundColor: this.title.length > maxLen ? 'red' : 'white',
+      };
     },
 
     previewBackgroundStyle() {
@@ -258,7 +304,8 @@ export default {
   width: 100%;
   border: none;
   padding-left: 20px;
-  padding-top: 10px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
   font-size: 50px;
@@ -301,7 +348,18 @@ export default {
   padding: 10px;
 }
 
+#post-button{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 
+.create-card button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 .create-card button {
   background-color: #0F0F0F;
@@ -324,10 +382,63 @@ export default {
 .create-card .error {
   color: #e74c3c;
   margin-top: 10px;
+  margin-bottom: 20px;
   text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
 }
 
 
+#loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+
+#heading-bar-container{
+
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+}
+
+
+.heading-bar {
+  height: 1px; 
+  width: 10%;  
+  background-color: white; 
+  margin-left: 20px; 
+  margin-bottom: 10px;
+  border-radius: 2px;
+}
+
+.title-bar {
+  height: 2px;
+  border-radius: 2px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  margin-left: 20px;
+  margin-top: -25px;
+  margin-bottom: 20px;
+}
+
+.over-limit {
+  background-color: red !important;
+}
 
 
 </style>

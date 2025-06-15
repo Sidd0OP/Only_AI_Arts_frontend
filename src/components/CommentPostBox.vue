@@ -5,11 +5,12 @@
 		<div id = "input-container">
 
 			<div id="button-container">
-				<button id = "cancel" @click="$emit('close')">
+				<button id = "cancel" @click="$emit('close')" :disabled="loading">
 					<img src="@/assets/xmark.svg" id="cancel-icon" alt="Cancel" @click="postReply">
 				</button>
-				<button id = "submit" @click = "sendData">
-					Send
+				<button id = "submit" @click = "sendData" :disabled="loading">
+					<p v-if="!loading">Send</p>
+					<div v-if="loading" id="loading"></div>
 				</button>
 			</div>
 			
@@ -50,7 +51,8 @@
 
 		data() {
 		    return {
-		      body: ''
+		      body: '',
+		      loading: false
 		    };
 		 },
 
@@ -61,6 +63,8 @@
 		      if (!this.body.trim()) return; 
 
 		      try {
+
+		      	this.loading = true;
 
 		        if (this.commentId == null) {
 
@@ -87,8 +91,14 @@
 		        this.$emit('close'); 
 
 		      } catch (err) {
+
 		        console.error('Failed to send comment:', err);
-		      }
+
+		      } finally {
+
+			    this.loading = false; 
+
+			  }
     		
     	}
   	}
@@ -168,6 +178,10 @@
 		gap: 10px;
 	}
 
+	#button-container button[disabled] {
+		  opacity: 0.5;
+		  cursor: not-allowed;
+		}
 
 	#submit{
 		  
@@ -228,6 +242,24 @@
 	.slide-up-leave-to {
 		transform: translateY(100%);
 		opacity: 0;
+	}
+
+	#loading {
+	  display: inline-block;
+	  width: 20px;
+	  height: 20px;
+	  border: 3px solid rgba(255,255,255,.3);
+	  border-radius: 50%;
+	  border-top-color: #fff;
+	  animation: spin 1s ease-in-out infinite;
+	  -webkit-animation: spin 1s ease-in-out infinite;
+	}
+
+	@keyframes spin {
+	  to { -webkit-transform: rotate(360deg); }
+	}
+	@-webkit-keyframes spin {
+	  to { -webkit-transform: rotate(360deg); }
 	}
 
 </style>

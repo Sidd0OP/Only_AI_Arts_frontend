@@ -1,7 +1,9 @@
 <template>
   <Navbar @login-status-checked="onNavbarReady"/>
+  
+  
   <main>
-    <button id="post-button" @click="handlePost">
+    <!-- <button id="post-button" @click="handlePost">
       
       <div id = "icon-container">
         <div id = "inner">
@@ -20,7 +22,7 @@
 
     <div id = "latest-container">
       
-    </div>
+    </div> -->
     <div id = "container">
       
       <PostSnippet v-if="post" :post = post :editable = this.postEditable />

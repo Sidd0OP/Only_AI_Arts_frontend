@@ -92,7 +92,7 @@
     },
     name() {
 
-     return this.reply.userName ?? "Bob"
+     return this.reply.userName ?? ""
 
     },
 
@@ -145,7 +145,8 @@
   {
     padding-top: 20px;
     width: 85%;
-    box-shadow: inset 2px 0 0 #222222;
+    border: 1px solid rgba(107, 107, 107, 0.3);
+    /*box-shadow: inset 2px 2px 2px  #222222;*/
     z-index: 10;
     background-color: var(--secondary-color);
 
@@ -173,7 +174,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    border-bottom: 2px solid #222222;
+    /*border-bottom: 2px solid #222222;*/
   }
 
   #left-container
@@ -226,6 +227,7 @@
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+    background-color: var(--bg-color);
   }
 
   .dates
@@ -272,6 +274,6 @@
   .dates div div {
       font-size: 0.5rem;
       font-weight: bold;
-      color: #fff; /* White text for readability */
+      color: #fff; 
   }
 </style>

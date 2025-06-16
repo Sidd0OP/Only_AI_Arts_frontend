@@ -4,12 +4,12 @@
       
       <img src= "/OnlyAiArtLogo.png" @click="goToHomePage">
 
-      <div id = "search-bar-container">
+      <!-- <div id = "search-bar-container">
         <div id = "icon-container">
           <img src="@/assets/search.svg" id="search-icon" alt="Search">
         </div>
         <input id = "search-box" type="text" placeholder="Dog flying in a jelly sky images...">
-      </div>
+      </div> -->
       
       <div id = "left-container">
         
@@ -39,6 +39,7 @@
       return {
         userLoggedIn: false,
         userId: null,
+        profileUrl: null
 
       }
     },
@@ -50,12 +51,7 @@
 
     computed: {
 
-    profileUrl(){
-
-        
-        return "this.response.data.profilePhotoUrl"
-    
-    }
+   
 
     },
 
@@ -78,7 +74,7 @@
           }else{
 
             this.userId = response.data.userId;
-            
+            this.profileUrl = response.data.profilePhotoUrl
             this.userLoggedIn = true;
           }
 
@@ -136,7 +132,7 @@
 
 .navbar img {
   width: 45px; 
-  height: auto; 
+  height: 45px; 
   cursor: pointer;
 }
 
@@ -144,8 +140,10 @@
   width: 45px;
   height: 45px;
   border-radius: 100px;
-  background-color: gray;
+  background-color: var(--bg-color);
   cursor: pointer;
+  overflow: hidden;
+  background: contain;
 }
 
 

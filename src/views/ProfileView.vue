@@ -1,24 +1,47 @@
 <template>
   <Navbar @login-status-checked="onNavbarReady"/>
+
+ 
+    
+    <EditBox 
+    :prevText = "this.bio" 
+    :type = "'bio'" 
+    :visible="showEditBox" 
+    :id = "this.userId" 
+    @close="showEditBox = false"/>
+
+
+  
+    
   <div class="profile">
+    
+
     <div id = "user-data-container">
 
       <div id = "profile-image-container">
-        <img :src= "profileImage" alt="Profile Photo" @click = "changeProfileImage"/>
+        <img id = "profile-image" :src= "profileImage" alt="Profile Photo" @click = "changeProfileImage"/>
         <img id = "edit-icon" src="@/assets/edit-pencil.svg" alt="Edit" @click = "changeProfileImage">
         <input ref="fileInput" type="file" @change="handleFileUpload" accept=".jpg,.png,.gif" hidden />
       </div>
+
       <div id = "meta-data-container">
-        <div id = name-data-container>
-          <p id = "hello">Hello </p>
+        <div id = "name-data-container">
           <p id = "name">{{ name }}</p>
-          <img id = "edit-icon-small" src="@/assets/edit-pencil.svg" alt="Edit">
+          <!-- <div id="icon-container">
+            <img id = "edit-icon-small" src="@/assets/edit-pencil.svg" alt="Edit">
+          </div> -->
         </div>
         
-        <p id = "joined">Joined: {{ formattedCreated }}</p>
-        <div id = name-data-container>
-          <p id = "bio">Bio: {{ bio }}</p>
-          <img id = "edit-icon-small" src="@/assets/edit-pencil.svg" alt="Edit">
+        <p id = "joined">{{ formattedCreated }}</p>
+
+        <div id = "name-data-container">
+          <div id="bio-container">
+            <p id = "bio">{{ bio }}</p>
+          </div>
+          
+          <div id="icon-container" @click = "editBio">
+            <img id = "edit-icon-small" src="@/assets/edit-pencil.svg" alt="Edit">
+          </div>  
         </div>
         
       </div>
@@ -31,14 +54,28 @@
           <p :class="{ active: selectedTab === 'Reply' }" @click="selectedTab = 'Reply'">Reply</p>
         </div>
         <div id = "container">
-          <PostSnippet v-if="selectedTab === 'Post'" v-for= "post in posts" :post = post :editable = this.editable />
-          <Comment v-if="selectedTab === 'Comment'" v-for="comment in comments" 
+
+          <PostSnippet 
+          v-if="selectedTab === 'Post'" 
+          v-for= "post in posts" 
+          :post = post 
+          :editable = this.editable />
+
+          <Comment 
+          v-if="selectedTab === 'Comment'" 
+          v-for="comment in comments" 
           :comments="comment"
           :listOfEditableComments = "listOfEditableComments" />
-          <Reply v-if="selectedTab === 'Reply'" v-for="reply in replies" 
+
+          <Reply 
+          v-if="selectedTab === 'Reply'" 
+          v-for="reply in replies" 
           :reply="reply" 
           :listOfEditableReplies = "listOfEditableReplies" />
+
         </div>
+
+        
         
     </div>
 </template>
@@ -50,6 +87,7 @@ import Navbar from '../components/Navbar.vue'
 import PostSnippet from '../components/PostSnippet.vue'
 import Comment from '../components/Comment.vue'
 import Reply from '../components/Reply.vue'
+import EditBox from '../components/EditBox.vue'
 
 
 export default {
@@ -57,7 +95,8 @@ export default {
     Navbar,
     PostSnippet,
     Comment,
-    Reply
+    Reply,
+    EditBox
   },
 
 
@@ -70,27 +109,24 @@ export default {
       editable: false,
       listOfEditableComments: [],
       listOfEditableReplies: [],
+      userId: null,
       userName: "",
-      bio: "",
+      displayBio: "",
       joined: "",
       url: "",
       selectedFile: null,
+      showEditBox: false
 
     }
     
   },
 
-  mounted() {
-    
-    
-
-  },
 
 
   computed: {
     
     bio() {
-      return this.bio ?? "Write something about yourself..."
+      return this.displayBio ?? "Your Description.."
     },
 
     name() {
@@ -120,6 +156,10 @@ export default {
     async onNavbarReady()
     {
       this.fetchPost()
+    },
+
+    editBio() {
+      this.showEditBox = true;
     },
 
     changeProfileImage(){
@@ -163,12 +203,13 @@ export default {
     async fetchPost() {
       
       const response = await axiosObj.get(`/profile/${this.$route.params.id}`);
+      this.userId = response.data.userId
       this.posts = response.data.posts
       this.comments = response.data.comments
       this.replies = response.data.replies
       this.editable =  response.data.editable
       this.userName = response.data.name
-      this.bio = response.data.bio
+      this.displayBio = response.data.bio
       this.joined =  response.data.joined
       this.url = response.data.profilePhotoUrl
 
@@ -190,6 +231,7 @@ export default {
 
 <style scoped>
   .profile{
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -199,23 +241,30 @@ export default {
     gap: 30px;
   }
 
+ 
+
+  
+
   #user-data-container{
+    position: relative;
     width: 100%;
     height: 40%;
     min-height: 250px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: start;
     gap: 30px;
     padding-left: 50px;
-    padding-bottom: 50px;
+    
   }
 
 
   #profile-image-container{
     
-    height: 100%;
-    aspect-ratio: 1 / 1;
+    position: fixed;
+    width: 200px;
+    height: 200px;
     border-radius: 100%;
     background-color: gray;
     z-index: 22;
@@ -223,44 +272,78 @@ export default {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    object-fit: contain;
+    object-fit: cover;
+    
+  }
+
+  #profile-image {
+    width: 100%;
+    height: 100%;
   }
 
   #edit-icon{
     position: absolute;
-     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
     width: 50px;
     height: 50px;
     cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  #profile-image-container:hover #edit-icon {
+    opacity: 1;
+  }
+
+
+  #bio-container{
+    
+    background-color: var(--tertiary-color);
+    border-radius: 15px;
+    padding: 20px;
   }
 
   #edit-icon-small{
     width: 30px;
     height: 30px;
     cursor: pointer;
+    z-index: 1000;
   }
 
 
   #meta-data-container{
-    height: 80%;
+    position: fixed;
+    width: 70%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: center;
-    padding-left: 50px;
+    padding-left: 250px;
+    
   }
 
-  #meta-data-container p {
-    color: white;
-    font-family: 'Inter', sans-serif;
-    font-weight: 1000;
-    font-size: 36px;
-  }
+ #icon-container{
+
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-color);
+  border-radius: 100%;
+  z-index: 500;
+ }
+
+ #icon-container:hover{
+  background-color: var(--tertiary-color);
+ }
 
   #user-post-container{
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     width: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -283,14 +366,15 @@ export default {
     padding-right: 200px;
     padding-top: 30px;
     padding-bottom: 30px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 24px;
     color: var(--text-color);
     z-index: 150;
   }
 
   #top-bar p {
+    
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
     cursor: pointer;
   }
 
@@ -299,6 +383,8 @@ export default {
   }
 
   #name-data-container{
+    
+    width: 90%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -306,9 +392,20 @@ export default {
     gap: 20px;
   }
 
+  
+
+  #meta-data-container p{
+
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+
+  }
+
   #container
   {
-    padding-top: 30px;
+    padding-top: 60px;
     width: 60vw;
     max-width: 700px;
     text-align: center;

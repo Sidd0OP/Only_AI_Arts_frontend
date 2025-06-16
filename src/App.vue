@@ -6,30 +6,30 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
 
   <div id = "left-text">
-    <h1>Bob</h1>
-    <h1>Bob</h1>
-    <h1>Bob</h1>
-    <h1>Bob</h1>
-    <h1>Bob</h1>
-    <h1>Bob</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
   </div>
 
   <div id = "center-text">
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
-    <h1>Siddharth</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
   </div>
 
   <div id = "right-text">
-    <h1>So</h1>
-    <h1>So</h1>
-    <h1>So</h1>
-    <h1>So</h1>
-    <h1>So</h1>
-    <h1>So</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
+    <h1>Ai</h1>
   </div>
 
   <RouterView />

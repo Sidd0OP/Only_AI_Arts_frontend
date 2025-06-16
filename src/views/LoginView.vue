@@ -234,6 +234,15 @@ input[type="password"] {
   padding: 12px;
   border-radius: 10px;
   border: 1px solid rgba(136, 136, 136, 0.1);
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .remember-me {

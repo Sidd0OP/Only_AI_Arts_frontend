@@ -112,6 +112,16 @@
 
 		        }
 
+
+		        if (this.type == "bio"){
+
+		        	const formData = new FormData(); 
+      				formData.append('bio', this.body);     
+
+      				await axiosObj.post('/bio', formData);
+
+		        }
+
 		        this.body = '';
 		        this.$emit('close'); 
 
@@ -130,7 +140,7 @@
 	#container{
 		position: fixed;
 		left: 0;
-		bottom: 0;
+		top: 60px;
 		width: 100vw;
 		height: 60vh;
 		z-index: 200;
@@ -143,6 +153,8 @@
 		border: 1px solid rgba(107, 107, 107, 0.3);
 		
 	}
+
+
 
 	.comment-input {
 
@@ -158,7 +170,7 @@
 	  border: none;
 	  font-family: 'Inter', sans-serif;
       font-weight: 800;
-	  font-size: px;
+	  font-size: 24px;
 
 	}
 
@@ -237,23 +249,29 @@
 	}
 
 	.slide-up-enter-from {
-	transform: translateY(100%);
-	opacity: 0;
+		transform: translateY(-100%);
+		opacity: 0;
 	}
+
 	.slide-up-enter-active {
 		transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 	}
+
 	.slide-up-enter-to {
 		transform: translateY(0);
 		opacity: 1;
 	}
+
+	
 	.slide-up-leave-from {
 		transform: translateY(0);
 		opacity: 1;
 	}
+
 	.slide-up-leave-active {
 		transition: transform 0.3s ease-in, opacity 0.3s ease-in;
 	}
+
 	.slide-up-leave-to {
 		transform: translateY(100%);
 		opacity: 0;

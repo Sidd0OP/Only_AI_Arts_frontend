@@ -111,7 +111,7 @@
 	#container{
 		position: fixed;
 		left: 0;
-		bottom: 0;
+		top: 60px;
 		width: 100vw;
 		height: 60vh;
 		z-index: 200;
@@ -124,6 +124,9 @@
 		border: 1px solid rgba(107, 107, 107, 0.3);
 		
 	}
+
+	
+
 
 	.comment-input {
 
@@ -222,7 +225,7 @@
 	}
 
 	.slide-up-enter-from {
-	transform: translateY(100%);
+	transform: translateY(-100%);
 	opacity: 0;
 	}
 	.slide-up-enter-active {

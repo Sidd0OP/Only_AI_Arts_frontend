@@ -24,7 +24,7 @@
         <div id ="left-container">
 
           <div id ="profile-image" @click="goToProfile">
-              <img  :src="profileImage" />
+              <img v-if = "profileImage" :src="profileImage" />
           </div>
 
           <div id = "name" @click="goToProfile">
@@ -106,7 +106,7 @@ export default {
     },
     name() {
 
-     return this.post.userName ?? "Bob"
+     return this.post.userName ?? ""
 
     },
 
@@ -289,6 +289,13 @@ export default {
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+  }
+
+  #profile-image img {
+
+    width: 100%;
+    height: 100%;
+
   }
 
   #icon-container{

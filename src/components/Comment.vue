@@ -116,7 +116,7 @@
     },
     name() {
 
-     return this.comments.userName ?? "Bob"
+     return this.comments.userName ?? ""
 
     },
 
@@ -176,7 +176,7 @@
 <style scoped>
 	#comment-container
   {
-    border-top: 2px solid #222222;
+    border: 2px solid #222222;
     padding-top: 20px;
     width: 100%;
     background: var(--bg-color);
@@ -304,6 +304,7 @@
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+    background-color: var(--bg-color);
   }
 
   .dates

@@ -47,7 +47,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        source: only-ai-art-server.tar
+        source: dist/
         target: "home/${{ secrets.USERNAME }}/build"
     
     

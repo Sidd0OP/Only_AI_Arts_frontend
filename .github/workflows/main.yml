@@ -38,7 +38,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: build-folder
-        path: ./dist
+        path: dist
         
     - name: Send build to server 
       uses: appleboy/scp-action@master

@@ -40,6 +40,16 @@ jobs:
         name: build-folder
         path: dist
         
+    - name: Delete previous dist folder on server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          rm -rf build/dist
+        
     - name: Send build to server 
       uses: appleboy/scp-action@master
       with:

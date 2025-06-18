@@ -6,6 +6,12 @@
       <div id="heading-container">
         <p>Top Images Today</p>
       </div>
+      
+      <PostSnippetSkeleton v-if = "show"/>
+      <PostSnippetSkeleton v-if = "show"/>
+      <PostSnippetSkeleton v-if = "show"/>
+      <PostSnippetSkeleton v-if = "show"/>
+
       <PostSnippet  v-for= "post in posts" :post = post />
     </div>
 
@@ -43,11 +49,13 @@
 import axiosObj from '../axios-config';
 import Navbar from '../components/Navbar.vue'
 import PostSnippet from '../components/PostSnippet.vue'
+import PostSnippetSkeleton from '../components/PostSnippetSkeleton.vue'
 
 export default {
   components: {
     Navbar,
-    PostSnippet
+    PostSnippet,
+    PostSnippetSkeleton
   },
 
 
@@ -56,7 +64,9 @@ export default {
       posts: [],
       page: 1,         
       usingSnippetsApi: false,
-      userLoggedIn: false
+      userLoggedIn: false,
+      show: true
+
     }
   },
 
@@ -83,8 +93,9 @@ export default {
         
         const response = await axiosObj.get('/home');
 
-        
         this.posts = response.data.postSnippets;
+
+        this.show = false;
 
       } catch (error) {
         console.error('Error fetching posts:', error)

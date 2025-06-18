@@ -109,8 +109,6 @@ const googleSignUp = () => {
       callback: async (response) => {
         if (response.code) {
 
-          // console.log(response);
-
           try {
 
             const backResponse = await axiosObj.post('/auth/google' , {
@@ -128,12 +126,8 @@ const googleSignUp = () => {
 
             try {
     
-                const backResponse = await axiosObj.post('/login', newFormData);
-                
-                
-
-                console.log("redirecting");
-                router.push('/');
+              const backResponse = await axiosObj.post('/login', newFormData);
+              router.push('/');
 
 
               } catch (err) {

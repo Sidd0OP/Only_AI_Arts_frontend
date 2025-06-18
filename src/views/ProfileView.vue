@@ -20,7 +20,7 @@
 
       <div id = "profile-image-container">
         <img id = "profile-image" :src= "profileImage" alt="Profile Photo" @click = "changeProfileImage"/>
-        <img id = "edit-icon" src="@/assets/edit-pencil.svg" alt="Edit" @click = "changeProfileImage">
+        <img v-if = "editable" id = "edit-icon" src="@/assets/edit-pencil.svg" alt="Edit" @click = "changeProfileImage">
         <input ref="fileInput" type="file" @change="handleFileUpload" accept=".jpg,.png,.gif" hidden />
       </div>
 
@@ -39,7 +39,7 @@
             <p id = "bio">{{ bio }}</p>
           </div>
           
-          <div id="icon-container" @click = "editBio">
+          <div v-if = "editable" id="icon-container" @click = "editBio">
             <img id = "edit-icon-small" src="@/assets/edit-pencil.svg" alt="Edit">
           </div>  
         </div>

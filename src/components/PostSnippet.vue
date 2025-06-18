@@ -7,7 +7,7 @@
 
     <div id="image-container" :style="{ backgroundImage: 'url(' + url + ')' }" @click="goToPost">
       <div class="image-overlay"></div>
-      <img :src="url" />
+      <img :src="url" loading="lazy"/>
     </div>
 
     <p>

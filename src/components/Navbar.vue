@@ -37,7 +37,7 @@
 
     data() {
       return {
-        userLoggedIn: false,
+        userLoggedIn: true,
         userId: null,
         profileUrl: null
 

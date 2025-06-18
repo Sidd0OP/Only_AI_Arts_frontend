@@ -25,6 +25,7 @@
     </div> -->
     <div id = "container">
       
+      <PostSnippetSkeleton v-if = "show"/>
       <PostSnippet v-if="post" :post = post :editable = this.postEditable />
       <div id="gap-container"></div>
 
@@ -41,13 +42,18 @@
       <div id = "more-post-container">
 
         <div  v-if="similarPosts && similarPosts.length > 0" id="heading-container">
+          <PostSnippetSkeleton v-if = "show"/>
+          <PostSnippetSkeleton v-if = "show"/>
           <p>Similar Posts</p>
         </div>
         
+
         <PostSnippet  v-for= "post in similarPosts" :post = post />
 
         <div id="heading-container"><p>Some more</p></div>
 
+        <PostSnippetSkeleton v-if = "show"/>
+        <PostSnippetSkeleton v-if = "show"/>
         <PostSnippet  v-for= "post in posts" :post = post />
 
       </div>
@@ -65,12 +71,14 @@ import axiosObj from '../axios-config';
 import Navbar from '../components/Navbar.vue'
 import Comment from '../components/Comment.vue'
 import PostSnippet from '../components/PostSnippet.vue'
+import PostSnippetSkeleton from '../components/PostSnippetSkeleton.vue'
 
 export default {
   components: {
     Navbar,
     PostSnippet,
-    Comment
+    Comment,
+    PostSnippetSkeleton
   },
 
   data() {
@@ -84,7 +92,8 @@ export default {
       comments: [],
       postEditable: false,
       listOfEditableComments: [],
-      listOfEditableReplies: []
+      listOfEditableReplies: [],
+      show: true
     };
 
   },
@@ -124,6 +133,8 @@ export default {
       } catch (error) {
         console.error('Error loading more posts:', error);
       }
+
+      this.show = false;
     },
 
     async fetchPost(postId) {
@@ -136,6 +147,8 @@ export default {
       this.postEditable = response.data.postEditableByUser
       this.listOfEditableComments = response.data.listOfEditableComments;
       this.listOfEditableReplies = response.data.listOfEditableReplies;
+
+      this.show = false;
     }
   }
 

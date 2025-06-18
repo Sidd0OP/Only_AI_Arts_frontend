@@ -64,6 +64,10 @@ const handleLogin = async () => {
     
     const backResponse = await axiosObj.post('/login', formData);
     
+
+    console.log(backResponse.data)
+
+
     if(!backResponse.data.userId && backResponse.data.userId == null)
     {
       throw new Error("Validation Failed , wrong Password or Email");

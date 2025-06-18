@@ -63,20 +63,31 @@ const handleLogin = async () => {
   try {
     
     const backResponse = await axiosObj.post('/login', formData);
-    
+         
+    const response = await axiosObj.get('/user');
+          
+    if(response.data.userId === null){
 
-    console.log(backResponse.data)
-
-
-    if(!backResponse.data.userId && backResponse.data.userId == null)
-    {
       throw new Error("Validation Failed , wrong Password or Email");
-      
-    }else{
 
-      router.push('/');
+      }else{
 
+        router.push('/');
+          
     }
+
+        
+
+
+    // if(!backResponse.data.userId && backResponse.data.userId == null)
+    // {
+    //   throw new Error("Validation Failed , wrong Password or Email");
+      
+    // }else{
+
+    //   router.push('/');
+
+    // }
 
     
 

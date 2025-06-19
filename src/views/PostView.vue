@@ -3,26 +3,7 @@
   
   
   <main>
-    <!-- <button id="post-button" @click="handlePost">
-      
-      <div id = "icon-container">
-        <div id = "inner">
-          <img src="@/assets/upload-svg.svg" id="upload-icon" alt="Upload">
-        </div>
-        
-      </div>
-        
-        <div id = "text-container">
-          <p id = "big">Create Post</p>
-          <p id = "small">Use your favourite AI model</p>
-        </div>
-        
-
-    </button>
-
-    <div id = "latest-container">
-      
-    </div> -->
+    <CreatePost />
     <div id = "container">
       
       <PostSnippetSkeleton v-if = "show"/>
@@ -44,13 +25,13 @@
         <div  v-if="similarPosts && similarPosts.length > 0" id="heading-container">
           <PostSnippetSkeleton v-if = "show"/>
           <PostSnippetSkeleton v-if = "show"/>
-          <p>Similar Posts</p>
+          <p>Similar Images</p>
         </div>
         
 
         <PostSnippet  v-for= "post in similarPosts" :post = post />
 
-        <div id="heading-container"><p>Some more</p></div>
+        <div id="heading-container"><p>Some more Images</p></div>
 
         <PostSnippetSkeleton v-if = "show"/>
         <PostSnippetSkeleton v-if = "show"/>
@@ -72,13 +53,15 @@ import Navbar from '../components/Navbar.vue'
 import Comment from '../components/Comment.vue'
 import PostSnippet from '../components/PostSnippet.vue'
 import PostSnippetSkeleton from '../components/PostSnippetSkeleton.vue'
+import CreatePost from '../components/CreatePost.vue'
 
 export default {
   components: {
     Navbar,
     PostSnippet,
     Comment,
-    PostSnippetSkeleton
+    PostSnippetSkeleton,
+    CreatePost
   },
 
   data() {
@@ -194,21 +177,22 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding-bottom: 30px;
   }
 
 
   #more-post-container p{
-    -webkit-text-stroke: 1px #FF2160;
+    -webkit-text-stroke: 2px #FF2160;
     color: var(--bg-color);
     font-family: 'Inter', sans-serif;
-    font-size: 40px;
+    font-size: 48px;
   }
 
   #heading-container{
     background-color: var(--bg-color);
     border-radius: 15px;
     border: 1px solid #222222;
-    padding: 12px;
+    padding-left: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -7,7 +7,6 @@
           <li>✅ Supported file formats: <strong>.png</strong>, <strong>.gif</strong>, <strong>.jpeg</strong></li>
           <li>📏 Maximum file size: <strong>10 MB</strong></li>
           <li>🖼️ Recommended resolution: <strong>at least 800x600</strong> for best quality</li>
-          <li>🚫 Do not upload offensive or copyrighted material</li>
         </div>
       <div class="create-card">
         <form id = "form-container" @submit.prevent="handleSubmission">

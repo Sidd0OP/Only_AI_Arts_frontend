@@ -15,7 +15,7 @@
       <PostSnippet  v-for= "post in posts" :post = post />
     </div>
 
-    <button id="post-button" @click="handlePost">
+    <!-- <button id="post-button" @click="handlePost">
       
       <div id = "icon-container">
         <div id = "inner">
@@ -30,7 +30,9 @@
         </div>
         
 
-    </button>
+    </button> -->
+
+    <CreatePost />
 
     <div id = "latest-container">
       <p>Recent Posts</p>
@@ -40,7 +42,10 @@
     <div id = "button_container">
       <button id = "load-more-button" @click="loadMorePosts">load More</button>
     </div>
+    
   </main>
+
+  
 
 </template>
 
@@ -50,12 +55,17 @@ import axiosObj from '../axios-config';
 import Navbar from '../components/Navbar.vue'
 import PostSnippet from '../components/PostSnippet.vue'
 import PostSnippetSkeleton from '../components/PostSnippetSkeleton.vue'
+import Footer from '../components/Footer.vue'
+import CreatePost from '../components/CreatePost.vue'
+
 
 export default {
   components: {
     Navbar,
     PostSnippet,
-    PostSnippetSkeleton
+    PostSnippetSkeleton,
+    Footer,
+    CreatePost
   },
 
 
@@ -170,7 +180,7 @@ export default {
     background-color: var(--bg-color);
     border-radius: 15px;
     border: 1px solid #222222;
-    padding: 12px;
+    padding-left: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -178,16 +188,16 @@ export default {
     width: 100%;
     height: 80px;
     z-index: 10;
-    text-stroke: 2px red;
+    
 
   }
 
   #heading-container p
   {
-    -webkit-text-stroke: 1px #FF2160;
+    -webkit-text-stroke: 2px #FF2160;
     color: var(--bg-color);
     font-family: 'Inter', sans-serif;
-    font-size: 32px;
+    font-size: 48px;
   }
 
   #container
@@ -204,85 +214,7 @@ export default {
 
   }
 
-  #post-button
-  {
-    position: fixed;
-    top: 100px; 
-    left: 50%;
-    transform: translateX(28vw); 
-    width: 18vw;
-    border-radius: 17px;
-    border: 1px solid #222222;
-    color: white;
-    height: 80px;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: 10px;
-    padding-right: 20px;
-    background: var(--secondary-color);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: start;
-    
-  }
-
-
-  #icon-container{
-    width: 80px;
-    height: 60px;
-    background: #833AB4;
-    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, 
-      rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
-    border: 1px solid #222222;
-    padding: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 12px;
-    transition: all 0.1s ease-in-out;
-    cursor: pointer;
-  }
-
-  #icon-container:hover{
-    padding: 2px;
-  }
-
-  #inner{
-    background-color: var(--bg-color);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    padding: 1px;
-  }
-
-  #text-container{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    gap: 10px;
-    padding-left: 20px;
-  }
-
-  #big{
-
-    font-family: 'Inter', sans-serif;
-    font-weight: bold;
-    font-size: 1.3rem;
-  }
-
-  #small{
-    opacity: 60%;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 0.6rem;
-  }
+  
   
 
   #image-reference{
@@ -294,11 +226,6 @@ export default {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-  }
-
-  #upload-icon{
-    height: 25px;
-    width: 25px;
   }
 
   #latest-container
@@ -328,7 +255,6 @@ export default {
     position: relative;
     width: 100%;
     height: 79px;
-    background: var(--bg-color);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -338,6 +264,27 @@ export default {
 
   }
 
+
+  #load-more-button{
+
+    background-color: var(--bg-color);
+    color: white;
+    border-radius: 10px;
+    border: 2px solid var(--tertiary-color);
+    width: 125px;
+    height: 45px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+  }
 
   
 

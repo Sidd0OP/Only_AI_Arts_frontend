@@ -157,7 +157,8 @@
 
 
 	.comment-input {
-
+	  position: sticky;
+	  top: 50px;
 	  padding: 20px;
 	  width: 100%;
 	  max-width: 100%;

@@ -1,5 +1,10 @@
 <template>
   <div id="register-page">
+
+    <div id = "logo-containre">
+      <img id = "logo" src= "/OnlyAiArtsLogo.png">
+    </div>
+
     <div class="register-card">
       
 
@@ -55,7 +60,12 @@
         <p class="or-text">Or</p>
 
 
-        <button id = "google" @click.prevent = "googleSignUp">Log in with Google</button>
+        <button id = "google" @click.prevent = "googleSignUp">
+          <img src="@/assets/google.svg" id="google-icon" alt="google">
+          <p>
+            Register with Google
+          </p>
+        </button>
 
         <div id = "option-container">
           <p id = "login-redirect" @click.prevent = "login">Already Registered ?</p>
@@ -211,18 +221,27 @@ const login = () => {
 <style scoped>
 #register-page {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100%;
   background: var(--bg-color);
   z-index: 10;
+  gap: 20px;
+}
 
+#logo-container{
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .register-card {
   background: #17100E;
   border-radius: 20px;
+  height: 600px;
   width: 720px;
   color: #fff;
   display: flex;
@@ -235,7 +254,7 @@ const login = () => {
 {
   
   width: 60%;
-  height: 80%;
+  height: 100%;
   left: 0;
   overflow: hidden;
   display: flex;
@@ -247,8 +266,8 @@ const login = () => {
 
 #bgVideo{
 
-  height: 600px;
-  object-fit: contain;
+  height: 800px;
+  object-fit: cover;
 
 }
 
@@ -321,12 +340,23 @@ input[type="password"].input-error {
 
 
 #google {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
   width: 100%;
   background-color: rgba(187, 187, 187, 0.15);  
   padding: 12px;
   border-radius: 10px;
   border: 1px solid rgba(136, 136, 136, 0.1);
   cursor: pointer;
+}
+
+#google img {
+
+  width: 20px;
+  height: 20px;
 }
 
 button {

@@ -33,8 +33,13 @@ import { RouterLink, RouterView } from 'vue-router'
   </div>
 
   <RouterView />
+  <Footer />
 
 </template>
+
+<script>
+  import Footer from './components/Footer.vue'
+</script>
 
 <style scoped>
 
@@ -98,8 +103,8 @@ import { RouterLink, RouterView } from 'vue-router'
 
   transform: rotate(var(--text-rotation));
   font-size: 13vw; 
-  color: var(--text-color);
-  opacity: var(--text-opacity);
+  color: var(--secondary-color);
+  
   line-height: 1;
   text-align: center;
   white-space: nowrap;

@@ -1,12 +1,16 @@
 <template>
   <div id="login-page">
+    <div id = "logo-containre">
+      <img id = "logo" src= "/OnlyAiArtsLogo.png">
+    </div>
+    
     <div class="login-card">
       
 
       <div id = "vid-container">
         <video autoplay muted loop id="bgVideo">
-        <source src="/video.mp4" type="video/mp4">
-      </video>
+          <source src="/video.mp4" type="video/mp4">
+        </video>
       </div>
       
 
@@ -24,7 +28,12 @@
         <p class="or-text">Or</p>
 
 
-        <button id = "google" @click.prevent = "googleSignUp">Log in with Google</button>
+        <button id = "google" @click.prevent = "googleSignUp">
+          <img src="@/assets/google.svg" id="google-icon" alt="google">
+          <p>
+            Log in with Google
+          </p>
+        </button>
 
         <div id = "option-container">
           <p id = "forgot" @click = "forgot" >Forgot Password ?</p>
@@ -33,10 +42,19 @@
         
         <button type="submit">Login</button>
 
+        <button id = "skip" @click.prevent = "goToHome">
+          
+          <p>
+            Skip
+          </p>
+          <img src="@/assets/arrow-right-circle.svg" id="google-icon" alt="google">
+        </button>
+
         <p v-if="error" class="error">{{ error }}</p>
       </form>
 
     </div>
+
   </div>
 </template>
 
@@ -168,26 +186,40 @@ const register = () => {
   router.push('/register')
 
 }
+
+const goToHome = () => {
+
+  router.push('/')
+
+}
 </script>
 
 
 <style scoped>
 #login-page {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100%;
   background: var(--bg-color);
   z-index: 10;
+  gap: 20px;
+}
 
+#logo-container{
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-card {
   background: #17100E;
   border-radius: 20px;
   width: 720px;
-  height: 450px;
+  height: 500px;
   color: #fff;
   display: flex;
   flex-direction: row;
@@ -210,7 +242,7 @@ const register = () => {
 
 #bgVideo{
 
-  height: 100%;
+  height: 125%;
 
 }
 
@@ -284,7 +316,43 @@ input:focus {
   padding: 12px;
   border-radius: 10px;
   border: 1px solid rgba(136, 136, 136, 0.1);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  gap: 15px;
+}
+
+#google img {
+
+  width: 20px;
+  height: 20px;
+}
+
+#skip{
+
+  width: 100%;
+  padding: 0.7rem;
+  border: none;
+  width: 100%;
+  background-color: #333333;  
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(136, 136, 136, 0.1);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#skip img{
+  width: 20px;
+  height: 20px;
 }
 
 button {
@@ -304,6 +372,10 @@ button {
 button:hover {
   background-color: rgba(51, 51, 51, 0.85);
 
+}
+
+#skip:hover{
+  background-color: rgba(51, 51, 51, 0.85);
 }
 
 #forgot{

@@ -2,23 +2,32 @@
   <nav class="navbar">
     <ul>
       
-      <img src= "/OnlyAiArtLogo.png" @click="goToHomePage">
+      <img id = "logo" src= "/OnlyAiArtsLogo.png" @click="goToHomePage">
 
-      <!-- <div id = "search-bar-container">
+      <div id = "search-bar-container">
+        <input id = "search-box" type="text" placeholder="Search">
+
         <div id = "icon-container">
           <img src="@/assets/search.svg" id="search-icon" alt="Search">
         </div>
-        <input id = "search-box" type="text" placeholder="Dog flying in a jelly sky images...">
-      </div> -->
+      </div>
+
+
       
       <div id = "left-container">
         
         <div id = "profile-image-container" @click="goToProfilePage" v-if="userLoggedIn">
-          <img :src = "profileUrl">
+          <img :src = "getProfileUrl()">
         </div>
         
-        <button id = "login-button" type="button" @click="goToLoginPage" v-if="!userLoggedIn">Log in</button>
-        <button id = "register-button" type="button" @click="goToRegisterPage" v-if="!userLoggedIn">Sign up</button>
+        <button id = "login-button" type="button" @click="goToLoginPage" v-if="!userLoggedIn">
+        <img src="@/assets/log-in.svg" id="login-icon" alt="Login">
+         <p>Log in</p>
+        </button>
+        <button id = "register-button" type="button" @click="goToRegisterPage" v-if="!userLoggedIn">
+        <img src="@/assets/peace-hand.svg" id="login-icon" alt="Login">
+         <p>Sign up</p>
+        </button>
       </div>
 
 
@@ -67,7 +76,7 @@
           
           if(response.data.userId === null){
 
-            userLoggedIn = false;
+            this.userLoggedIn = false;
 
             console.log(false)
 
@@ -79,8 +88,14 @@
           }
 
         } catch (error) {
+          this.userLoggedIn = false;
           console.error('Error fetching posts:', error)
         }
+      },
+
+      getProfileUrl(){
+
+        return this.profileUrl ?? "/DefaultProfilePic.png"
       },
 
       goToProfilePage() {
@@ -111,7 +126,7 @@
   left: 0;
   width: 100%;
   background-color: #000000;
-  padding: 0.8rem;
+  padding: 0.5rem;
   border-color: #4D4D4D;
   border-width: 0px 0px 2px 0px; 
   border-style: solid;
@@ -120,19 +135,19 @@
 
 }
 .navbar ul {
-  list-style: none;
+  
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding-left: 30px;
-  padding-right: 20px;
+  gap: 5px;
+
+  padding-right: 36px;
 }
 
-.navbar img {
-  width: 45px; 
-  height: 45px; 
+#logo {
+
+  scale: 0.7;
   cursor: pointer;
 }
 
@@ -141,11 +156,21 @@
   height: 45px;
   border-radius: 100px;
   background-color: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   overflow: hidden;
   background: contain;
 }
 
+#profile-image-container img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+
+}
 
 #left-container{
   display: flex;
@@ -167,12 +192,12 @@
   font-family: 'Inter', sans-serif;
   font-weight: 800;
   font-size: 22px;
-  transition: background-color 0.2s ease;
+  
 }
 
 #login-button{
 
-  background-color: #0F0F0F;
+  background-color: var(--bg-color);
   color: white;
   border-radius: 10px;
   border: 2px solid rgba(107, 107, 107, 0.3);
@@ -182,28 +207,62 @@
   font-family: 'Inter', sans-serif;
   font-weight: 800;
   font-size: 15px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+#login-button img{
+
+  width: 20px;
+  height: 20px;
+}
+
+
+#login-button:hover{
+   background-color: var(--secondary-color);
 }
 
 #register-button{
 
-  background-color: #0F0F0F;
+  background-color: var(--bg-color);
   color: white;
   border-radius: 10px;
-  border: 2px solid #FF5C5C;
+  border: 2px solid var(--tertiary-color);
   width: 125px;
   height: 45px;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
   font-size: 15px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+
+#register-button img{
+
+  width: 20px;
+  height: 20px;
+}
+
+#register-button:hover{
+   background-color: var(--tertiary-color);
 }
 
 #search-bar-container{
 
   position: fixed;
   width: 40%;
-  height: 50px;
-  padding-left: 10px;
+  height: 45px;
+  overflow: hidden;
   background-color: var(--tertiary-color);
   border-radius: 10px;
   border: 1px solid #222222;
@@ -222,6 +281,8 @@
   justify-content: center;
   align-items: center;
   padding-right: 10px;
+  padding-left: 10px;
+
 }
 
 #search-icon{
@@ -235,7 +296,8 @@
   background-color: var(--bg-color);
   color: white;
   border: none;
-  text-align: center;
+  padding-left: 15px;
+  text-align: left;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
   font-size: 22px;

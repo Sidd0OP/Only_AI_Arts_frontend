@@ -5,11 +5,21 @@
       <img id = "logo" src= "/OnlyAiArtsLogo.png" @click="goToHomePage">
 
       <div id = "search-bar-container">
-        <input id = "search-box" type="text" placeholder="Search">
+
+        <input id = "search-box" type="text" placeholder="Search" 
+        @focus="isSearchActive = true"
+        @input="handleInput"
+        @keydown.enter="handleEnter"
+        v-model="searchText">
 
         <div id = "icon-container">
-          <img src="@/assets/search.svg" id="search-icon" alt="Search">
+          <img v-if="!isSearchActive" src="@/assets/search.svg" id="search-icon" alt="Search">
+          <img v-if="isSearchActive" src="@/assets/xmark.svg" id="search-icon" alt="Search" @click="closeSearchBar">
         </div>
+      </div>
+
+      <div v-if="isSearchActive" id = "search-result-container" >
+        <SearchResult  v-for= "result in searchResults" :postId = result.postId :title = result.title :imageUrl = result.imageUrl />
       </div>
 
 
@@ -37,18 +47,25 @@
 
 <script>
   import axiosObj from '../axios-config';
-
+  import SearchResult from './SearchResult.vue'
 
 
   export default {
 
     name: 'Navbar',
 
+    components: {
+      SearchResult,
+    },
+
     data() {
       return {
         userLoggedIn: true,
         userId: null,
-        profileUrl: null
+        profileUrl: null,
+        isSearchActive: false,
+        searchText: '',
+        searchResults: []
 
       }
     },
@@ -58,14 +75,40 @@
       this.$emit('login-status-checked')
     },
 
-    computed: {
-
-   
-
-    },
-
-
     methods: {
+
+      closeSearchBar(){
+        this.isSearchActive = false;
+        this.searchText = '';
+        this.searchResults = [];
+      },
+
+
+      async handleEnter() {
+        const trimmed = this.searchText.trim();
+        if (trimmed.length > 0) {
+          await this.searchQuery(trimmed);
+        }
+      },
+      async handleInput() {
+        const trimmed = this.searchText.trim();
+        if (this.searchText.slice(-1) === ' ' && trimmed.length > 0) {
+          await this.searchQuery(trimmed);
+        }
+      },
+
+      async searchQuery(query) {
+        try {
+          const response = await axiosObj.get(`/search/${encodeURIComponent(query)}`);
+          this.searchResults = response.data;
+
+
+        } catch (error) {
+          console.error('Search Error', error);
+        }
+      },
+
+
 
 
       async checkLoginStatus() {
@@ -260,7 +303,7 @@
 #search-bar-container{
 
   position: fixed;
-  width: 40%;
+  width: 50%;
   height: 45px;
   overflow: hidden;
   background-color: var(--tertiary-color);
@@ -273,6 +316,25 @@
   align-items: center;
   justify-content: start;
 
+}
+
+#search-result-container{
+  position: fixed;
+  top: 60px;
+  width: 50%;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  border: 1px solid #222222;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #icon-container{

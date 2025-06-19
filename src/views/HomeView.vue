@@ -15,23 +15,6 @@
       <PostSnippet  v-for= "post in posts" :post = post />
     </div>
 
-    <!-- <button id="post-button" @click="handlePost">
-      
-      <div id = "icon-container">
-        <div id = "inner">
-          <img src="@/assets/upload-svg.svg" id="upload-icon" alt="Upload">
-        </div>
-        
-      </div>
-        
-        <div id = "text-container">
-          <p id = "big">Create Post</p>
-          <p id = "small">Use your favourite AI model</p>
-        </div>
-        
-
-    </button> -->
-
     <CreatePost />
 
     <div id = "latest-container">

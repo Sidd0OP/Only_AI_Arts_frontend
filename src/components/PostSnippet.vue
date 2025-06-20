@@ -1,6 +1,23 @@
 <template>
   <CommentPostBox :visible="showCommentBox" :postId = "this.postId" @close="showCommentBox = false"/>
-  <EditBox :prevText = "body" :type = "'post'" :visible="showEditBox" :id = "this.postId" @close="showEditBox = false"/>
+
+  <!-- <EditBox 
+  :prevText = "body" 
+  :type = "'post'" 
+  :visible="showEditBox" 
+  :id = "this.postId" 
+  @close="showEditBox = false"/> -->
+
+  <teleport to ="body">
+    <EditBox
+      :prevText="body"
+      :type="'post'"
+      :visible="showEditBox"
+      :id="postId"
+      @close="showEditBox = false"
+    />
+  </teleport>
+
   <div id ="post-snippet">
     <h2 @click="goToPost">{{ title }}</h2>
 

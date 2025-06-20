@@ -1,5 +1,15 @@
 <template>
-  <EditBox :prevText = "body" :type = "'reply'" :visible="showEditBox" :id = "this.replyId" @close="showEditBox = false"/>
+
+  <teleport to ="body">
+    <EditBox 
+    :prevText = "body" 
+    :type = "'reply'" 
+    :visible="showEditBox" 
+    :id = "this.replyId"
+    @close="showEditBox = false"/>
+  </teleport>
+
+
 	<div id ="reply-container">
 
     <p>

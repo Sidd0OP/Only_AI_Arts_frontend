@@ -140,7 +140,7 @@
 	#container{
 		position: fixed;
 		left: 0;
-		top: 60px;
+		bottom: 0;
 		width: 100vw;
 		height: 60vh;
 		z-index: 200;
@@ -166,7 +166,7 @@
 	  border-radius: 15px;
 	  font-size: 32px;
 	  color: white;
-	  background-color: var(--tertiary-color);
+	  background-color: var(--secondary-color);
 	  color: white;
 	  border: none;
 	  font-family: 'Inter', sans-serif;
@@ -250,7 +250,7 @@
 	}
 
 	.slide-up-enter-from {
-		transform: translateY(-100%);
+		transform: translateY(100%);
 		opacity: 0;
 	}
 

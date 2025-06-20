@@ -1,30 +1,24 @@
 <template>
-  <Navbar @login-status-checked="onNavbarReady"/>
+  <div id="main-wrapper">
+    <EditBox
+      :prevText="bio"
+      :type="'bio'"
+      :visible="showEditBox"
+      :id="userId"
+      @close="showEditBox = false"
+    />
 
- 
-    
-    <EditBox 
-    :prevText = "this.bio" 
-    :type = "'bio'" 
-    :visible="showEditBox" 
-    :id = "this.userId" 
-    @close="showEditBox = false"/>
-
-
-  
-    
-  <div class="profile">
-    
 
     <div id = "user-data-container">
 
       <div id = "profile-image-container">
-        <img id = "profile-image" :src= "profileImage" alt="Profile Photo" @click = "changeProfileImage"/>
+        <img id = "profile-image" :src= "profileImage" :class="{ uploading: isUploading }" alt="Profile Photo" @click = "changeProfileImage"/>
         <img v-if = "editable" id = "edit-icon" src="@/assets/edit-pencil.svg" alt="Edit" @click = "changeProfileImage">
         <input ref="fileInput" type="file" @change="handleFileUpload" accept=".jpg,.png,.gif" hidden />
       </div>
 
       <div id = "meta-data-container">
+
         <div id = "name-data-container">
           <p id = "name">{{ name }}</p>
           <!-- <div id="icon-container">
@@ -35,6 +29,7 @@
         <p id = "joined">{{ formattedCreated }}</p>
 
         <div id = "name-data-container">
+
           <div id="bio-container">
             <p id = "bio">{{ bio }}</p>
           </div>
@@ -42,19 +37,24 @@
           <div v-if = "editable" id="icon-container" @click = "editBio">
             <img id = "edit-icon-small" src="@/assets/edit-pencil.svg" alt="Edit">
           </div>  
+
         </div>
         
       </div>
-      </div>
     </div>
-    <div id = "user-post-container">
-        <div id = "top-bar">
-          <p :class="{ active: selectedTab === 'Post' }" @click="selectedTab = 'Post'">Post</p>
-          <p :class="{ active: selectedTab === 'Comment' }" @click="selectedTab = 'Comment'">Comment</p>
-          <p :class="{ active: selectedTab === 'Reply' }" @click="selectedTab = 'Reply'">Reply</p>
-        </div>
-        <div id = "container">
 
+
+    <Navbar @login-status-checked="onNavbarReady" />
+
+    <main id="content-wrapper">
+      <section id="tabs-bar">
+        <button :class="{ active: selectedTab === 'Post' }" @click="selectedTab = 'Post'">Posts</button>
+        <button :class="{ active: selectedTab === 'Comment' }" @click="selectedTab = 'Comment'">Comments</button>
+        <button :class="{ active: selectedTab === 'Reply' }" @click="selectedTab = 'Reply'">Replies</button>
+      </section>
+
+      <section id="tab-content">
+        
           <PostSnippet 
           v-if="selectedTab === 'Post'" 
           v-for= "post in posts" 
@@ -73,11 +73,9 @@
           :reply="reply" 
           :listOfEditableReplies = "listOfEditableReplies" />
 
-        </div>
-
-        
-        
-    </div>
+      </section>
+    </main>
+  </div>
 </template>
 
 
@@ -115,7 +113,8 @@ export default {
       joined: "",
       url: "",
       selectedFile: null,
-      showEditBox: false
+      showEditBox: false,
+      isUploading: false,
 
     }
     
@@ -176,17 +175,22 @@ export default {
 
         const formData = new FormData();
         formData.append('file', this.selectedFile);
+        this.isUploading = true;
 
         axiosObj.post('/upload/profile', formData)
         .then(()=>{
             console.log("uploaded")
+            this.fetchPost();
           }
         )
         .catch(err => {
           console.error(err);
           this.error = err;
 
-        });
+        })
+        .finally(() => {
+          this.isUploading = false;
+        });;
 
         } else {
           this.error = 'Unsupported file type';
@@ -230,190 +234,184 @@ export default {
 </script>
 
 <style scoped>
-  .profile{
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding-top: 100px;
-    z-index: 20;
-    gap: 30px;
-  }
 
- 
-
-  
-
-  #user-data-container{
-    position: relative;
-    width: 100%;
-    height: 40%;
-    min-height: 250px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: start;
-    gap: 30px;
-    padding-left: 50px;
-    
-  }
-
-
-  #profile-image-container{
-    
-    position: fixed;
-    width: 200px;
-    height: 200px;
-    border-radius: 100%;
-    background-color: gray;
-    z-index: 22;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    object-fit: cover;
-    
-  }
-
-  #profile-image {
-    width: 100%;
-    height: 100%;
-  }
-
-  #edit-icon{
-    position: absolute;
-    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  #profile-image-container:hover #edit-icon {
-    opacity: 1;
-  }
-
-
-  #bio-container{
-    
-    background-color: var(--tertiary-color);
-    border-radius: 15px;
-    padding: 20px;
-  }
-
-  #edit-icon-small{
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    z-index: 1000;
-  }
-
-
-  #meta-data-container{
-    position: fixed;
-    width: 70%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    padding-left: 250px;
-    
-  }
-
- #icon-container{
-
-  width: 60px;
-  height: 60px;
+  #main-wrapper {
+  width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
+}
+
+#content-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+#tabs-bar {
+  position: sticky;
+  top: 68px;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  display: flex;
   justify-content: center;
-  background-color: var(--bg-color);
-  border-radius: 100%;
-  z-index: 500;
- }
+  gap: 20%;
+  padding: 20px 0;
+  border-top: 1px solid #4d4d4d;
+  z-index: 150;
+  width: 100%;
+}
 
- #icon-container:hover{
-  background-color: var(--tertiary-color);
- }
+#tabs-bar button {
+  background: none;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-color);
+  cursor: pointer;
+  padding-bottom: 6px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
 
-  #user-post-container{
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 30;
-  }
+#tabs-bar button:hover {
+  color: white;
+}
 
-  #top-bar{
-    position: sticky;
-    top: 50px;
-    width: 100%;
-    background-color: var(--bg-color);
-    border-color: #4D4D4D;
-    border-width: 1px 0px 0px 0px; 
-    border-style: solid;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 200px;
-    padding-right: 200px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    color: var(--text-color);
-    z-index: 150;
-  }
+#tabs-bar button.active {
+  color: white;
+  border-bottom: 2px solid white;
+}
 
-  #top-bar p {
-    
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 24px;
-    cursor: pointer;
-  }
+#tab-content {
+  width: 60vw;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 80px;
+}
 
-  #top-bar p.active {
-    color: white;
-  }
 
-  #name-data-container{
-    
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: start;
-    gap: 20px;
-  }
+#user-data-container{
+
+  margin-top: 60px;
+  width: 100%;
+  padding: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  gap: 30px;
+  z-index: 100;
+}
+
+#profile-image-container {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  margin-left: 30px;
+  width: 250px;
+  height: 250px;
+  border-radius: 10%;
+  overflow: hidden;
+  z-index: 100;
+  border: 1px solid rgba(107, 107, 107, 0.3);
+}
+
+#profile-image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#meta-data-container{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 10px;
+  padding-left: 30px;
+  width: 80%;
+}
+
+
+#name-data-container{
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: row;
+  background-color: var(--secondary-color);
+  padding: 5px;
+  border-radius: 15px;
+  gap: 10px;
+}
+
+
+#name{
+
+  font-family: 'Inter', sans-serif;
+  font-size: 72px;
+  font-weight: 800;
+  color: white;
+}
+
+#joined{
+
+  font-family: 'Inter', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  color: white; 
+}
+
+
+#bio{
+
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--text-color);
+}
+
+#icon-container{
+
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
+#edit-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#profile-image-container:hover #edit-icon {
+  opacity: 1;
+}
+
+#profile-image.uploading {
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
 
   
-
-  #meta-data-container p{
-
-    color: white;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 32px;
-
-  }
-
-  #container
-  {
-    padding-top: 60px;
-    width: 60vw;
-    max-width: 700px;
-    text-align: center;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-
-  }
 </style>
 

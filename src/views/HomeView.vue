@@ -1,5 +1,5 @@
 <template>
-
+  <div>
   <Navbar @login-status-checked="onNavbarReady" />
   <main>
     <div id = "container">
@@ -29,7 +29,7 @@
   </main>
 
   
-
+</div>
 </template>
 
 

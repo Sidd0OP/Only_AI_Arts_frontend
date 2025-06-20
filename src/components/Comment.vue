@@ -5,7 +5,25 @@
   :commentId = "this.commentId" 
   @close="showCommentBox = false"/>
 
-  <EditBox :prevText = "body" :type = "'comment'" :visible="showEditBox" :id = "this.commentId" @close="showEditBox = false"/>
+  <teleport to ="body">
+    <EditBox 
+    :prevText = "body" 
+    :type = "'comment'" 
+    :visible="showEditBox" 
+    :id = "this.commentId"
+    @close="showEditBox = false"/>
+  </teleport>
+
+
+    <!-- <EditBox
+      :prevText="body"
+      type="post"
+      :visible="showEditBox"
+      :id="postId"
+      @close="showEditBox = false"
+    /> -->
+  
+  
 	<div id ="comment-container">
 
     <div id = "body-container">

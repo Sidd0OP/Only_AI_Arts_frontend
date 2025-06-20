@@ -1,4 +1,5 @@
 <template>
+  <div>
   <Navbar @login-status-checked="onNavbarReady"/>
   
   
@@ -43,7 +44,7 @@
 
     </div>
   </main>
-  
+  </div>
 </template>
 
 
@@ -83,9 +84,9 @@ export default {
 
 
 
-  // mounted() {
-    
-  // },
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  },
 
   methods: {
 

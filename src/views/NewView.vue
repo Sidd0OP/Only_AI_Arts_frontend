@@ -1,4 +1,6 @@
 <template>
+  <div>
+
   <Navbar @login-status-checked="onNavbarReady"/>
   
     <div id="create-page">
@@ -7,7 +9,7 @@
           <li>✅ Supported file formats: <strong>.png</strong>, <strong>.gif</strong>, <strong>.jpeg</strong></li>
           <li>📏 Maximum file size: <strong>10 MB</strong></li>
           <li>🖼️ Recommended resolution: <strong>at least 800x600</strong> for best quality</li>
-        </div>
+      </div>
       <div class="create-card">
         <form id = "form-container" @submit.prevent="handleSubmission">
           <input v-model="title" type="text" placeholder="Title" required />
@@ -45,7 +47,8 @@
         </form>
       </div>
     </div>
-  
+
+  </div>
 </template>
 
 <script>
@@ -242,7 +245,7 @@ export default {
   border: 1px solid rgba(107, 107, 107, 0.3);
   padding: 20px;
   gap: 10px;
-
+  z-index: 100;
 
 } 
 

@@ -3,25 +3,18 @@
   <CommentPostBox :visible="showCommentBox" 
   :postId = "this.postId" 
   :commentId = "this.commentId" 
-  @close="showCommentBox = false"/>
+  @close="this.showCommentBox = false"
+  @updated="posted()"/>
 
   <teleport to ="body">
     <EditBox 
     :prevText = "body" 
     :type = "'comment'" 
     :visible="showEditBox" 
-    :id = "this.commentId"
-    @close="showEditBox = false"/>
+    :id = "this.commentId" 
+    @close="this.showEditBox = false"
+    @updated="update()"/>
   </teleport>
-
-
-    <!-- <EditBox
-      :prevText="body"
-      type="post"
-      :visible="showEditBox"
-      :id="postId"
-      @close="showEditBox = false"
-    /> -->
   
   
 	<div id ="comment-container">
@@ -66,7 +59,7 @@
         </div>
       </div>
     </div>
-    <Reply v-for="reply in localReplies" :reply="reply" :listOfEditableReplies = "listOfEditableReplies" />
+    <Reply v-for="reply in localReplies" :reply="reply" :listOfEditableReplies = "listOfEditableReplies" @updated="update()"/>
 
   </div>
 </template>
@@ -75,6 +68,7 @@
   import Reply from './Reply.vue'
   import CommentPostBox from './CommentPostBox.vue'
   import EditBox from './EditBox.vue'
+  import axiosObj from '../axios-config';
 
 	export default {
 
@@ -120,11 +114,24 @@
       commentEditable: false,
       showCommentBox: false,
       showEditBox: false,
+      userLoggedIn: false
     }
   },
 
+
+  emits: ['updated'],
+
+
+
   created() {
     this.localReplies = [...this.replies];
+  },
+
+
+    watch: {
+    replies(newReplies) {
+      this.localReplies = [...newReplies];
+    }
   },
 
   computed: {
@@ -153,6 +160,46 @@
   },
 
   methods: {
+    async checkLoginStatus() {
+        try {
+
+          
+          const response = await axiosObj.get('/user');
+          
+          if(response.data.userId === null){
+
+            this.userLoggedIn = false;
+
+            
+
+          }else{
+
+            this.userLoggedIn = true;
+
+            
+          }
+
+        } catch (error) {
+
+          this.userLoggedIn = false;
+
+          console.log(error)
+        }
+    },
+
+    async posted(){
+      this.showCommentBox = false
+      this.$emit('updated');
+
+
+    },
+
+    update(){
+
+      this.$emit('updated');
+      this.showEditBox = false;
+
+    },
 
     formatDate(isoString) {
       if (!isoString) return '-'
@@ -167,7 +214,14 @@
       } 
     }, 
 
-    postReply(){
+    async postReply(){
+
+      await this.checkLoginStatus();
+      
+      if(!this.userLoggedIn){
+        this.$router.push(`/login`);
+        return;
+      }
 
       this.showCommentBox = true;
 

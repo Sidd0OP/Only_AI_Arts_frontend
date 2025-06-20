@@ -119,6 +119,8 @@ const handleLogin = async () => {
   
 }
 
+
+
 const googleSignUp = () => {
   googleSdkLoaded((google) => {
     const client = google.accounts.oauth2.initCodeClient({
@@ -213,6 +215,13 @@ const goToHome = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#logo {
+
+  width: 100px;
+  height: 100px;
+  
 }
 
 .login-card {

@@ -1,8 +1,10 @@
 <template>
   <div id="post-result">
-    <div id="image-container" class ="shimmer" @click="goToPost">
+    <div id="image-container" @click="goToPost">
+      <div class="shimmer"></div>
       <img :src="url" loading="lazy" />
     </div>
+
 
     <div id="heading">
       <p @click="goToPost">{{ title }}</p>
@@ -57,12 +59,12 @@ export default {
   flex-direction: row;
   justify-content: start;
   align-items: end;
-  background-color: var(--bg-color);
   padding-left: 10px;
   padding-right: 10px;
-  gap: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  gap: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+
 
 }
 
@@ -76,27 +78,36 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 5px;
+  margin: 0;
+  padding: 0;
+  display: block;
+
 }
 
 #image-container img{
-  width: 101%;
-  heading: 101%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  z-index: 10;
+  display: block; 
+  margin: 0;
+  padding: 0;
+  z-index: 2;
 }
 
 #heading{
-  background-color: var(--bg-color);
-  min-height: 50px;
-  border-radius: 10px;
-  padding-left: 10px;
-  padding-bottom: 4px;
+  
+  min-height: 40px;
+  padding-left: 0px;
   width: 80%;
   display: flex;
   flex-direction: row;
-  align-items: end;
+  align-items: center;
   justify-content: start;
+  z-index: 500;
+  border-color: #4D4D4D;
+  border-width: 0px 0px 1px 0px; 
+  border-style: solid;
 }
 
 #heading p{
@@ -104,7 +115,8 @@ export default {
   color: white;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 
@@ -132,12 +144,11 @@ export default {
   align-items: center;
   padding: 10px;
   border-radius: 10px;
-  background-color: var(--secondary-color);
 }
 
 #search-icon{
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
 }
 
 

@@ -6,7 +6,7 @@
 
 			<div id="button-container">
 				<button id = "cancel" @click="$emit('close')" :disabled="loading">
-					<img src="@/assets/xmark.svg" id="cancel-icon" alt="Cancel" @click="postReply">
+					<img src="@/assets/xmark.svg" id="cancel-icon" alt="Cancel">
 				</button>
 				<button id = "submit" @click = "sendData" :disabled="loading">
 					<p v-if="!loading">Send</p>
@@ -47,7 +47,8 @@
 
 		  },
 
-		emits: ['close'],
+		emits: ['close' , 'updated'],
+		
 
 		data() {
 		    return {
@@ -89,6 +90,7 @@
 
 		        this.body = '';
 		        this.$emit('close'); 
+		        this.$emit('updated'); 
 
 		      } catch (err) {
 
@@ -111,7 +113,7 @@
 	#container{
 		position: fixed;
 		left: 0;
-		top: 60px;
+		bottom: 0;
 		width: 100vw;
 		height: 60vh;
 		z-index: 200;
@@ -225,7 +227,7 @@
 	}
 
 	.slide-up-enter-from {
-	transform: translateY(-100%);
+	transform: translateY(100%);
 	opacity: 0;
 	}
 	.slide-up-enter-active {

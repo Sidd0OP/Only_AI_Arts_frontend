@@ -18,9 +18,23 @@
         </div>
       </div>
 
-      <div v-if="isSearchActive" id = "search-result-container" >
-        <SearchResult  v-for= "result in searchResults" :postId = result.postId :title = result.title :imageUrl = result.imageUrl />
+      <teleport to="body">
+      <div
+        v-if="isSearchActive"
+        id="search-result-container"
+      >
+        <div v-if="searchResults.length === 0" id = "icon-container">
+          <img src="@/assets/lamp.svg" id="lamp-icon" alt="Empty">
+        </div>
+        <SearchResult
+          v-for="result in searchResults"
+          :key="result.postId"
+          :postId="result.postId"
+          :title="result.title"
+          :imageUrl="result.imageUrl"
+        />
       </div>
+    </teleport>
 
 
       
@@ -168,12 +182,15 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #000000;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
   padding: 0.5rem;
   border-color: #4D4D4D;
-  border-width: 0px 0px 2px 0px; 
+  border-width: 0px 0px 1px 0px; 
   border-style: solid;
   box-sizing: border-box;
+  padding-left: 20px;
   z-index: 1000;
 
 }
@@ -190,7 +207,8 @@
 
 #logo {
 
-  scale: 0.7;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
 }
 
@@ -199,6 +217,7 @@
   height: 45px;
   border-radius: 100px;
   background-color: var(--bg-color);
+  border: 1px solid #4D4D4D;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -266,21 +285,22 @@
 
 
 #login-button:hover{
-   background-color: var(--secondary-color);
+   background-color: var(--bg-color);
 }
 
 #register-button{
 
-  background-color: var(--bg-color);
+  background-color: white;
   color: white;
   border-radius: 10px;
-  border: 2px solid var(--tertiary-color);
+  border: 2px solid var(--bg-color);
   width: 125px;
   height: 45px;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
   font-size: 15px;
+  color: black;
   transition: background-color 0.2s ease;
   display: flex;
   flex-direction: row;
@@ -296,9 +316,6 @@
   height: 20px;
 }
 
-#register-button:hover{
-   background-color: var(--tertiary-color);
-}
 
 #search-bar-container{
 
@@ -306,7 +323,7 @@
   width: 50%;
   height: 45px;
   overflow: hidden;
-  background-color: var(--tertiary-color);
+  background-color: var(--bg-color);
   border-radius: 10px;
   border: 1px solid #222222;
   left: 50%;
@@ -320,10 +337,12 @@
 
 #search-result-container{
   position: fixed;
-  top: 60px;
+  top: 80px;
   width: 50%;
   overflow: hidden;
-  background-color: var(--bg-color);
+  background-color: rgba(0, 0, 0, 0.5); 
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 10px;
   border: 1px solid #222222;
   left: 50%;
@@ -332,9 +351,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  gap: 5px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  gap: 25px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  z-index: 1001;
 }
 
 #icon-container{
@@ -348,8 +368,13 @@
 }
 
 #search-icon{
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
+}
+
+#lamp-icon{
+  height: 45px;
+  width: 45px;
 }
 
 #search-box{

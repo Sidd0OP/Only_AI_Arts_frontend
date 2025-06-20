@@ -91,7 +91,7 @@ export default {
   }
 
 
-  .shimmer {
+.shimmer {
   position: relative;
   overflow: hidden;
   background: #e0e0e0;

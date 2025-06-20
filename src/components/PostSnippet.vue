@@ -1,12 +1,5 @@
 <template>
-  <CommentPostBox :visible="showCommentBox" :postId = "this.postId" @close="showCommentBox = false"/>
-
-  <!-- <EditBox 
-  :prevText = "body" 
-  :type = "'post'" 
-  :visible="showEditBox" 
-  :id = "this.postId" 
-  @close="showEditBox = false"/> -->
+  <CommentPostBox :visible="showCommentBox" :postId = "this.postId" @close="showCommentBox = false" @updated="posted()"/>
 
   <teleport to ="body">
     <EditBox
@@ -14,7 +7,8 @@
       :type="'post'"
       :visible="showEditBox"
       :id="postId"
-      @close="showEditBox = false"
+      @close="this.showEditBox = false"
+      @updated="refresh()"
     />
   </teleport>
 
@@ -104,13 +98,17 @@ export default {
   } ,
 
 
+  emits: ['updated'],
+
+
   data() {
     return {
       postId: null,
       userId: null,
       showCommentBox: false,
       showEditBox: false,
-      hearted: false
+      hearted: false,
+      userLoggedIn: false
     }
   },
 
@@ -153,6 +151,44 @@ export default {
   },
 
   methods: {
+
+    async posted(){
+      this.showCommentBox = false
+      this.$emit('updated');
+
+
+    },
+
+    async refresh(){
+
+      console.log("refresh");
+      this.$emit('updated');
+
+    },
+
+    async checkLoginStatus() {
+        try {
+
+          
+          const response = await axiosObj.get('/user');
+          
+          if(response.data.userId === null){
+
+            this.userLoggedIn = false;
+
+            console.log(false)
+
+          }else{
+            this.userLoggedIn = true;
+          }
+
+        } catch (error) {
+
+          this.userLoggedIn = false;
+        }
+    },
+
+
     formatDate(isoString) {
       if (!isoString) return '-'
       const d = new Date(isoString)
@@ -173,17 +209,44 @@ export default {
       } 
     },
 
-    postComment() {
+    async postComment() {
+      await this.checkLoginStatus();
+      
+      if(!this.userLoggedIn){
+        this.$router.push(`/login`);
+        return;
+      }
+
+
       this.showCommentBox = true;
     },
 
-    editComment() {
+    async editComment() {
+
+      await this.checkLoginStatus();
+      
+      if(!this.userLoggedIn){
+        this.$router.push(`/login`);
+        return;
+      }
+
+
       this.showEditBox = true;
     },
 
     async heartComment() {
+
+      await this.checkLoginStatus();
+
+      if(!this.userLoggedIn){
+        this.$router.push(`/login`);
+        return;
+      }
+
       try {
         
+
+
         console.log(this.postId)
         const response = await axiosObj.post(`/heart/${this.postId}`);
         this.hearted = true;

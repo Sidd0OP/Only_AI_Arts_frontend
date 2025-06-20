@@ -121,6 +121,10 @@ export default {
   },
 
 
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  },
+
 
   computed: {
     
@@ -243,6 +247,7 @@ export default {
 }
 
 #content-wrapper {
+
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -250,11 +255,12 @@ export default {
   min-height: 100vh;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  padding-bottom: 20px;
 }
 
 #tabs-bar {
   position: sticky;
-  top: 68px;
+  top: 60px;
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
@@ -303,6 +309,7 @@ export default {
 
   margin-top: 60px;
   width: 100%;
+  min-height: 100px;
   padding: 30px;
   display: flex;
   flex-direction: row;
@@ -348,7 +355,7 @@ export default {
   justify-content: center;
   flex-direction: row;
   background-color: var(--secondary-color);
-  padding: 5px;
+  padding: 10px;
   border-radius: 15px;
   gap: 10px;
 }

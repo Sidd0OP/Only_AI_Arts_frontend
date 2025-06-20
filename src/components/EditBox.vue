@@ -56,7 +56,7 @@
 
 		  },
 
-		emits: ['close'],
+		emits: ['close' , 'updated'],
 
 		data() {
 		    return {
@@ -123,6 +123,7 @@
 		        }
 
 		        this.body = '';
+		        this.$emit('updated');
 		        this.$emit('close'); 
 
 		      } catch (err) {

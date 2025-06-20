@@ -8,7 +8,7 @@
     <div id = "container">
       
       <PostSnippetSkeleton v-if = "show"/>
-      <PostSnippet v-if="post" :post = post :editable = this.postEditable />
+      <PostSnippet v-if="post" :post = post :editable = this.postEditable @updated="refreshPostData"/>
       <div id="gap-container"></div>
 
       <div v-if = "comments" id = comment-reply-container>
@@ -16,7 +16,8 @@
           :comments="comment.comment"
           :replies="comment.replies"
           :listOfEditableComments= "listOfEditableComments"
-          :listOfEditableReplies= "listOfEditableReplies"/>
+          :listOfEditableReplies= "listOfEditableReplies"
+          @updated="refreshPostData"/>
       </div>
       
       <div id="gap-container"></div>
@@ -77,7 +78,8 @@ export default {
       postEditable: false,
       listOfEditableComments: [],
       listOfEditableReplies: [],
-      show: true
+      show: true,
+
     };
 
   },
@@ -89,6 +91,12 @@ export default {
   },
 
   methods: {
+
+    refreshPostData() {
+      console.log("refresh post view");
+      const postId = this.$route.params.id;
+      this.fetchPost(postId);
+    },
 
     onNavbarReady()
     {
@@ -128,6 +136,7 @@ export default {
       this.post = response.data.post
       this.similarPosts = response.data.similarPosts
       this.comments = response.data.discussion
+      console.log(this.comments)
       this.postEditable = response.data.postEditableByUser
       this.listOfEditableComments = response.data.listOfEditableComments;
       this.listOfEditableReplies = response.data.listOfEditableReplies;

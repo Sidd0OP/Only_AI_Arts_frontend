@@ -238,6 +238,13 @@ const login = () => {
   align-items: center;
 }
 
+#logo {
+
+  width: 100px;
+  height: 100px;
+  
+}
+
 .register-card {
   background: #17100E;
   border-radius: 20px;

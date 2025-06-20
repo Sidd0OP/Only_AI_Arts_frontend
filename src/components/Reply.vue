@@ -6,7 +6,8 @@
     :type = "'reply'" 
     :visible="showEditBox" 
     :id = "this.replyId"
-    @close="showEditBox = false"/>
+    @close="this.showEditBox = false"
+    @updated="update()"/>
   </teleport>
 
 
@@ -84,6 +85,8 @@
     
   },
 
+  emits: ['updated'],
+
   data() {
     return {
 
@@ -121,6 +124,15 @@
   },
 
   methods: {
+
+    update(){
+
+      this.$emit('updated');
+      this.showEditBox = false;
+
+    },
+
+    
     formatDate(isoString) {
       if (!isoString) return '-'
       const d = new Date(isoString)

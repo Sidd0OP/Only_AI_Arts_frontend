@@ -72,6 +72,11 @@ export default {
     };
   },
 
+
+  mounted() {
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+  },
+
   methods: {
     handleFileUpload(event) {
       const file = event.target.files[0];

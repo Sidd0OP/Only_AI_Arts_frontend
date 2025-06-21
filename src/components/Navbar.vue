@@ -186,11 +186,8 @@
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
   padding: 0.5rem;
-  border-color: #4D4D4D;
-  border-width: 0px 0px 1px 0px; 
-  border-style: solid;
   box-sizing: border-box;
-  padding-left: 20px;
+  padding-left: 30px;
   z-index: 1000;
 
 }
@@ -320,7 +317,7 @@
 #search-bar-container{
 
   position: fixed;
-  width: 50%;
+  width: 40%;
   height: 45px;
   overflow: hidden;
   background-color: var(--bg-color);
@@ -338,7 +335,7 @@
 #search-result-container{
   position: fixed;
   top: 80px;
-  width: 50%;
+  width: 40%;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.5); 
   backdrop-filter: blur(20px);

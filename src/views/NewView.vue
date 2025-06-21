@@ -2,7 +2,7 @@
   <div>
 
   <Navbar @login-status-checked="onNavbarReady"/>
-  
+  <SidePanel />
     <div id="create-page">
       <div id = "hint-text-container">
           <p  id = "heading">Important things to follow</p>
@@ -54,11 +54,13 @@
 <script>
 import axiosObj from '../axios-config';
 import Navbar from '../components/Navbar.vue'
+import SidePanel from '../components/SidePanel.vue'
 
 
 export default {
   components: {
     Navbar,
+    SidePanel
   },
 
   data() {

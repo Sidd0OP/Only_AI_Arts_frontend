@@ -1,6 +1,7 @@
 <template>
   <div>
   <Navbar @login-status-checked="onNavbarReady" />
+  <SidePanel />
   <main>
     <div id = "container">
       <div id="heading-container">
@@ -40,7 +41,7 @@ import PostSnippet from '../components/PostSnippet.vue'
 import PostSnippetSkeleton from '../components/PostSnippetSkeleton.vue'
 import Footer from '../components/Footer.vue'
 import CreatePost from '../components/CreatePost.vue'
-
+import SidePanel from '../components/SidePanel.vue'
 
 export default {
   components: {
@@ -48,7 +49,8 @@ export default {
     PostSnippet,
     PostSnippetSkeleton,
     Footer,
-    CreatePost
+    CreatePost,
+    SidePanel
   },
 
 

@@ -60,10 +60,20 @@
                   <small>Posted</small>
                   <div>{{ formattedCreated }}</div>
               </div>
+              <div id = "time-wrapper">
+                  <small>At</small>
+                  <div id = "time">{{ timePosted }}</div>
+              </div>
+
               <div v-if="post.edited">
                   <small>Edited</small>
                   <div>{{ formattedEdited }}</div>
               </div>
+              <div id = "time-wrapper" v-if="post.edited">
+                  <small>At</small>
+                  <div id = "time">{{ timePosted }}</div>
+              </div>
+
           </div>
         </div>
 
@@ -147,7 +157,15 @@ export default {
 
     formattedEdited() {
       return this.formatDate(this.post.edited)
+    },
+
+    timePosted() {
+      return this.formatTime(this.post.created)
+    },
+    timeEdited() {
+      return this.formatTime(this.post.edited)
     }
+
   },
 
   methods: {
@@ -193,8 +211,22 @@ export default {
       if (!isoString) return '-'
       const d = new Date(isoString)
       const options = { year: 'numeric', month: 'short', day: 'numeric' }
+
+
       return d.toLocaleDateString(undefined, options)
     },
+
+    formatTime(isoString) {
+    if (!isoString) return '-';
+    const d = new Date(isoString);
+    return d.toLocaleTimeString(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
+  }
+
+    ,
 
     goToProfile() {
       if (this.userId) {
@@ -435,6 +467,23 @@ export default {
       font-weight: bold;
       color: #fff; 
   }
+
+  #time-wrapper{
+    display: start;
+    flex-direction: column;
+    justify-content: end;
+    align-items: start;
+    height: 30px;
+    
+  }
+
+  #time{
+    font-size: 0.5rem;
+    opacity: 1.0;
+
+  }
+
+
 
 
   #image-container{

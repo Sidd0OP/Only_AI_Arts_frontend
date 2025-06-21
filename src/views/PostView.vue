@@ -1,7 +1,7 @@
 <template>
   <div>
   <Navbar @login-status-checked="onNavbarReady"/>
-  
+  <SidePanel />
   
   <main>
     <CreatePost />
@@ -56,6 +56,7 @@ import Comment from '../components/Comment.vue'
 import PostSnippet from '../components/PostSnippet.vue'
 import PostSnippetSkeleton from '../components/PostSnippetSkeleton.vue'
 import CreatePost from '../components/CreatePost.vue'
+import SidePanel from '../components/SidePanel.vue'
 
 export default {
   components: {
@@ -63,7 +64,8 @@ export default {
     PostSnippet,
     Comment,
     PostSnippetSkeleton,
-    CreatePost
+    CreatePost,
+    SidePanel
   },
 
   data() {
@@ -136,7 +138,6 @@ export default {
       this.post = response.data.post
       this.similarPosts = response.data.similarPosts
       this.comments = response.data.discussion
-      console.log(this.comments)
       this.postEditable = response.data.postEditableByUser
       this.listOfEditableComments = response.data.listOfEditableComments;
       this.listOfEditableReplies = response.data.listOfEditableReplies;

@@ -17,6 +17,9 @@
 
 
     <div id="image-container" :style="{ backgroundImage: 'url(' + url + ')' }" @click="goToPost">
+      <div id = "model-icon">
+        
+      </div>
       <div class="image-overlay"></div>
       <img :src="url" loading="lazy"/>
     </div>
@@ -47,6 +50,9 @@
 
         <div id="right-container">
           <button v-if = "editable" id = "edit-button" @click = "editComment">Edit</button>
+          <div v-if = "rated" id = "icon-container">
+            <img src="@/assets/waist.svg" id="comments-icon" alt="Rated">
+          </div>
           <div id = "icon-container">
             <img v-if = "!hearted" src ="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart" @click="heartComment">
             <img v-if = "hearted" src ="@/assets/heart-solid.svg" id="heart-icon" alt="Heart">
@@ -118,7 +124,8 @@ export default {
       showCommentBox: false,
       showEditBox: false,
       hearted: false,
-      userLoggedIn: false
+      userLoggedIn: false,
+      rated: false,
     }
   },
 
@@ -297,6 +304,7 @@ export default {
 
     this.postId = this.post.postId
     this.userId = this.post.userId
+    this.rated = this.post.rated
   }
 
 }
@@ -401,6 +409,7 @@ export default {
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+    
   }
 
   #profile-image img {
@@ -483,9 +492,6 @@ export default {
 
   }
 
-
-
-
   #image-container{
     position: relative;
     display: flex;
@@ -506,7 +512,19 @@ export default {
   inset: 0;
   backdrop-filter: blur(30px);
   background-color: rgba(0, 0, 0, 0.5);
-  
+}
+
+#model-icon{
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 10px;
+  margin-left: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border-radius: 100%;
+  z-index: 100;
 }
 
 #image-container img {

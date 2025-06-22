@@ -89,7 +89,6 @@ export default {
         const response = await axiosObj.get('/home');
 
         this.posts = response.data.postSnippets;
-
         this.show = false;
 
       } catch (error) {

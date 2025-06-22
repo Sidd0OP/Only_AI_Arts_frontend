@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id = "main-wrapper">
 
   <Navbar @login-status-checked="onNavbarReady"/>
   <SidePanel />
@@ -35,11 +35,49 @@
           
           <input id = "body-container" v-model="body" type="text" placeholder="Write something about this image" required />
 
+          <div id = "model-selection-container">
+            <p>Human made or AI</p>
+            <div id = "model-grid">
+                <div id="icon-container" @click="model = 'user'">
+                  <img src="@/assets/user.svg" alt="User" :class="{ selected: model === 'user' }" />
+                </div>
+
+                <div id="icon-container" @click="model = 'copilot'">
+                  <img src="/copilot.png" alt="Copilot" :class="{ selected: model === 'copilot' }" />
+                </div>
+
+                <div id="icon-container" @click="model = 'gemini'">
+                  <img src="/gemini.png" alt="Gemini" :class="{ selected: model === 'gemini' }" />
+                </div>
+
+                <div id="icon-container" @click="model = 'chatgpt'">
+                  <img src="/chatGpt.png" alt="ChatGPT" :class="{ selected: model === 'chatgpt' }" />
+                </div>
+
+                <div id="icon-container" @click="model = 'grock'">
+                  <img src="/grock.png" alt="Grock" :class="{ selected: model === 'grock' }" />
+                </div>
+
+                <div id="icon-container" @click="model = 'midjourney'">
+                  <img src="/midjorney.png" alt="MidJourney" :class="{ selected: model === 'midjourney' }" />
+                </div>
+            </div>
+          </div>
+
+          <input v-model="tags" id = "tag-text-container" type="text" name="tag-input" placeholder="#Ai #Better" required>
+
           <div id = "post-button-container">
+
               <button id = "post-button" type="submit" :disabled="loading">
                 <p v-if="!loading">Post</p>
                 <div v-if="loading" id="loading"></div>
               </button>
+
+              <label class="Adult Content">
+                <input v-model="rated" type="checkbox" name="rated">
+                Explicit Content
+              </label>
+
           </div>
           
 
@@ -71,6 +109,9 @@ export default {
       selectedFile: null,
       error: null,
       loading: false,
+      tags: '',         
+      rated: false,
+      model: '',
     };
   },
 
@@ -148,7 +189,9 @@ export default {
       formData.append('title', this.title);
       formData.append('body', this.body);
       formData.append('file', this.selectedFile);
-
+      formData.append('tags', this.tags); 
+      formData.append('rated', this.rated); 
+      formData.append('model', this.model);
 
 
 
@@ -221,13 +264,14 @@ export default {
 
 <style scoped>
 
-
+#main-wrapper{
+  width: 100%;
+}
 
 #create-page {
  
 
-  width: 100vw;
-  
+  width: 100%;
   z-index: 21;
   display: flex;
   flex-direction: column;
@@ -242,7 +286,7 @@ export default {
 
 #hint-text-container{
 
-  width: 80%;
+  width: 95%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -274,7 +318,7 @@ export default {
 
 .create-card {
   background-color: var(--bg-color);
-  width: 80%;
+  width: 95%;
   border-radius: 15px;
   border: 1px solid rgba(107, 107, 107, 0.3);
   z-index: 10;
@@ -285,6 +329,10 @@ export default {
 
 }
 
+.selected {
+  border: 2px solid #357bd8;
+  border-radius: 12px;
+}
 
 
 .create-card form {
@@ -305,6 +353,65 @@ export default {
   font-size: 16px;
 
 }
+
+#tag-text-container{
+  position: relative;
+  background-color: var(--bg-color);
+  width: 95%;
+  border-radius: 15px;
+  border: 1px solid rgba(107, 107, 107, 0.3);
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+#model-selection-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#model-grid{
+  background-color: var(--bg-color);
+  width: 95%;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  justify-content: center;
+  gap: 15px;
+  padding: 20px;
+
+  
+}
+
+#icon-container{
+    background: #ffffff;
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(199, 199, 199, 1) 80%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.4s ease;
+  }
+
+  #icon-container:hover{
+
+    border-radius: 15px;
+    background: #ffffff;
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(199, 199, 199, 1) 53%);
+
+  }
+
+  #icon-container img{
+
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+
+  }
 
 .create-card input[type="text"]
 {
@@ -353,7 +460,8 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: start;
+  align-items: center;
+  gap: 20px;
   padding: 10px;
 }
 

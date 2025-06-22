@@ -67,7 +67,7 @@
 	}
 
 	#icon-container{
-		background-color: var(--secondary-color);
+		background-color: var(--bg-color);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -87,7 +87,7 @@
 
 		width: 32px;
 		height: 32px;
-		opacity: 0.2;
+		opacity: 0.4;
 		cursor: pointer;
 
 	}

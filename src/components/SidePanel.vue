@@ -10,9 +10,7 @@
       	<div id = "icon-container">
 	        <img src="@/assets/view-grid.svg" id="grid-icon" alt="Gallery" @click="goGallery">
       	</div>
-      	<div id = "icon-container">
-	        <img src="@/assets/home-simple.svg" id="home-icon" alt="Home" @click="goHome">
-      	</div>
+      	
       	
 
 	</div>

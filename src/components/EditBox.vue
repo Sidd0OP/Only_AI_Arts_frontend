@@ -150,7 +150,9 @@
 		align-items: center;
 		justify-content: center;
 		gap: 50px;
-		background-color: var(--bg-color);
+		background-color: rgba(0, 0, 0, 0.5);
+  		backdrop-filter: blur(40px);
+  		-webkit-backdrop-filter: blur(40px);
 		border: 1px solid rgba(107, 107, 107, 0.3);
 		
 	}

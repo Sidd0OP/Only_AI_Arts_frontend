@@ -28,7 +28,10 @@
       {{ body }}
     </p>
 
-    <hr class="divider" />
+   <div id="tag-container">
+    <TagPill v-for="(tag, index) in tagList" :key="index" :tag="tag" />
+   </div>
+
 
     <div id ="post-footer">
 
@@ -92,12 +95,14 @@
 import CommentPostBox from './CommentPostBox.vue'
 import EditBox from './EditBox.vue'
 import axiosObj from '../axios-config';
+import TagPill from './TagPill.vue';
 
 export default {
   name: 'PostSnippet',
   components: {
     CommentPostBox,
-    EditBox
+    EditBox,
+    TagPill
   },
 
   props: {
@@ -171,6 +176,10 @@ export default {
     },
     timeEdited() {
       return this.formatTime(this.post.edited)
+    },
+    tagList() {
+      if (!this.post.tags) return [];
+      return this.post.tags.split(',').map(tag => tag.trim());
     }
 
   },
@@ -186,7 +195,6 @@ export default {
 
     async refresh(){
 
-      console.log("refresh");
       this.$emit('updated');
 
     },
@@ -201,7 +209,6 @@ export default {
 
             this.userLoggedIn = false;
 
-            console.log(false)
 
           }else{
             this.userLoggedIn = true;
@@ -244,7 +251,12 @@ export default {
 
     goToPost() {
       if (this.postId) {
-        this.$router.push(`/post/${this.postId}/${this.post.title}`)
+        const slug = this.post.title
+        .replace(/\s+/g, '_')            
+        .replace(/[^a-zA-Z0-9-_]/g, ''); 
+
+        this.$router.push(`/post/${this.postId}/${slug}`);
+
       } 
     },
 
@@ -283,10 +295,7 @@ export default {
       }
 
       try {
-        
-
-
-        console.log(this.postId)
+      
         const response = await axiosObj.post(`/heart/${this.postId}`);
         this.hearted = true;
         
@@ -344,13 +353,15 @@ export default {
     padding-left: 15px;
   }
 
-  .divider {
-    width: 97%;
-    margin: 10px auto;
-    opacity: 0.4;
-    border-top: 1px solid #999999;
 
-  }
+  #tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 15px;
+  margin-bottom: 20px;
+}
+
+
 
   #meta
   {

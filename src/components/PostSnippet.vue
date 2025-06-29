@@ -18,7 +18,7 @@
 
     <div id="image-container" :style="{ backgroundImage: 'url(' + url + ')' }" @click="goToPost">
       <div id = "model-icon">
-        
+           <img src="@/assets/maximize.svg" id="maximize-icon" alt="Maximize">
       </div>
       <div class="image-overlay"></div>
       <img :src="url" loading="lazy"/>
@@ -526,16 +526,25 @@ export default {
 }
 
 #model-icon{
-  width: 60px;
-  height: 60px;
+  width: 45px;
+  height: 45px;
   position: absolute;
-  top: 10px;
-  margin-left: 10px;
-  background-color: rgba(0, 0, 0, 0.1);
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
   border-radius: 100%;
   z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#model-icon img{
+  width: 20px;
+  height: 20px;
 }
 
 #image-container img {

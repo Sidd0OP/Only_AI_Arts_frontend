@@ -60,18 +60,20 @@ export default {
   justify-content: start;
   align-items: end;
   padding-left: 10px;
-  padding-right: 10px;
-  gap: 10px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-
+  padding-right: 14px;
+  padding-top: 14px;
+  padding-bottom: 10px;
+  gap: 20px;
+  border-color: rgba(77, 77, 77, 0.5);
+  border-width: 1px 0px 0px 0px; 
+  border-style: solid;
 
 }
 
 
 #image-container{
 
-  width: 60px;
+  width: 80px;
   height: 40px;
   object-fit: contain;
   overflow: hidden;
@@ -105,9 +107,6 @@ export default {
   align-items: center;
   justify-content: start;
   z-index: 500;
-  border-color: #4D4D4D;
-  border-width: 0px 0px 1px 0px; 
-  border-style: solid;
 }
 
 #heading p{

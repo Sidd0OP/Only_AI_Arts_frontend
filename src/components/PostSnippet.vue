@@ -12,21 +12,33 @@
     />
   </teleport>
 
+  <teleport to="body">
+    <ImageViewer
+      :active="showImageViewer"
+      :image="viewerImageUrl"
+      @close="showImageViewer = false"
+    />
+  </teleport>
+
+
   <div id ="post-snippet">
     <h2 @click="goToPost">{{ title }}</h2>
 
 
-    <div id="image-container" :style="{ backgroundImage: 'url(' + url + ')' }" @click="goToPost">
-      <div id = "model-icon">
+    <div id="image-container" :style="{ backgroundImage: 'url(' + url + ')' }">
+      <div id = "maximize-icon-container" @click.stop="openImageViewer">
            <img src="@/assets/maximize.svg" id="maximize-icon" alt="Maximize">
       </div>
       <div class="image-overlay"></div>
       <img :src="url" loading="lazy"/>
     </div>
 
-    <p>
-      {{ body }}
-    </p>
+    <div id="body-container">
+      <p>
+        {{ body }}
+      </p>
+    </div>
+    
 
    <div id="tag-container">
     <TagPill v-for="(tag, index) in tagList" :key="index" :tag="tag" />
@@ -94,6 +106,7 @@
 <script>
 import CommentPostBox from './CommentPostBox.vue'
 import EditBox from './EditBox.vue'
+import ImageViewer from './ImageViewer.vue'
 import axiosObj from '../axios-config';
 import TagPill from './TagPill.vue';
 
@@ -102,7 +115,8 @@ export default {
   components: {
     CommentPostBox,
     EditBox,
-    TagPill
+    TagPill,
+    ImageViewer
   },
 
   props: {
@@ -131,6 +145,8 @@ export default {
       hearted: false,
       userLoggedIn: false,
       rated: false,
+      showImageViewer: false,
+      viewerImageUrl: ''
     }
   },
 
@@ -185,6 +201,11 @@ export default {
   },
 
   methods: {
+
+    openImageViewer() {
+      this.viewerImageUrl = this.url;
+      this.showImageViewer = true;
+    },
 
     async posted(){
       this.showCommentBox = false
@@ -341,24 +362,36 @@ export default {
     cursor: pointer;
   }
 
+
+  #body-container{
+    background-color: var(--secondary-color);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    margin: 20px;
+    border-radius: 10px;
+  }
+
+
   p
   {
     font-size: 1rem;
     font-weight: bold;
-    margin-bottom: 32px;
     color: #FFFFFF;
     opacity: 0.55;
     text-align: left;
-    padding-top: 0px;
     padding-left: 15px;
   }
 
 
   #tag-container {
-  display: flex;
-  flex-wrap: wrap;
-  padding-left: 15px;
-  margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 20px;
+    margin-bottom: 5px;
 }
 
 
@@ -369,6 +402,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+
   }
 
   #left-container
@@ -379,16 +413,18 @@ export default {
       justify-content: center;
       margin-left: 20px;
       margin-bottom: 10px;
+      gap: 0px;
   }
 
     #name
     {
-        width: 40px;
+        
         height: 40px;
+        padding: 2px;
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: start;
         margin-left: 15px;
         cursor: pointer;
       }
@@ -525,26 +561,32 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-#model-icon{
+#maximize-icon-container {
   width: 45px;
   height: 45px;
   position: absolute;
   bottom: 10px;
   right: 10px;
   background-color: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 100%;
   z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-#model-icon img{
-  width: 20px;
-  height: 20px;
+#image-container:hover #maximize-icon-container {
+  opacity: 1;
+}
+
+#maximize-icon-container img{
+  width: 25px;
+  height: 25px;
 }
 
 #image-container img {

@@ -19,10 +19,10 @@ export default {
   display: inline-block;
   background-color: var(--tertiary-color);
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 3px 10px;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 12px;
   color: white;
   opacity: 0.55;
   margin-right: 8px;

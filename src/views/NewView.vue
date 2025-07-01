@@ -6,9 +6,9 @@
     <div id="create-page">
       <div id = "hint-text-container">
           <p  id = "heading">Important things to follow</p>
-          <li>✅ Supported file formats: <strong>.png</strong>, <strong>.gif</strong>, <strong>.jpeg</strong></li>
-          <li>📏 Maximum file size: <strong>10 MB</strong></li>
-          <li>🖼️ Recommended resolution: <strong>at least 800x600</strong> for best quality</li>
+          <li>Supported file formats: <strong>.png</strong>, <strong>.gif</strong>, <strong>.jpeg</strong></li>
+          <li>Maximum file size: <strong>10 MB</strong></li>
+          <li>Recommended resolution: <strong>at least 800x600</strong> for best quality</li>
       </div>
       <div class="create-card">
         <form id = "form-container" @submit.prevent="handleSubmission">
@@ -25,8 +25,7 @@
 
             :style="[previewBackgroundStyle, dragOverStyle]">
 
-            <p>Drag and drop the image file</p>
-            <p>file types supported are  , png , jpeg , gif</p>
+            <p>Drag and drop the media file</p>
             <p>Or</p>
             
             <button type="button" @click="triggerFileSelect">Click to Upload</button>
@@ -38,44 +37,69 @@
           <div id = "model-selection-container">
             <p>Human made or AI</p>
             <div id = "model-grid">
-                <div id="icon-container" @click="model = 'user'">
-                  <img src="@/assets/user.svg" alt="User" :class="{ selected: model === 'user' }" />
+                <div id="icon-container" @click="model = 'blender'">
+                  <img src="@/assets/blender_icon.webp" alt="blender" :class="{ selected: model === 'blender' }" />
+                </div>
+
+                <div id="icon-container" @click="model = 'cinema'">
+                  <img src="@/assets/cinema_icon.webp" alt="cinema" :class="{ selected: model === 'cinema' }" />
+                </div>
+
+                <div id="icon-container" @click="model = 'maya'">
+                  <img src="@/assets/maya_icon.webp" alt="maya" :class="{ selected: model === 'maya' }" />
+                </div>
+
+                <div id="icon-container" @click="model = 'krita'">
+                  <img src="@/assets/krita_icon.webp" alt="krita" :class="{ selected: model === 'krita' }" />
+                </div>
+
+                <div id="icon-container" @click="model = 'procreate'">
+                  <img src="@/assets/procreate_icon.webp" alt="procreate" :class="{ selected: model === 'procreate' }" />
+                </div>
+
+                <div id="icon-container" @click="model = 'photoshop'">
+                  <img src="@/assets/photoshop_icon.webp" alt="photoshop" :class="{ selected: model === 'photoshop' }" />
+                </div>
+
+                <div id="icon-container" @click="model = 'gimp'">
+                  <img src="@/assets/gimp_icon.webp" alt="gimp" :class="{ selected: model === 'gimp' }" />
+                </div>
+
+                
+
+                <div id="icon-container" @click="model = 'gemini'">
+                  <img src="@/assets/gemini_icon.webp" alt="Gemini" :class="{ selected: model === 'gemini' }" />
                 </div>
 
                 <div id="icon-container" @click="model = 'copilot'">
-                  <img src="/copilot.png" alt="Copilot" :class="{ selected: model === 'copilot' }" />
+                  <img src="@/assets/copilot_icon.webp" alt="copilot" :class="{ selected: model === 'copilot' }" />
                 </div>
 
-                <div id="icon-container" @click="model = 'gemini'">
-                  <img src="/gemini.png" alt="Gemini" :class="{ selected: model === 'gemini' }" />
+                <div id="icon-container" @click="model = 'meta'">
+                  <img src="@/assets/meta_icon.webp" alt="meta" :class="{ selected: model === 'meta' }" />
                 </div>
 
-                <div id="icon-container" @click="model = 'chatgpt'">
-                  <img src="/chatGpt.png" alt="ChatGPT" :class="{ selected: model === 'chatgpt' }" />
+                <div id="icon-container" @click="model = 'gpt'">
+                  <img src="@/assets/gpt_icon.webp" alt="gpt" :class="{ selected: model === 'gpt' }" />
                 </div>
 
-                <div id="icon-container" @click="model = 'grock'">
-                  <img src="/grock.png" alt="Grock" :class="{ selected: model === 'grock' }" />
-                </div>
-
-                <div id="icon-container" @click="model = 'midjourney'">
-                  <img src="/midjorney.png" alt="MidJourney" :class="{ selected: model === 'midjourney' }" />
+                <div id="icon-container" @click="model = 'mid'">
+                  <img src="@/assets/mid_icon.webp" alt="mid" :class="{ selected: model === 'mid' }" />
                 </div>
             </div>
           </div>
 
-          <input v-model="tags" id = "tag-text-container" type="text" name="tag-input" placeholder="#Ai #Better" required>
+          <div id="tag-area">
+            <p>Write tags for image</p>
+            <input v-model="tags" id = "tag-text-container" type="text" name="tag-input" placeholder="#Blue #Sky #Realistic" required>
+          </div>
+          
 
           <div id = "post-button-container">
 
-              <button id = "post-button" type="submit" :disabled="loading">
-                <p v-if="!loading">Post</p>
-                <div v-if="loading" id="loading"></div>
-              </button>
-
-              <label class="Adult Content">
+              <label class="Adult_Content">
                 <input v-model="rated" type="checkbox" name="rated">
-                Explicit Content
+                <p>Post contains explicit content</p>
               </label>
 
           </div>
@@ -84,6 +108,18 @@
           <p v-if="error" class="error">{{ error }}</p>
         </form>
       </div>
+
+      <div id = "hint-text-container">
+          <p  id = "heading">Ready to Publish ?</p>
+          
+          <button id = "post-button" type="submit" form="form-container" :disabled="loading">
+              <p v-if="!loading">Post</p>
+              <div v-if="loading" id="loading"></div>
+          </button>
+
+      </div>
+
+
     </div>
 
   </div>
@@ -278,7 +314,7 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 100px;
-  gap: 20px;
+  gap: 25px;
 
   
 }
@@ -294,14 +330,14 @@ export default {
   background-color: var(--bg-color);
   border-radius: 15px;
   border: 1px solid rgba(107, 107, 107, 0.3);
-  padding: 20px;
-  gap: 10px;
+  padding: 25px;
+  gap: 20px;
   z-index: 100;
 
 } 
 
 #hint-text-container p {
-  padding-left: 20px;
+  padding-left: 5px;
   color: white;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
@@ -326,6 +362,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 30px;
 
 }
 
@@ -344,51 +381,78 @@ export default {
 
 .create-card #body-container
 {
-  background-color: var(--bg-color);
-  width: 100%;
+  background-color: var(--secondary-color);
+  width: 95%;
+  border-radius: 20px;
   border: none;
+  margin-top: 30px;
   padding-left: 20px;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 24px;
 
+}
+
+#tag-area{
+  margin-top: 20px;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  color: white;
 }
 
 #tag-text-container{
   position: relative;
+  margin-top: 10px;
   background-color: var(--bg-color);
   width: 95%;
   border-radius: 15px;
   border: 1px solid rgba(107, 107, 107, 0.3);
+  padding-left: 20px;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 24px;
 }
 
 #model-selection-container{
-  width: 100%;
+  width: 95%;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   flex-direction: column;
+  gap: 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  color: white;
 }
 
 #model-grid{
+
   background-color: var(--bg-color);
-  width: 95%;
+  width: 100%;
   border-radius: 15px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   justify-content: center;
-  gap: 15px;
-  padding: 20px;
+  gap: 20px;
+ 
 
   
 }
 
 #icon-container{
     background: #ffffff;
-    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(199, 199, 199, 1) 80%);
+    background: var(--secondary-color);
+    width: 100px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -401,7 +465,7 @@ export default {
 
     border-radius: 15px;
     background: #ffffff;
-    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(199, 199, 199, 1) 53%);
+    
 
   }
 
@@ -417,9 +481,9 @@ export default {
 {
   background-color: var(--bg-color);
   outline: none;
-  width: 100%;
+  width: 95%;
   border: none;
-  padding-left: 20px;
+  padding-left: 5px;
   padding-top: 30px;
   padding-bottom: 30px;
   font-family: 'Inter', sans-serif;
@@ -450,6 +514,7 @@ export default {
   font-family: 'Inter', sans-serif;
   font-weight: 800;
   font-size: 18px;
+  color: white;
 
 }
 
@@ -457,12 +522,37 @@ export default {
 
 #post-button-container{
 
+  margin-top: 30px;
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  padding: 10px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+
+.Adult_Content{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 30px;
+}
+
+.Adult_Content p{
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 24px;
+  color: white;
+}
+
+.Adult_Content input[type = "checkbox"]
+{
+  width: 20px;
+  height: 20px;
 }
 
 #post-button{
@@ -470,12 +560,26 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
   gap: 10px;
+  background-color: #0F0F0F;
+  color: white;
+  border-radius: 10px;
+  border: 1px solid rgba(107, 107, 107, 0.3);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.create-card button[disabled] {
+#post-button[disabled] {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+
+#post-button:hover{
+  background-color: #357bd8;
 }
 
 .create-card button {
@@ -483,8 +587,8 @@ export default {
   color: white;
   border-radius: 100px;
   border: 1px solid rgba(107, 107, 107, 0.3);
-  width: 125px;
-  height: 45px;
+  width: 140px;
+  height: 60px;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-weight: 800;
@@ -495,6 +599,8 @@ export default {
 .create-card button:hover {
   background-color: #357bd8;
 }
+
+
 
 .create-card .error {
   color: #e74c3c;
@@ -532,6 +638,7 @@ export default {
   align-items: center;
   justify-content: start;
 
+
 }
 
 
@@ -548,7 +655,7 @@ export default {
   height: 2px;
   border-radius: 2px;
   transition: width 0.3s ease, background-color 0.3s ease;
-  margin-left: 20px;
+  margin-left: 30px;
   margin-top: -25px;
   margin-bottom: 20px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="post">
   <Navbar @login-status-checked="onNavbarReady"/>
   <SidePanel />
   
@@ -7,43 +7,47 @@
     <CreatePost />
     <div id = "container">
       
-      <PostSnippetSkeleton v-if = "show"/>
-      <PostSnippet v-if="post" :post = post :editable = this.postEditable @updated="refreshPostData"/>
-      <div id="gap-container"></div>
+      <div id = "center-container">
 
-      <div v-if = "comments" id = comment-reply-container>
-        <Comment  v-for= "comment in comments" 
-          :comments="comment.comment"
-          :replies="comment.replies"
-          :listOfEditableComments= "listOfEditableComments"
-          :listOfEditableReplies= "listOfEditableReplies"
-          @updated="refreshPostData"/>
-      </div>
-      
-      <div id="gap-container"></div>
+        <PostSnippetSkeleton v-if = "show"/>
+        <PostSnippet v-if="post" :post = post :editable = this.postEditable @updated="refreshPostData"/>
 
-      <div id = "more-post-container">
+        <div id="gap-container"></div>
 
-        <div  v-if="similarPosts && similarPosts.length > 0" id="heading-container">
-          <PostSnippetSkeleton v-if = "show"/>
-          <PostSnippetSkeleton v-if = "show"/>
-          <p>Similar Images</p>
+        <div v-if = "comments" id = comment-reply-container>
+          <Comment  v-for= "comment in comments" 
+            :comments="comment.comment"
+            :replies="comment.replies"
+            :listOfEditableComments= "listOfEditableComments"
+            :listOfEditableReplies= "listOfEditableReplies"
+            @updated="refreshPostData"/>
         </div>
         
+        <div id="gap-container"></div>
 
-        <PostSnippet  v-for= "post in similarPosts" :post = post />
+        <div id = "more-post-container">
 
-        <div id="heading-container"><p>Some more Images</p></div>
+          <div  v-if="similarPosts && similarPosts.length > 0" id="heading-container">
+            <PostSnippetSkeleton v-if = "show"/>
+            <PostSnippetSkeleton v-if = "show"/>
+            <p>Similar Images</p>
+          </div>
+          <PostSnippet  v-for= "post in similarPosts" :post = post />
 
-        <PostSnippetSkeleton v-if = "show"/>
-        <PostSnippetSkeleton v-if = "show"/>
-        <PostSnippet  v-for= "post in posts" :post = post />
+        </div>
+
 
       </div>
       
+      <div id="side-container">
+        <!-- <PostSnippetSkeleton v-if = "show"/>
+        <PostSnippetSkeleton v-if = "show"/> -->
+        <PostSnippetSmall  v-for= "post in posts" :post = post />
+      </div>
         
 
-    </div>
+
+      </div>
   </main>
   </div>
 </template>
@@ -54,6 +58,7 @@ import axiosObj from '../axios-config';
 import Navbar from '../components/Navbar.vue'
 import Comment from '../components/Comment.vue'
 import PostSnippet from '../components/PostSnippet.vue'
+import PostSnippetSmall from '../components/PostSnippetSmall.vue'
 import PostSnippetSkeleton from '../components/PostSnippetSkeleton.vue'
 import CreatePost from '../components/CreatePost.vue'
 import SidePanel from '../components/SidePanel.vue'
@@ -62,6 +67,7 @@ export default {
   components: {
     Navbar,
     PostSnippet,
+    PostSnippetSmall,
     Comment,
     PostSnippetSkeleton,
     CreatePost,
@@ -158,17 +164,42 @@ export default {
     height: 30px;
   }
 
+  #post{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+  }
+
   #container
   {
     padding-top: 100px;
-    width: 60vw;
-    max-width: 700px;
+    width: 100vw;
+    max-width: 1000px;
     background-color: #000000;
     text-align: center;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: 50px;
 
+
+  }
+
+  #center-container{
+    width: 70%;
+    z-index: 100;
+  }
+
+  #side-container{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
   }
 
   #comment-reply-container{

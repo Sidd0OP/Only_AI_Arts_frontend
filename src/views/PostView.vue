@@ -33,7 +33,13 @@
             <p>Similar Images</p>
           </div>
           <PostSnippet  v-for= "post in similarPosts" :post = post />
-
+          <div id="side-container-normal">
+            <div  id="heading-container">
+              <p>Continue With More</p>
+            </div>
+            <div id="gap-container"></div>
+            <PostSnippet  v-for= "post in posts" :post = post />
+          </div>
         </div>
 
 
@@ -159,6 +165,10 @@ export default {
 
 <style scoped>
 
+  #side-container-normal{
+    display: none;
+  }
+
   #gap-container{
     width: 100%;
     height: 30px;
@@ -183,6 +193,8 @@ export default {
     margin: 0 auto;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: start;
     gap: 50px;
 
 
@@ -201,6 +213,8 @@ export default {
     justify-content: center;
     gap: 20px;
   }
+
+
 
   #comment-reply-container{
 
@@ -347,6 +361,111 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+
+
+
+  @media (min-width: 768px) and (max-width: 1200px)
+  {
+    
+    #side-container{
+
+      display: none;
+
+    }
+
+    
+
+    #side-container-normal{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+     
+     
+    
+  }
+
+  @media (max-width: 767px) 
+  {
+
+    #side-container{
+
+      display: none;
+
+    }
+
+    #gap-container{
+      display: none;
+    }
+
+    #more-post-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    padding-bottom: 30px;
+  }
+
+    #side-container-normal{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    #center-container{
+      width: 100%;
+      z-index: 100;
+    }
+
+    #container
+    {
+      padding-top: 100px;
+      width: 100%;
+      background-color: #000000;
+      text-align: center;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: start;
+      gap: 0px;
+
+
+    }
+
+    #more-post-container p{
+      -webkit-text-stroke: 2px #FF2160;
+      color: var(--bg-color);
+      font-family: 'Inter', sans-serif;
+      font-size: 32px;
+    }
+
+
+    #heading-container{
+      background-color: var(--bg-color);
+      border-radius: 0px;
+      border: none;
+      padding-left: 0px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      z-index: 10;
+      padding: 10px;
+
+    }
+
+
+  
+
+    
+
   }
 
   

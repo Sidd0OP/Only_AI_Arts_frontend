@@ -83,4 +83,18 @@
 		gap: 3px;
 	}
 
+
+	@media (max-width: 767px) 
+	{
+		#container{
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		margin-top: 60px;
+		gap: 3px;
+	}
+	}
+
 </style>

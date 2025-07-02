@@ -160,6 +160,8 @@ export default {
 
 <style scoped>
 
+  
+
   #heading-container{
     background-color: var(--bg-color);
     border-radius: 15px;
@@ -269,6 +271,56 @@ export default {
     gap: 5px;
 
   }
+
+
+  @media (min-width: 768px) and (max-width: 1024px){
+    
+     
+     
+    
+  }
+
+  @media (max-width: 767px) {
+  
+    #heading-container p
+    {
+      font-size: 32px;
+    }
+  
+
+    #heading-container {
+      background-color: var(--bg-color);
+      border-radius: 0px;
+      border: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 80px;
+      z-index: 10;
+    }
+
+    #container
+    {
+      padding-top: 100px;
+      width:100%;
+      max-width: 100%;
+      background-color: #000000;
+      text-align: center;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+
+    }
+
+
+
+  }
+
+
+  
 
   
 

@@ -22,7 +22,7 @@
 
 
   <div id ="post-snippet">
-    <h2 @click="goToPost">{{ title }}</h2>
+    <h2 id="normal-heading" @click="goToPost">{{ title }}</h2>
 
 
     <div id="image-container" :style="{ backgroundImage: 'url(' + url + ')' }">
@@ -55,6 +55,8 @@
           <div id ="profile-image" @click="goToProfile">
               <img v-if = "profileImage" :src="profileImage" />
           </div>
+
+          <h2 id="media-heading" @click="goToPost">{{ title }}</h2>
 
           <div id = "name" @click="goToProfile">
             <span id= "name-text">{{ name }}</span>
@@ -99,6 +101,48 @@
         </div>
 
       </div>
+
+
+
+      <div id="bottom-right-container">
+          <button v-if = "editable" id = "edit-button" @click = "editComment">Edit</button>
+          <div v-if = "rated" id = "icon-container">
+            <img src="@/assets/waist.svg" id="comments-icon" alt="Rated">
+          </div>
+          <div id = "icon-container">
+            <img v-if = "!hearted" src ="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart" @click="heartComment">
+            <img v-if = "hearted" src ="@/assets/heart-solid.svg" id="heart-icon" alt="Heart">
+          </div>
+          <div id = "icon-container">
+            <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="postComment">
+          </div>
+          
+          <div class="dates">
+              <div>
+                  <small>Posted</small>
+                  <div>{{ formattedCreated }}</div>
+              </div>
+              <div id = "time-wrapper">
+                  <small>At</small>
+                  <div id = "time">{{ timePosted }}</div>
+              </div>
+
+              <div v-if="post.edited">
+                  <small>Edited</small>
+                  <div>{{ formattedEdited }}</div>
+              </div>
+              <div id = "time-wrapper" v-if="post.edited">
+                  <small>At</small>
+                  <div id = "time">{{ timePosted }}</div>
+              </div>
+
+          </div>
+        </div>
+
+
+
+
+
     </div>
   </div>
 </template>
@@ -341,6 +385,20 @@ export default {
 </script>
 
 <style scoped>
+
+
+
+  #media-heading{
+    display: none;
+  }
+
+
+  #bottom-right-container{
+    display: none;
+  }
+
+
+
   #post-snippet
   {
     width: 100%;
@@ -350,7 +408,7 @@ export default {
     z-index: 10;
   }
 
-  h2
+  #normal-heading
   {
     font-size: 2rem;
     font-weight: bold;
@@ -416,8 +474,8 @@ export default {
       gap: 0px;
   }
 
-    #name
-    {
+  #name
+  {
         
         height: 40px;
         padding: 2px;
@@ -427,7 +485,7 @@ export default {
         justify-content: start;
         margin-left: 15px;
         cursor: pointer;
-      }
+    }
 
     #name-text
     {
@@ -612,6 +670,116 @@ export default {
 
 #edit-button:hover {
   background-color: #357bd8;
+}
+
+
+@media (min-width: 768px) and (max-width: 1024px){
+    
+     
+     
+    
+} 
+
+@media (max-width: 767px) {
+
+
+  #body-container{
+    display: none;
+  }
+
+  #tag-container{
+    display: none;
+  }
+
+  #name{
+    display: none;
+  }
+
+  #time-wrapper{
+    display: none;
+  }
+
+  #normal-heading {
+    display: none;
+  }
+
+
+  #right-container{
+    display: none;
+  }
+
+  #post-snippet
+  {
+    width: 100%;
+    background: var(--bg-color);
+    border-radius: 0px;
+    border: none;
+    z-index: 10;
+  }
+
+
+  #meta{
+    padding-top: 10px;
+  }
+
+  #media-heading {
+    display: flex;
+    padding-left: 20px;
+
+    font-size: 1.0rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+
+  #bottom-right-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 32px;
+    padding-bottom: 4px;
+    padding-left: 54px;
+  }
+
+  #bottom-right-container small{
+    display: none;
+  }
+
+  #image-container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 50vh;
+    border-radius: 10px;
+    margin: 10px;
+    overflow: hidden;
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+
+  }
+
+
+  .dates div div {
+      font-size: 0.7rem;
+      font-weight: bold;
+      color: #fff; 
+  }
+
+
+  #comments-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  #heart-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+
 }
 
 </style>

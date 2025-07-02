@@ -91,4 +91,50 @@
 	}
 
 
+	@media (min-width: 768px) and (max-width: 1024px){
+    
+     
+     
+    
+  	}	
+
+  @media (max-width: 767px) {
+
+  	#side-bar-container {
+	  position: fixed;
+	  top: auto;
+	  bottom: 0;
+	  width: 100%;
+	  height: 80px;
+	  box-sizing: border-box;
+	  z-index: 999;
+	  display: flex;
+	  flex-direction: row;
+	  align-items: center;
+	  justify-content: center;
+	  gap: 80px;
+
+	}
+
+	#icon-container img{
+
+		width: 24px;
+		height: 24px;
+		opacity: 0.8;
+		cursor: pointer;
+
+	}
+
+	#icon-container{
+		background-color: rgba(0, 0, 0, 0.0);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 10px;
+		border-radius: 10px;
+		transition: 0.4s ease;
+	}
+	
+  }
+
 </style>

@@ -16,7 +16,7 @@
       <PostSnippet  v-for= "post in posts" :post = post />
     </div>
 
-    <CreatePost />
+    
 
     <div id = "latest-container">
       <p>Recent Posts</p>
@@ -303,7 +303,7 @@ export default {
 
     #container
     {
-      padding-top: 100px;
+      padding-top: 60px;
       width:100%;
       max-width: 100%;
       background-color: #000000;

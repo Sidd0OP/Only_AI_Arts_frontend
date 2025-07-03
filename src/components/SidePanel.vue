@@ -1,12 +1,11 @@
 <template>
 	<div id = "side-bar-container">
 		
-		<div id = "icon-container">
-	        <img src="@/assets/long-arrow-up-left.svg" id="back-icon" alt="Back" @click="goBack">
-      	</div>
+		
       	<div id = "icon-container">
 	        <img src="@/assets/post.svg" id="post-icon" alt="Trending" @click="goTrending">
       	</div>
+      	<CreatePost />
       	<div id = "icon-container">
 	        <img src="@/assets/view-grid.svg" id="grid-icon" alt="Gallery" @click="goGallery">
       	</div>
@@ -16,10 +15,17 @@
 	</div>
 </template>
 <script>
+	import CreatePost from './CreatePost.vue'
 
 	export default {
 
     	name: 'SidePanel',
+
+    	components: {
+		    
+		    CreatePost,
+
+		  },
 
     	methods: {
 		    goBack() {

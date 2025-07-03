@@ -4,7 +4,6 @@
   <SidePanel />
   
   <main>
-    <CreatePost />
     <div id = "container">
       
       <div id = "center-container">
@@ -424,7 +423,7 @@ export default {
 
     #container
     {
-      padding-top: 100px;
+      padding-top: 60px;
       width: 100%;
       background-color: #000000;
       text-align: center;

@@ -119,5 +119,21 @@ export default {
   }
 }
   
+@media (max-width: 767px) {
+
+  #post-snippet {
+    width: 100vw;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .divider {
+    width: 100%;
+  }
+
+}
 
 </style>

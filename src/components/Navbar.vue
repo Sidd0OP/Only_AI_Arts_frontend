@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar">
+  <nav class="navbar" :class="{ 'search-active': isSearchActive }">
     <ul>
       
       <img id = "logo" src= "/OnlyAiArtsLogo.png" @click="goToHomePage">
@@ -16,42 +16,55 @@
           <img v-if="!isSearchActive" src="@/assets/search.svg" id="search-icon" alt="Search">
           <img v-if="isSearchActive" src="@/assets/xmark.svg" id="search-icon" alt="Search" @click="closeSearchBar">
         </div>
+
       </div>
 
       <teleport to="body">
-      <div
-        v-if="isSearchActive"
-        id="search-result-container"
-      >
-        <div v-if="searchResults.length === 0" id = "icon-container">
-          <img src="@/assets/lamp.svg" id="lamp-icon" alt="Empty">
+        <div
+          v-if="isSearchActive"
+          id="search-result-container"
+        >
+          <div v-if="searchResults.length === 0" id = "icon-container">
+            <img src="@/assets/lamp.svg" id="lamp-icon" alt="Empty">
+          </div>
+          <SearchResult
+            v-for="result in searchResults"
+            :key="result.postId"
+            :postId="result.postId"
+            :title="result.title"
+            :imageUrl="result.imageUrl"
+          />
         </div>
-        <SearchResult
-          v-for="result in searchResults"
-          :key="result.postId"
-          :postId="result.postId"
-          :title="result.title"
-          :imageUrl="result.imageUrl"
-        />
-      </div>
-    </teleport>
+      </teleport>
 
-
+      
+      
       
       <div id = "left-container">
         
+
+
+        <div id = "left-icon-container">
+          <img v-if="!isSearchActive" src="@/assets/search.svg" id="search-icon" alt="Search" @click="isSearchActive = true">
+          <img v-if="isSearchActive" src="@/assets/xmark.svg" id="search-icon" alt="Search" @click="closeSearchBar">
+        </div>
+
         <div id = "profile-image-container" @click="goToProfilePage" v-if="userLoggedIn">
           <img :src = "getProfileUrl()">
         </div>
+
+        <button id = "register-button" type="button" @click="goToRegisterPage" v-if="!userLoggedIn">
+          <img src="@/assets/peace-hand.svg" id="login-icon" alt="Login">
+          <p>Sign up</p>
+        </button>
         
         <button id = "login-button" type="button" @click="goToLoginPage" v-if="!userLoggedIn">
-        <img src="@/assets/log-in.svg" id="login-icon" alt="Login">
-         <p>Log in</p>
+          <img src="@/assets/log-in.svg" id="login-icon" alt="Login">
+          <p>Log in</p>
         </button>
-        <button id = "register-button" type="button" @click="goToRegisterPage" v-if="!userLoggedIn">
-        <img src="@/assets/peace-hand.svg" id="login-icon" alt="Login">
-         <p>Sign up</p>
-        </button>
+
+        
+
       </div>
 
 
@@ -177,6 +190,10 @@
 
 <style scoped>
 
+#left-icon-container{
+  display: none;
+}
+
 .navbar {
   position: fixed;
   top: 0;
@@ -191,6 +208,9 @@
   z-index: 1000;
 
 }
+
+
+
 .navbar ul {
   
   display: flex;
@@ -329,6 +349,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: start;
+  transition: all 0.3s ease-in-out;
 
 }
 
@@ -395,4 +416,283 @@ input:focus {
   color: white;
   text-decoration: none;
 }
+
+
+@media (min-width: 768px) and (max-width: 1124px){
+    
+      #left-container{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+      }
+
+
+      #search-result-container{
+        position: fixed;
+        top: 60px;
+        width: 100%;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.5); 
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 10px;
+        border: 1px solid #222222;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        z-index: 1001;
+      }
+
+      #login-button{
+
+        background-color: var(--bg-color);
+        color: white;
+        border-radius: 10px;
+        border: 2px solid rgba(107, 107, 107, 0.3);
+        width: 86px;
+        height: 45px;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        font-size: 16px;
+        transition: background-color 0.2s ease;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+
+      }
+
+      #login-button img{
+
+        display: none;
+      }
+
+
+      #login-button:hover{
+         background-color: var(--bg-color);
+      }
+
+    #register-button{
+
+      background-color: white;
+      color: white;
+      border-radius: 10px;
+      border: 2px solid var(--bg-color);
+      width: 86px;
+      height: 45px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      color: black;
+      transition: background-color 0.2s ease;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+
+    #register-button img{
+
+      display: none;
+    }
+
+
+     
+     
+    
+  }
+
+  @media (max-width: 767px) {
+
+
+
+
+
+
+
+    #left-icon-container{
+      display: flex;
+      padding: 10px;
+    }
+
+
+    #search-result-container{
+      position: fixed;
+      top: 60px;
+      width: 100%;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.5); 
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 0px;
+      border: 1px solid #222222;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      z-index: 1001;
+    }
+
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--bg-color);
+      padding: 0.5rem;
+      box-sizing: border-box;
+      padding-left: 15px;
+      z-index: 1000;
+    }
+
+    .navbar ul {
+  
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+      padding-right: 10px;
+
+    }
+
+    #left-container{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+      }
+
+
+    #login-button{
+
+        background-color: var(--bg-color);
+        color: white;
+        border-radius: 10px;
+        border: 2px solid rgba(107, 107, 107, 0.3);
+        width: 80px;
+        height: 45px;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        font-size: 12px;
+        transition: background-color 0.2s ease;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+
+      }
+
+      #login-button img{
+
+        display: none;
+      }
+
+
+    #login-button:hover{
+      background-color: var(--bg-color);
+    }
+
+    #register-button{
+
+      background-color: white;
+      color: white;
+      border-radius: 10px;
+      border: 2px solid var(--bg-color);
+      width: 80px;
+      height: 45px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      color: black;
+      transition: background-color 0.2s ease;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+
+    #register-button img{
+
+      display: none;
+    }
+
+
+    #search-bar-container{
+
+      display: none;
+
+    }
+
+    .navbar.search-active #search-bar-container {
+
+
+
+      width: 60%;
+      border-radius: 100px;
+      border: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: start;
+      transition: all 0.3s ease-in-out;
+      background-color: var(--secondary-color);
+      display: flex;
+      width: 90%;
+      margin: 0 auto;
+      position: relative;
+      justify-content: center;
+    }
+
+    .navbar.search-active #login-button,
+    .navbar.search-active #register-button,
+    .navbar.search-active #profile-image-container {
+      display: none;
+    }
+
+
+    .navbar.search-active ul {
+  
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: start;
+      gap: 0px;
+      padding-right: 0px;
+
+    }
+
+    #search-box{
+      width: 100%;
+      height: 100%;
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      padding-left: 15px;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      border-left: none;
+    }
+
+
+  }
 </style>

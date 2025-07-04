@@ -330,6 +330,7 @@ export default {
   overflow: hidden;
   z-index: 100;
   border: 1px solid rgba(107, 107, 107, 0.3);
+  background-color: rgba(0, 0, 0, 1.0);
 }
 
 #profile-image{
@@ -417,6 +418,143 @@ export default {
   opacity: 0.4;
   transition: opacity 0.3s ease;
 }
+
+ @media (min-width: 768px) and (max-width: 1024px){
+    
+     
+     
+    
+  }
+
+  @media (max-width: 767px) {
+
+    #user-data-container{
+
+      margin-top: 60px;
+      width: 100%;
+      min-height: 100px;
+      padding: 20px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 30px;
+      z-index: 100;
+    }
+
+
+
+    #tabs-bar {
+      position: sticky;
+      top: 60px;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      display: flex;
+      justify-content: center;
+      gap: 15%;
+      padding: 20px 0;
+      border-top: 1px solid #4d4d4d;
+      z-index: 150;
+      width: 100%;
+    }
+
+    #profile-image-container {
+      position: absolute;
+      top: 80px;
+      left: 150px;
+      width: 80px;
+      height: 80px;
+      border-radius: 10%;
+      overflow: hidden;
+      z-index: 100;
+      border: 1px solid rgba(107, 107, 107, 0.3);
+      background-color: rgba(0, 0, 0, 1.0);
+    }
+
+    #tab-content {
+      width: 100%;
+      
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0px;
+      margin-top: 80px;
+    }
+
+    #name-data-container{
+      display: flex;
+      align-items: start;
+      justify-content: center;
+      flex-direction: row;
+      background-color: var(--secondary-color);
+      padding: 10px;
+      border-radius: 15px;
+      gap: 10px;
+    }
+
+
+    #name{
+
+      font-family: 'Inter', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: white;
+    }
+
+    #joined{
+
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: white; 
+    }
+
+
+    #bio{
+
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--text-color);
+    }
+
+    #icon-container{
+
+      display: flex;
+      align-items: start;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+
+    #meta-data-container{
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+      gap: 10px;
+      padding-left: 0px;
+      width: 100%;
+    }
+
+
+
+    #edit-icon {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+  }
 
 
   

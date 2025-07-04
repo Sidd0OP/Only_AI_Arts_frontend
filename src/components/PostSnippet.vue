@@ -66,7 +66,11 @@
 
 
         <div id="right-container">
-          <button v-if = "editable" id = "edit-button" @click = "editComment">Edit</button>
+
+          <button v-if = "editable" id = "edit-button" @click = "editComment">
+            <img id = "edit-icon" src="@/assets/edit-pencil.svg" alt="Edit">
+          </button>
+
           <div v-if = "rated" id = "icon-container">
             <img src="@/assets/waist.svg" id="comments-icon" alt="Rated">
           </div>
@@ -105,7 +109,11 @@
 
 
       <div id="bottom-right-container">
-          <button v-if = "editable" id = "edit-button" @click = "editComment">Edit</button>
+          <button v-if = "editable" id = "edit-button" @click = "editComment">
+            
+            <img id = "edit-icon" src="@/assets/edit-pencil.svg" alt="Edit">
+
+          </button>
           <div v-if = "rated" id = "icon-container">
             <img src="@/assets/waist.svg" id="comments-icon" alt="Rated">
           </div>
@@ -655,18 +663,28 @@ export default {
 }
 
   #edit-button {
-  background-color: #0F0F0F;
-  color: white;
-  border-radius: 100px;
-  border: 1px solid rgba(107, 107, 107, 0.3);
-  width: 125px;
-  height: 45px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 12px;
-  transition: background-color 0.2s ease;
-}
+    background-color: var(--bg-color);
+    color: white;
+    border-radius: 100px;
+    border: none;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  #edit-icon{
+        display: flex;
+        width: 20px;
+        height: 20px;
+      }
 
 #edit-button:hover {
   background-color: #357bd8;
@@ -780,6 +798,45 @@ export default {
   }
 
 
+}
+
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (hover: none) {
+  #edit-button,
+  #icon-container,
+  #maximize-icon-container {
+    transition: transform 0.2s ease;
+  }
+
+  #edit-button:active,
+  #icon-container:active,
+  #maximize-icon-container:active {
+    animation: pop 0.3s ease;
+  }
+
+  /* Optionally disable hover effects on mobile */
+  #edit-button:hover,
+  #icon-container:hover,
+  #maximize-icon-container:hover {
+    background-color: transparent !important;
+    opacity: 1 !important;
+  }
+
+  #image-container:hover #maximize-icon-container {
+    opacity: 0 !important;
+  }
 }
 
 </style>

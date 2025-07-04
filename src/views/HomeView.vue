@@ -18,10 +18,9 @@
 
     
 
-    <div id = "latest-container">
+    <!-- <div id = "latest-container">
       <p>Recent Posts</p>
-      
-    </div>
+    </div> -->
 
     <div id = "button_container">
       <button id = "load-more-button" @click="loadMorePosts">load More</button>
@@ -60,18 +59,21 @@ export default {
       page: 1,         
       usingSnippetsApi: false,
       userLoggedIn: false,
-      show: true
+      show: true,
+      isLoading: false,
 
     }
   },
 
   async mounted() {
 
-    
+    window.addEventListener('scroll', this.handleScroll);
     
   },
 
-  
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
 
 
   methods: {
@@ -98,21 +100,24 @@ export default {
 
 
     async loadMorePosts() {
+      if (this.isLoading) return;
+
+      this.isLoading = true;
       try {
         this.usingSnippetsApi = true;
         const response = await axiosObj.get(`/snippets/${this.page}`);
         const newPosts = response.data;
 
-
         this.posts.push(...newPosts);
         this.page++;
 
-        
         if (newPosts.length === 0) {
           this.hasMore = false;
         }
       } catch (error) {
         console.error('Error loading more posts:', error);
+      } finally {
+        this.isLoading = false;
       }
     },
 
@@ -149,7 +154,20 @@ export default {
       }else{
         this.$router.push('/login');
       }
+    },
+
+    handleScroll() {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const fullHeight = document.documentElement.scrollHeight;
+
+      const scrolledPercentage = (scrollTop + windowHeight) / fullHeight;
+
+      if (scrolledPercentage > 0.7) {
+        this.loadMorePosts();
+      }
     }
+
 
   }
 

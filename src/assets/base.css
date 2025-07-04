@@ -3,18 +3,24 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 :root {
   --bg-color: black;
   --secondary-color: #0c0910;
   --tertiary-color: #1d1e2c;
+  --light-text: ;
   --text-color: #888;
   --text-opacity: 12%;
   --text-rotation: -45deg;
   --login-text-color: #888888;
 }
 
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
 
 body {
   font-family: Poppins, sans-serif;
@@ -25,8 +31,9 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-
   display: flex;
   justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 
 }

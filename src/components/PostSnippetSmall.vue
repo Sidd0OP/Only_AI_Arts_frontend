@@ -600,4 +600,7 @@ export default {
   background-color: #357bd8;
 }
 
+
+
+
 </style>

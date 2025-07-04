@@ -32,10 +32,14 @@
             <input ref="fileInput" type="file" @change="handleFileUpload" accept=".jpg,.png,.gif" hidden />
           </div>
           
-          <input id = "body-container" v-model="body" type="text" placeholder="Write something about this image" required />
+          <div id="body-text-description">
+            <p>Describe this Image</p>
+          <input id = "body-container" v-model="body" type="text" placeholder="This image is about..." required />
+          </div> 
+          
 
           <div id = "model-selection-container">
-            <p>Human made or AI</p>
+            <p>Pick an Art App or AI Model</p>
             <div id = "model-grid">
                 <div id="icon-container" @click="model = 'blender'">
                   <img src="@/assets/blender_icon.webp" alt="blender" :class="{ selected: model === 'blender' }" />
@@ -90,7 +94,7 @@
           </div>
 
           <div id="tag-area">
-            <p>Write tags for image</p>
+            <p>Describe this Image with Tags</p>
             <input v-model="tags" id = "tag-text-container" type="text" name="tag-input" placeholder="#Blue #Sky #Realistic" required>
           </div>
           
@@ -99,7 +103,8 @@
 
               <label class="Adult_Content">
                 <input v-model="rated" type="checkbox" name="rated">
-                <p>Post contains explicit content</p>
+                <span class="slider"></span>
+                <p>Contains Sensitive Content</p>
               </label>
 
           </div>
@@ -110,7 +115,7 @@
       </div>
 
       <div id = "hint-text-container">
-          <p  id = "heading">Ready to Publish ?</p>
+          <p  id = "heading">All set. Let’s go!</p>
           
           <button id = "post-button" type="submit" form="form-container" :disabled="loading">
               <p v-if="!loading">Post</p>
@@ -393,6 +398,20 @@ export default {
 
 }
 
+
+#body-text-description{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    padding-top: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: white;
+  }
+
 #tag-area{
   margin-top: 20px;
   width: 95%;
@@ -533,12 +552,24 @@ export default {
 }
 
 .Adult_Content{
+  
+  background-color: white;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  padding: 20px;
+  position: relative;
+  margin-top: 10px;
+  background-color: white;
+  width: 95%;
+  border-radius: 15px;
+  padding-left: 30px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 24px;
   gap: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .Adult_Content p{
@@ -546,13 +577,40 @@ export default {
   font-family: 'Inter', sans-serif;
   font-weight: 800;
   font-size: 24px;
-  color: white;
+  color: var(--bg-color);
 }
 
-.Adult_Content input[type = "checkbox"]
-{
-  width: 20px;
-  height: 20px;
+.Adult_Content input[type="checkbox"] {
+  display: none;
+}
+
+.Adult_Content .slider {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  background-color: #ccc;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.Adult_Content .slider::before {
+  content: "";
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.Adult_Content input:checked + .slider {
+  background-color: #FF5733;
+}
+
+.Adult_Content input:checked + .slider::before {
+  transform: translateX(24px);
 }
 
 #post-button{
@@ -663,6 +721,214 @@ export default {
 .over-limit {
   background-color: red !important;
 }
+
+
+@media (min-width: 768px) and (max-width: 1024px){
+    
+     
+     
+    
+  }
+
+  @media (max-width: 767px) {
+
+
+    #create-page {
+ 
+
+      width: 100%;
+      z-index: 21;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0px;
+      padding-top: 60px;
+      gap: 0px;
+
+      
+  }
+
+  #hint-text-container{
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    background-color: var(--bg-color);
+    border-radius: 0px;
+    border: none;
+    padding: 25px;
+    gap: 20px;
+    z-index: 100;
+
+  } 
+
+
+  #hint-text-container p {
+    padding-left: 5px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+  }
+
+  #hint-text-container li {
+    padding-left: 10px;
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+  }
+
+
+  .create-card {
+  background-color: var(--bg-color);
+  width: 100%;
+  border-radius: 0px;
+  border: none;
+  z-index: 10;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+}
+
+.create-card input[type="text"]
+{
+    background-color: var(--bg-color);
+    outline: none;
+    width: 95%;
+    border: none;
+    padding-left: 0px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: white;
+  }
+
+
+  .heading-bar {
+    height: 1px; 
+    width: 10%;  
+    background-color: white; 
+    margin-left: 20px; 
+    margin-bottom: 10px;
+    border-radius: 2px;
+  }
+
+  .title-bar {
+    height: 2px;
+    border-radius: 2px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+    margin-left: 0px;
+    margin-top: -25px;
+    margin-bottom: 20px;
+  }
+
+
+  .create-card #body-container
+  {
+    background-color: var(--secondary-color);
+    width: 95%;
+    border-radius: 10px;
+    border: none;
+    margin-top: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+
+  }
+
+
+  #model-selection-container{
+  width: 95%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  gap: 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 24px;
+  color: white;
+}
+
+  #body-text-description{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    padding-top: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    color: white;
+  }
+
+
+  #tag-text-container{
+    background-color: var(--secondary-color);
+      width: 95%;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-left: 20px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+  }
+
+
+  #tag-area{
+    margin-top: 20px;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    color: white;
+  }
+
+
+  .Adult_Content{
+      width: 95%;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-left: 20px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+  }
+
+  .Adult_Content p{
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--bg-color);
+}
+
+  }
 
 
 </style>

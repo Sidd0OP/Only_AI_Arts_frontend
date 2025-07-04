@@ -79,7 +79,7 @@ export default {
 <style scoped>
 
   #post-button{
-    background-color: var(--secondary-color);
+    background-color: rgba(0, 0, 0, 0.0);
     display: flex;
     align-items: center;
     justify-content: center;

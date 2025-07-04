@@ -381,7 +381,7 @@ export default {
   width: 98%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .create-card #body-container
@@ -427,16 +427,17 @@ export default {
 }
 
 #tag-text-container{
-  position: relative;
-  margin-top: 10px;
-  background-color: var(--bg-color);
-  width: 95%;
-  border-radius: 15px;
-  border: 1px solid rgba(107, 107, 107, 0.3);
-  padding-left: 20px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 24px;
+  background-color: var(--secondary-color);
+      width: 95%;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-left: 20px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 32px;
 }
 
 #model-selection-container{

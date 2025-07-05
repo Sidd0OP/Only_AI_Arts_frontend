@@ -13,7 +13,7 @@
       <PostSnippetSkeleton v-if = "show"/>
       <PostSnippetSkeleton v-if = "show"/>
 
-      <PostSnippet  v-for= "post in posts" :post = post />
+      <PostSnippet  v-for= "post in posts" :post = post :hearts="hearts"/>
     </div>
 
     
@@ -61,6 +61,7 @@ export default {
       userLoggedIn: false,
       show: true,
       isLoading: false,
+      hearts: [],
 
     }
   },
@@ -92,6 +93,10 @@ export default {
 
         this.posts = response.data.postSnippets;
         this.show = false;
+
+        this.hearts = response.data.heartedPost;
+
+        console.log(this.hearts)
 
       } catch (error) {
         console.error('Error fetching posts:', error)

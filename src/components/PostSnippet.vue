@@ -77,9 +77,11 @@
           <div id = "icon-container">
             <img v-if = "!hearted" src ="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart" @click="heartComment">
             <img v-if = "hearted" src ="@/assets/heart-solid.svg" id="heart-icon" alt="Heart">
+            <!-- <p>{{ heart }}</p> -->
           </div>
           <div id = "icon-container">
             <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="postComment">
+            <!-- <p>{{ commentCount }}</p> -->
           </div>
           
           <div class="dates">
@@ -120,9 +122,11 @@
           <div id = "icon-container">
             <img v-if = "!hearted" src ="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart" @click="heartComment">
             <img v-if = "hearted" src ="@/assets/heart-solid.svg" id="heart-icon" alt="Heart">
+            <p>{{ heart }}</p>
           </div>
           <div id = "icon-container">
             <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="postComment">
+            <p>{{ commentCount }}</p>
           </div>
           
           <div class="dates">
@@ -178,10 +182,20 @@ export default {
       required: true
     },
 
+    hearts: Array,
+
     editable: {
       type: Boolean,
       default: false
+    },
+
+    heartedPost: {
+
+      type: Boolean,
+      default: false
     }
+
+
   } ,
 
 
@@ -215,9 +229,22 @@ export default {
 
     },
 
+
+    commentCount(){
+
+      return this.post.commentCount
+
+    },
+
     heart(){
 
       return this.post.heart
+
+    },
+
+
+    isHearted() {
+      return this.hearts.includes(this.postId);
     },
 
     profileImage()
@@ -398,6 +425,15 @@ export default {
     this.postId = this.post.postId
     this.userId = this.post.userId
     this.rated = this.post.rated
+
+    if (
+    this.heartedPost === true ||                        // From prop
+    (this.post && this.post.hearted === true) ||    // From post object
+    (Array.isArray(this.hearts) && this.hearts.includes(this.post.postId)) // From hearts list
+    ) {
+      this.hearted = true;
+    }
+
   }
 
 }
@@ -716,6 +752,18 @@ export default {
     inset: 0;
     backdrop-filter: blur(30px);
     background-color: rgba(0, 0, 0, 0.8);
+  }
+
+
+
+
+  #icon-container p{
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    opacity: 0.8;
+   
   }
 
 

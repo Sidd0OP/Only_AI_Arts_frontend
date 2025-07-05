@@ -126,6 +126,7 @@ export default {
     border-radius: 0;
     border-left: none;
     border-right: none;
+    border-top: none;
     padding-left: 0;
     padding-right: 0;
   }

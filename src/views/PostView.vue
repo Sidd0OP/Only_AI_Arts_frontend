@@ -9,7 +9,7 @@
       <div id = "center-container">
 
         <PostSnippetSkeleton v-if = "show"/>
-        <PostSnippet v-if="post" :post = post :editable = this.postEditable @updated="refreshPostData"/>
+        <PostSnippet v-if="post" :post = post :editable = this.postEditable :heartedPost = this.hearted @updated="refreshPostData"/>
 
         <div id="gap-container"></div>
 
@@ -92,6 +92,7 @@ export default {
       listOfEditableComments: [],
       listOfEditableReplies: [],
       show: true,
+      hearted: false
 
     };
 
@@ -106,7 +107,7 @@ export default {
   methods: {
 
     refreshPostData() {
-      console.log("refresh post view");
+      
       const postId = this.$route.params.id;
       this.fetchPost(postId);
     },
@@ -126,7 +127,7 @@ export default {
         const response = await axiosObj.get(`/snippets/${this.page}`);
         const newPosts = response.data;
 
-        console.log(response)
+        
 
         this.posts.push(...newPosts);
         this.page++;
@@ -152,6 +153,7 @@ export default {
       this.postEditable = response.data.postEditableByUser
       this.listOfEditableComments = response.data.listOfEditableComments;
       this.listOfEditableReplies = response.data.listOfEditableReplies;
+      this.hearted = response.data.hearted;
 
       this.show = false;
     }

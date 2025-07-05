@@ -150,8 +150,14 @@
 
     profileImage()
     {
-      return this.comments.profliePhotoUrl ?? ""
-    } , 
+      const base = "https://res.cloudinary.com/decwrc84w/image/fetch";
+      const transformation = "f_auto";
+      const imageUrl = this.comments.profliePhotoUrl ?? "";
+
+      return imageUrl ? `${base}/${transformation}/${encodeURIComponent(imageUrl)}` : "";
+
+    
+    } ,
 
     formattedCreated() {
       return this.formatDate(this.comments.created)

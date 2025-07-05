@@ -27,7 +27,16 @@
 	      cards: [],
 	      page: 1,
 	      loading: true,
+	      isFetchingMore: false,
 	    }
+	  },
+
+	  mounted() {
+	    window.addEventListener('scroll', this.handleScroll);
+	  },
+
+	  beforeDestroy() {
+	    window.removeEventListener('scroll', this.handleScroll);
 	  },
 
 	  methods: {
@@ -49,16 +58,28 @@
 	    },
 
 	    async loadMoreCards() {
-	      try {
-	        const response = await axiosObj.get(`/gallery/${this.page}`)
-	        const newCards = response.data.cards
-	        this.cards.push(...newCards)
-	        this.page++
-	      } catch (err) {
-	        console.error('Error loading more cards:', err)
+		      try {
+		        const response = await axiosObj.get(`/gallery/${this.page}`)
+		        const newCards = response.data.cards
+		        this.cards.push(...newCards)
+		        this.page++
+		      } catch (err) {
+		        console.error('Error loading more cards:', err)
+		      }
+		    }
+		 },
+
+		  handleScroll() {
+	      const scrollTop = window.scrollY;
+	      const windowHeight = window.innerHeight;
+	      const fullHeight = document.documentElement.scrollHeight;
+
+	      const scrollPercent = (scrollTop + windowHeight) / fullHeight;
+
+	      if (scrollPercent > 0.7) {
+	        this.loadMoreCards();
 	      }
-	    }
-	  }
+	    },
 
 
 }

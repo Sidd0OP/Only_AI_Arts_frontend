@@ -1,6 +1,6 @@
 <template>
   <div class="image-card">
-    <img :src="imageUrl" alt="Post Image" class="post-image" />
+    <img :src="url" loading="lazy" alt="Post Image" class="post-image" />
   </div>
 </template>
 
@@ -21,6 +21,21 @@ export default {
       required: true,
     },
   },
+
+
+  computed:{
+    url()
+    {
+      const base = "https://res.cloudinary.com/decwrc84w/image/fetch";
+      const transformation = "f_auto";
+    
+
+      return this.imageUrl
+        ? `${base}/${transformation}/${encodeURIComponent(this.imageUrl)}`
+        : "";
+      
+    }
+  }
 };
 </script>
 

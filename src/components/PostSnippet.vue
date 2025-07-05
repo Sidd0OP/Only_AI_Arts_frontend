@@ -222,12 +222,23 @@ export default {
 
     profileImage()
     {
-      return this.post.profliePhotoUrl ?? ""
+      const base = "https://res.cloudinary.com/decwrc84w/image/fetch";
+      const transformation = "f_auto";
+      const imageUrl = this.post.profliePhotoUrl ?? "";
+
+      return imageUrl ? `${base}/${transformation}/${encodeURIComponent(imageUrl)}` : "";
+
+    
     } , 
 
     url()
     {
-      return this.post.imageUrl ?? ""
+      const base = "https://res.cloudinary.com/decwrc84w/image/fetch";
+      const transformation = "f_auto";
+      const imageUrl = this.post.imageUrl ?? "";
+
+      return imageUrl ? `${base}/${transformation}/${encodeURIComponent(imageUrl)}` : "";
+      
     }
      ,
 

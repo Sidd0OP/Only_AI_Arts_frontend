@@ -113,8 +113,14 @@
 
     profileImage()
     {
-      return this.reply.profliePhotoUrl ?? ""
-    } , 
+      const base = "https://res.cloudinary.com/decwrc84w/image/fetch";
+      const transformation = "f_auto";
+      const imageUrl = this.reply.profliePhotoUrl ?? "";
+
+      return imageUrl ? `${base}/${transformation}/${encodeURIComponent(imageUrl)}` : "";
+
+    
+    } ,
 
     formattedCreated() {
       return this.formatDate(this.reply.created)

@@ -443,8 +443,8 @@ export default {
     top: 100px;
     left: 0;
     margin-left: 30px;
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     border-radius: 10%;
     overflow: hidden;
     z-index: 100;
@@ -472,7 +472,7 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: flex-end;
-      gap: 20px;
+      gap: 60px;
       z-index: 100;
     }
 
@@ -497,8 +497,8 @@ export default {
       position: absolute;
       top: 80px;
       left: 0px;
-      width: 80px;
-      height: 80px;
+      width: 120px;
+      height: 120px;
       border-radius: 10%;
       overflow: hidden;
       z-index: 100;
@@ -508,7 +508,6 @@ export default {
 
     #tab-content {
       width: 100%;
-      
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -531,7 +530,7 @@ export default {
     #name{
 
       font-family: 'Inter', sans-serif;
-      font-size: 16px;
+      font-size: 28px;
       font-weight: 800;
       color: white;
     }
@@ -539,7 +538,7 @@ export default {
     #joined{
 
       font-family: 'Inter', sans-serif;
-      font-size: 16px;
+      font-size: 24px;
       font-weight: 800;
       color: white; 
     }
@@ -568,7 +567,7 @@ export default {
       align-items: start;
       justify-content: center;
       gap: 10px;
-      padding-left: 100px;
+      padding-left: 150px;
       width: 100%;
     }
 

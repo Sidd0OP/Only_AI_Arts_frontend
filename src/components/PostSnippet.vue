@@ -711,6 +711,13 @@ export default {
 
 @media (max-width: 767px) {
 
+  .image-overlay {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(30px);
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
 
   #body-container{
     display: none;
@@ -766,7 +773,7 @@ export default {
     flex-direction: row;
     justify-content: start;
     align-items: center;
-    gap: 32px;
+    gap: 24px;
     padding-bottom: 4px;
     padding-left: 54px;
   }

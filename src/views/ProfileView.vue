@@ -27,8 +27,10 @@
         </div>
         
         <p id = "joined">{{ formattedCreated }}</p>
+        
+      </div>
 
-        <div id = "name-data-container">
+      <div id = "bio-data-container">
 
           <div id="bio-container">
             <p id = "bio">{{ bio }}</p>
@@ -39,8 +41,6 @@
           </div>  
 
         </div>
-        
-      </div>
     </div>
 
 
@@ -312,10 +312,10 @@ export default {
   min-height: 100px;
   padding: 30px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: end;
-  gap: 30px;
+  gap: 50px;
   z-index: 100;
 }
 
@@ -345,8 +345,8 @@ export default {
   align-items: start;
   justify-content: center;
   gap: 10px;
-  padding-left: 30px;
-  width: 80%;
+  padding-left: 250px;
+  width: 90%;
 }
 
 
@@ -361,6 +361,17 @@ export default {
   gap: 10px;
 }
 
+
+#bio-data-container{
+  padding-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 30px;
+  background-color: var(--bg-color);
+  padding: 10px;
+}
 
 #name{
 
@@ -395,6 +406,11 @@ export default {
   cursor: pointer;
 }
 
+#edit-icon-small{
+  width: 40px;
+  height: 40px;
+}
+
 
 #edit-icon {
   position: absolute;
@@ -422,11 +438,29 @@ export default {
  @media (min-width: 768px) and (max-width: 1024px){
     
      
-     
+     #profile-image-container {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    margin-left: 30px;
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
+    overflow: hidden;
+    z-index: 100;
+    border: 1px solid rgba(107, 107, 107, 0.3);
+    background-color: rgba(0, 0, 0, 1.0);
+  }
     
   }
 
   @media (max-width: 767px) {
+
+
+    #edit-icon-small{
+      width: 25px;
+      height: 25px;
+    }
 
     #user-data-container{
 
@@ -435,10 +469,10 @@ export default {
       min-height: 100px;
       padding: 20px;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
       justify-content: flex-end;
-      gap: 30px;
+      gap: 20px;
       z-index: 100;
     }
 
@@ -462,7 +496,7 @@ export default {
     #profile-image-container {
       position: absolute;
       top: 80px;
-      left: 150px;
+      left: 0px;
       width: 80px;
       height: 80px;
       border-radius: 10%;
@@ -487,17 +521,17 @@ export default {
       align-items: start;
       justify-content: center;
       flex-direction: row;
-      background-color: var(--secondary-color);
-      padding: 10px;
+      background-color: var(--bg-color);
+      padding: 0px;
       border-radius: 15px;
-      gap: 10px;
+      gap: 5px;
     }
 
 
     #name{
 
       font-family: 'Inter', sans-serif;
-      font-size: 32px;
+      font-size: 16px;
       font-weight: 800;
       color: white;
     }
@@ -505,7 +539,7 @@ export default {
     #joined{
 
       font-family: 'Inter', sans-serif;
-      font-size: 24px;
+      font-size: 16px;
       font-weight: 800;
       color: white; 
     }
@@ -534,7 +568,7 @@ export default {
       align-items: start;
       justify-content: center;
       gap: 10px;
-      padding-left: 0px;
+      padding-left: 100px;
       width: 100%;
     }
 

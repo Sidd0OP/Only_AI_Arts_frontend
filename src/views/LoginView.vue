@@ -400,4 +400,66 @@ button:hover {
   color: red;
   margin-top: 0.5rem;
 }
+
+
+
+@media (min-width: 768px) and (max-width: 1024px){
+    
+     
+     
+    
+  }
+
+  @media (max-width: 767px) {
+
+    #vid-container{
+      display: none;
+    }
+
+
+    #login-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      padding-top: 50px;
+      height: 100vh;
+      width: 100%;
+      background: var(--bg-color);
+      z-index: 10;
+      gap: 20px;
+    }
+
+
+
+    .login-card {
+      background: #17100E;
+      border-radius: 20px;
+      width: 340px;
+      height: 500px;
+      color: #fff;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+
+    #form-container{
+
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      padding: 20px;
+      gap: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      color: #888888;
+
+    }
+
+  }
 </style>

@@ -402,4 +402,63 @@ button:hover {
 }
 
 
+@media (max-width: 767px) {
+
+    #vid-container{
+      display: none;
+    }
+
+    #register-page {
+      padding-top: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      height: auto;
+      width: 100%;
+      background: var(--bg-color);
+      z-index: 10;
+      gap: 50px;
+      padding-bottom: 30px;
+    }
+
+
+
+
+
+
+
+
+    .register-card {
+      background: #17100E;
+      border-radius: 20px;
+      padding-top: 40px;
+      width: 340px;
+      height: 640px;
+      color: #fff;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+
+    #form-container{
+
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      padding: 20px;
+      gap: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      color: #888888;
+
+    }
+
+  }
+
 </style>

@@ -1,6 +1,20 @@
 <template>
   <div>
-  <Navbar @login-status-checked="onNavbarReady" />
+  <Navbar ref="navbar" @login-status-checked="onNavbarReady" />
+  <div id="tag-container">
+    <TrendingTagPill
+      tag="All"
+      :isActive="activeTag === 'All'"
+      @click.native="setActiveTag('All')"
+    />
+
+    <TrendingTagPill
+    v-for="tag in trendingTags"
+    :tag="tag"
+    :isActive="activeTag === tag"
+    @click.native="setActiveTag(tag)"
+    />
+  </div>
   <SidePanel />
   <main>
     <div id = "container">
@@ -41,6 +55,7 @@ import PostSnippetSkeleton from '../components/PostSnippetSkeleton.vue'
 import Footer from '../components/Footer.vue'
 import CreatePost from '../components/CreatePost.vue'
 import SidePanel from '../components/SidePanel.vue'
+import TrendingTagPill from '../components/TrendingTagPill.vue'
 
 export default {
   components: {
@@ -49,7 +64,8 @@ export default {
     PostSnippetSkeleton,
     Footer,
     CreatePost,
-    SidePanel
+    SidePanel,
+    TrendingTagPill,
   },
 
 
@@ -62,7 +78,9 @@ export default {
       show: true,
       isLoading: false,
       hearts: [],
-
+      trendingTags: [],
+      activeTag: 'All',
+      hasMore: true,
     }
   },
 
@@ -79,9 +97,33 @@ export default {
 
   methods: {
 
+    setActiveTag(tag) {
+      if (this.activeTag === tag) return;
+
+      this.activeTag = tag;
+      
+      this.page = 0;
+      this.posts = [];
+      this.show = true;
+      this.hasMore = true
+
+      this.page = tag === 'All' ? 1 : 0;
+
+      if (tag === 'All') {
+        this.fetchPosts();  
+      } else {
+        this.fetchPostsByTag(this.activeTag, this.page);
+      }
+
+
+
+      console.log('Active tag:', tag);
+      console.log('New posts:' , this.posts)
+    },
+
     async onNavbarReady()
     {
-      await this.checkLoginStatus()
+      this.userLoggedIn = this.$refs.navbar.userLoggedIn;
       await this.fetchPosts()
     },
 
@@ -95,8 +137,8 @@ export default {
         this.show = false;
 
         this.hearts = response.data.heartedPost;
-
-        console.log(this.hearts)
+        this.trendingTags = response.data.trendingTags;
+      
 
       } catch (error) {
         console.error('Error fetching posts:', error)
@@ -104,21 +146,38 @@ export default {
     },
 
 
+    async fetchPostsByTag(tag, page = 1) {
+      try {
+          const response = await axiosObj.get(`/tags/${tag}/${page}`);
+
+          const newPosts = response.data; 
+
+          
+
+          console.log(newPosts);
+
+          this.posts = newPosts;
+          this.page = page;
+          this.show = false;
+          this.hasMore = newPosts.length > 0;
+
+        } catch (error) {
+          console.error(`Error fetching posts for tag "${tag}" at page ${page}:`, error);
+        }
+    },
+
+
     async loadMorePosts() {
-      if (this.isLoading) return;
+      if (this.isLoading || !this.hasMore) return;
 
       this.isLoading = true;
       try {
-        this.usingSnippetsApi = true;
         const response = await axiosObj.get(`/snippets/${this.page}`);
         const newPosts = response.data;
 
         this.posts.push(...newPosts);
         this.page++;
-
-        if (newPosts.length === 0) {
-          this.hasMore = false;
-        }
+        this.hasMore = newPosts.length > 0;
       } catch (error) {
         console.error('Error loading more posts:', error);
       } finally {
@@ -127,28 +186,47 @@ export default {
     },
 
 
-    async checkLoginStatus() {
-        try {
+    async loadMoreTagPosts() {
+      if (this.isLoading || !this.hasMore) return;
+
+      this.isLoading = true;
+      try {
+        const response = await axiosObj.get(`/tags/${this.activeTag}/${this.page}`);
+        const newPosts = response.data;
+
+        this.posts.push(...newPosts);
+        this.page++;
+        this.hasMore = newPosts.length > 0;
+      } catch (error) {
+        console.error('Error loading more tag posts:', error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+
+    // async checkLoginStatus() {
+    //     try {
 
           
-          const response = await axiosObj.get('/user');
+    //       const response = await axiosObj.get('/user');
 
-          if(response.data.userId === null){
+    //       if(response.data.userId === null){
 
-            this.userLoggedIn = false;
+    //         this.userLoggedIn = false;
 
-          }else{
+    //       }else{
 
             
-            this.userLoggedIn = true;
-          }
+    //         this.userLoggedIn = true;
+    //       }
 
-        } catch (error) {
+    //     } catch (error) {
 
-          console.error('Error fetching user Data:', error)
+    //       console.error('Error fetching user Data:', error)
 
-        }
-    },
+    //     }
+    // },
 
     
 
@@ -166,10 +244,17 @@ export default {
       const windowHeight = window.innerHeight;
       const fullHeight = document.documentElement.scrollHeight;
 
+      if (!this.hasMore) return;
+
       const scrolledPercentage = (scrollTop + windowHeight) / fullHeight;
 
-      if (scrolledPercentage > 0.7) {
-        this.loadMorePosts();
+
+      if (scrolledPercentage > 0.7 ) {
+        if(this.activeTag === "All"){
+          alert('load more called');
+          this.loadMorePosts();
+        }
+        
       }
     }
 
@@ -183,7 +268,33 @@ export default {
 
 <style scoped>
 
-  
+  #tag-container{
+    position: fixed;
+    height: 120px;
+    width: 100%;
+    top: 0px;
+    left: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: start;
+    padding-bottom: 15px;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    gap: 16px;
+
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+
+
+  #tag-container::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Edge */
+  }
+    
 
   #heading-container{
     background-color: var(--bg-color);
@@ -211,7 +322,7 @@ export default {
 
   #container
   {
-    padding-top: 100px;
+    padding-top: 150px;
     width: 60vw;
     max-width: 700px;
     background-color: #000000;
@@ -326,7 +437,7 @@ export default {
 
     #container
     {
-      padding-top: 60px;
+      padding-top: 100px;
       width:100%;
       max-width: 100%;
       background-color: #000000;
@@ -337,6 +448,31 @@ export default {
       gap: 0px;
 
     }
+
+
+    #tag-container{
+    position: fixed;
+    height: 120px;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: start;
+    padding-bottom: 15px;
+    padding-left: 16px;
+    padding-right: 16px;
+    z-index: 100;
+    background-color: var(--bg-color);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    gap: 14px;
+
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
 
 
 

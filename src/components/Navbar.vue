@@ -199,9 +199,9 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  /*background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);*/
   padding: 0.5rem;
   box-sizing: border-box;
   padding-left: 30px;

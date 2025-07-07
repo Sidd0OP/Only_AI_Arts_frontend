@@ -56,6 +56,9 @@ import Footer from '../components/Footer.vue'
 import CreatePost from '../components/CreatePost.vue'
 import SidePanel from '../components/SidePanel.vue'
 import TrendingTagPill from '../components/TrendingTagPill.vue'
+import throttle from 'lodash/throttle';
+import homeState from '../state/homeState.js';
+
 
 export default {
   components: {
@@ -81,17 +84,50 @@ export default {
       trendingTags: [],
       activeTag: 'All',
       hasMore: true,
+      throttledScroll: null
     }
   },
 
+  created() {
+    
+    this.throttledScroll = throttle(this.handleScroll, 300);
+  },
+
+
   async mounted() {
 
-    window.addEventListener('scroll', this.handleScroll);
+    if (this.$route.name === 'home') {
+      window.addEventListener('scroll', this.throttledScroll);
+    }
+
+
+    if (homeState.posts.length > 0) {
+      
+      this.posts = homeState.posts;
+      this.page = homeState.page;
+      this.activeTag = homeState.activeTag;
+      this.show = false;
+
+      this.$nextTick(() => {
+        window.scrollTo(0, homeState.scrollY);
+      });
+    } else {
+      await this.fetchPosts();
+    }
     
+
+       
   },
 
   beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
+
+    window.removeEventListener('scroll', this.throttledScroll);
+
+
+     homeState.scrollY = window.scrollY;
+     homeState.posts = this.posts;
+     homeState.page = this.page;
+     homeState.activeTag = this.activeTag;
   },
 
 
@@ -106,6 +142,11 @@ export default {
       this.posts = [];
       this.show = true;
       this.hasMore = true
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' 
+      });
 
       this.page = tag === 'All' ? 1 : 0;
 
@@ -240,6 +281,8 @@ export default {
     },
 
     handleScroll() {
+      if (this.$route.name !== 'home') return;
+
       const scrollTop = window.scrollY;
       const windowHeight = window.innerHeight;
       const fullHeight = document.documentElement.scrollHeight;
@@ -251,7 +294,7 @@ export default {
 
       if (scrolledPercentage > 0.7 ) {
         if(this.activeTag === "All"){
-          alert('load more called');
+          alert('load more called' + this.page);
           this.loadMorePosts();
         }
         

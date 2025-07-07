@@ -822,8 +822,8 @@ export default {
     justify-content: start;
     align-items: center;
     gap: 24px;
-    padding-bottom: 4px;
-    padding-left: 54px;
+    padding-bottom: 25px;
+    padding-left: 62px;
   }
 
   #bottom-right-container small{

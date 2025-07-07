@@ -91,12 +91,13 @@ export default {
   
   mounted() {
 
-    window.removeEventListener('scroll', this.handleScroll);
+    // window.removeEventListener('scroll', this.handleScroll);
 
   },
 
   
   beforeUnmount() {
+    console.log("brefore unmount called");
     window.removeEventListener('scroll', this.handleScroll);
   },
 
@@ -150,6 +151,9 @@ export default {
 
         this.hearts = response.data.heartedPost;
         this.trendingTags = response.data.trendingTags;
+
+
+        window.scrollTo({ top: 0, behavior: 'instant' });
       
         if (this.$route.name === 'home') {
           window.addEventListener("scroll", this.handleScroll)

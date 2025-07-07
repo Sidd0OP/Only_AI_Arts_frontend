@@ -5,14 +5,14 @@
     <TrendingTagPill
       tag="All"
       :isActive="activeTag === 'All'"
-      @click.native="setActiveTag('All')"
+      @click="setActiveTag('All')"
     />
 
     <TrendingTagPill
     v-for="tag in trendingTags"
     :tag="tag"
     :isActive="activeTag === tag"
-    @click.native="setActiveTag(tag)"
+    @click="setActiveTag(tag)"
     />
   </div>
   <SidePanel />
@@ -96,24 +96,7 @@ export default {
 
   async mounted() {
 
-    if (this.$route.name === 'home') {
-      window.addEventListener('scroll', this.throttledScroll);
-    }
-
-
-    if (homeState.posts.length > 0) {
-      
-      this.posts = homeState.posts;
-      this.page = homeState.page;
-      this.activeTag = homeState.activeTag;
-      this.show = false;
-
-      this.$nextTick(() => {
-        window.scrollTo(0, homeState.scrollY);
-      });
-    } else {
-      await this.fetchPosts();
-    }
+    
     
 
        
@@ -164,8 +147,14 @@ export default {
 
     async onNavbarReady()
     {
+
       this.userLoggedIn = this.$refs.navbar.userLoggedIn;
       await this.fetchPosts()
+
+      if (this.$route.name === 'home') {
+        window.addEventListener('scroll', this.throttledScroll);
+      }
+
     },
 
     async fetchPosts() {
@@ -183,6 +172,23 @@ export default {
 
       } catch (error) {
         console.error('Error fetching posts:', error)
+      }
+
+
+      if (homeState.posts.length > 0) {
+      
+        this.posts = homeState.posts;
+        this.page = homeState.page;
+        this.activeTag = homeState.activeTag;
+        this.show = false;
+
+
+        console.log(homeState.scrollY)
+
+
+        this.$nextTick(() => {
+          window.scrollTo(0, homeState.scrollY);
+        });
       }
     },
 
@@ -287,18 +293,20 @@ export default {
       const windowHeight = window.innerHeight;
       const fullHeight = document.documentElement.scrollHeight;
 
-      if (!this.hasMore) return;
+      if (!this.hasMore || this.show || this.isLoading) return;
 
       const scrolledPercentage = (scrollTop + windowHeight) / fullHeight;
 
 
-      if (scrolledPercentage > 0.7 ) {
-        if(this.activeTag === "All"){
-          alert('load more called' + this.page);
+      if (scrollTop + windowHeight >= fullHeight - 100) {
+        if (this.activeTag === "All") {
+          alert('load more called', this.page);
           this.loadMorePosts();
         }
-        
       }
+
+
+
     }
 
 

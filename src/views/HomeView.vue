@@ -91,12 +91,14 @@ export default {
   
   mounted() {
 
-    window.addEventListener("scroll", this.handleScroll)
+    window.removeEventListener('scroll', this.handleScroll);
 
   },
 
   
-
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
 
 
   methods: {
@@ -132,9 +134,7 @@ export default {
       this.userLoggedIn = this.$refs.navbar.userLoggedIn;
       await this.fetchPosts()
 
-      if (this.$route.name === 'home') {
-        window.addEventListener('scroll', this.throttledScroll);
-      }
+      
 
 
     },
@@ -151,6 +151,9 @@ export default {
         this.hearts = response.data.heartedPost;
         this.trendingTags = response.data.trendingTags;
       
+        if (this.$route.name === 'home') {
+          window.addEventListener("scroll", this.handleScroll)
+        }
 
       } catch (error) {
         console.error('Error fetching posts:', error)
@@ -242,7 +245,7 @@ export default {
 
       if (scrollTop + windowHeight >= fullHeight - 100) {
         if (this.activeTag === "All") {
-          console.log(this.page)
+          console.log(this.page , scrollTop + windowHeight)
           this.loadMorePosts();
         }
       }

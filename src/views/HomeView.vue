@@ -88,30 +88,15 @@ export default {
     }
   },
 
-  created() {
-    
-    this.throttledScroll = throttle(this.handleScroll, 300);
+  
+  mounted() {
+
+    window.addEventListener("scroll", this.handleScroll)
+
   },
 
+  
 
-  async mounted() {
-
-    
-    
-
-       
-  },
-
-  beforeDestroy() {
-
-    window.removeEventListener('scroll', this.throttledScroll);
-
-
-     homeState.scrollY = window.scrollY;
-     homeState.posts = this.posts;
-     homeState.page = this.page;
-     homeState.activeTag = this.activeTag;
-  },
 
 
   methods: {
@@ -139,10 +124,6 @@ export default {
         this.fetchPostsByTag(this.activeTag, this.page);
       }
 
-
-
-      console.log('Active tag:', tag);
-      console.log('New posts:' , this.posts)
     },
 
     async onNavbarReady()
@@ -154,6 +135,7 @@ export default {
       if (this.$route.name === 'home') {
         window.addEventListener('scroll', this.throttledScroll);
       }
+
 
     },
 
@@ -175,21 +157,7 @@ export default {
       }
 
 
-      if (homeState.posts.length > 0) {
       
-        this.posts = homeState.posts;
-        this.page = homeState.page;
-        this.activeTag = homeState.activeTag;
-        this.show = false;
-
-
-        console.log(homeState.scrollY)
-
-
-        this.$nextTick(() => {
-          window.scrollTo(0, homeState.scrollY);
-        });
-      }
     },
 
 
@@ -200,8 +168,6 @@ export default {
           const newPosts = response.data; 
 
           
-
-          console.log(newPosts);
 
           this.posts = newPosts;
           this.page = page;
@@ -252,30 +218,6 @@ export default {
     },
 
 
-    // async checkLoginStatus() {
-    //     try {
-
-          
-    //       const response = await axiosObj.get('/user');
-
-    //       if(response.data.userId === null){
-
-    //         this.userLoggedIn = false;
-
-    //       }else{
-
-            
-    //         this.userLoggedIn = true;
-    //       }
-
-    //     } catch (error) {
-
-    //       console.error('Error fetching user Data:', error)
-
-    //     }
-    // },
-
-    
 
     handlePost(){
 
@@ -300,7 +242,7 @@ export default {
 
       if (scrollTop + windowHeight >= fullHeight - 100) {
         if (this.activeTag === "All") {
-          alert('load more called', this.page);
+          console.log(this.page)
           this.loadMorePosts();
         }
       }

@@ -19,7 +19,12 @@
   <main>
     <div id = "container">
       <div id="heading-container">
-        <p>Top Images Today</p>
+        <ModelDisplay
+          v-for="(tool, index) in trendingTools"
+          :key="tool"
+          :number="index + 1"
+          :iconName="tool"
+        />
       </div>
       
       <PostSnippetSkeleton v-if = "show"/>
@@ -50,6 +55,7 @@
 <script>
 import axiosObj from '../axios-config';
 import Navbar from '../components/Navbar.vue'
+import ModelDisplay from '../components/ModelDisplay.vue'
 import PostSnippet from '../components/PostSnippet.vue'
 import PostSnippetSkeleton from '../components/PostSnippetSkeleton.vue'
 import Footer from '../components/Footer.vue'
@@ -69,6 +75,7 @@ export default {
     CreatePost,
     SidePanel,
     TrendingTagPill,
+    ModelDisplay
   },
 
 
@@ -82,6 +89,7 @@ export default {
       isLoading: false,
       hearts: [],
       trendingTags: [],
+      trendingTools: [],
       activeTag: 'All',
       hasMore: true,
       throttledScroll: null
@@ -151,7 +159,7 @@ export default {
 
         this.hearts = response.data.heartedPost;
         this.trendingTags = response.data.trendingTags;
-
+        this.trendingTools = response.data.trendingTools;
 
         window.scrollTo({ top: 0, behavior: 'instant' });
       
@@ -300,14 +308,14 @@ export default {
     background-color: var(--bg-color);
     border-radius: 15px;
     border: 1px solid #222222;
-    padding-left: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: start;
     width: 100%;
-    height: 80px;
+    /*height: 80px;*/
     z-index: 10;
+    gap: 10px;
     
 
   }

@@ -119,6 +119,9 @@
 	  align-items: center;
 	  justify-content: center;
 	  gap: 80px;
+	  background-color: var(--bg-color);
+	  backdrop-filter: none;
+	  -webkit-backdrop-filter: none;
 
 	}
 

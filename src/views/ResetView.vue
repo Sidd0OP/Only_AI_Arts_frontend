@@ -12,16 +12,22 @@
 
       <div id = "form-container">
 
-        <p>Email</p>
-        <input v-model="email" type="email" placeholder="Email" required />
-        <p v-if="showTokenBox" >Password</p>
-        <input v-if="showTokenBox" v-model="token" type="text-container" placeholder="Token" required />
+        <p v-if="!showTokenBox" >Email</p>
+        <input v-if="!showTokenBox" v-model="email" type="email" placeholder="Email" required />
 
-        <div id = "option-container">
-          <p>Remembered ?</p>
-        </div>
+        <p v-if="showTokenBox" >Secret Token</p>
+        <input v-if="showTokenBox" v-model="token" type="text-container" placeholder="Secret Token" required />
+
+        <p v-if="showTokenBox" >New Password</p>
+        <input v-if="showTokenBox" v-model="password" type="password" placeholder="Password" required />
+        <p v-if="showTokenBox" >Confirm New Password</p>
+        <input v-if="showTokenBox" v-model="confirmPassword" type="password" placeholder="Confirm Password" required />
+
         
-        <button @click = "getToken" >Submit</button>
+        
+        <button v-if="!showTokenBox" @click = "getToken" >Submit</button>
+
+        <button v-if="showTokenBox" @click = "submitNewDetails" >Change</button>
 
         <p v-if="error" class="error">{{ error }}</p>
 
@@ -39,6 +45,10 @@ import axiosObj from '../axios-config';
 
 const email = ref('')
 const token = ref('')
+
+const password = ref('')
+const confirmPassword = ref('')
+
 const error = ref('')
 const router = useRouter()
 const showTokenBox = ref(false)
@@ -47,19 +57,45 @@ const getToken = async () => {
   error.value = ''
 
   try {
-    console.log(email.value);
-    axiosObj.post('/token', {email: email.value})
+    
+
+    await axiosObj.post('/token', {email: email.value})
     .then(() => {
+      
       showTokenBox.value = true
+
     })
 
   } catch (err) {
 
-    error.value = err || 'Login failed'
+    error.value = 'Email invalid or does not exist'
   }
 
   
 }
+
+
+const submitNewDetails = async () => {
+  error.value = '';
+
+  if (password.value !== confirmPassword.value) {
+    error.value = 'Passwords do not match.';
+    return;
+  }
+
+  try {
+    const formData = new FormData();
+    formData.append('email', email.value);
+    formData.append('token', token.value);
+    formData.append('newPassword', password.value);
+
+    await axiosObj.post('/reset', formData);
+
+    router.push('/login');
+  } catch (err) {
+    error.value = err.response?.data?.message || 'Reset failed';
+  }
+};
 
 
 
@@ -131,7 +167,8 @@ const getToken = async () => {
 }
 
 input[type="email"],
-input[type="text-container"] {
+input[type="text-container"],
+input[type="password"] {
 
   width: 100%;
   background-color: rgba(187, 187, 187, 0.15);  

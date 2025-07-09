@@ -748,14 +748,50 @@ export default {
 @media (max-width: 767px) {
 
   .image-overlay {
-    position: absolute;
-    inset: 0;
-    backdrop-filter: blur(30px);
-    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
   }
 
+  #image-container {
+    background: none !important;
+    background-image: none !important;
+    background-size: initial !important;
+    background-position: initial !important;
+    background-repeat: initial !important;
+  }
 
+  #maximize-icon-container img{
+    display: none;
+  }
 
+  #maximize-icon-container{
+    opacity: 1.0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;
+    background-color: rgba(0, 0, 0, 0.0);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  #image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 10;
+}
+  
+  #icon-container{
+
+    width: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 100%;
+    transition: background-color 0.3s ease;
+  }
 
   #icon-container p{
     color: white;
@@ -822,8 +858,9 @@ export default {
     justify-content: start;
     align-items: center;
     gap: 24px;
-    padding-bottom: 25px;
-    padding-left: 62px;
+    padding-bottom: 35px;
+    padding-left: 64px;
+    
   }
 
   #bottom-right-container small{

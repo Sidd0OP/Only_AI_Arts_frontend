@@ -19,12 +19,19 @@
   <main>
     <div id = "container">
       <div id="heading-container">
-        <ModelDisplay
+        <div id="model-text-container">
+          <p>Top</p>
+          <p>Trends</p>
+        </div>
+        
+        <div id="model-container">
+          <ModelDisplay
           v-for="(tool, index) in trendingTools"
           :key="tool"
           :number="index + 1"
           :iconName="tool"
         />
+        </div>
       </div>
       
       <PostSnippetSkeleton v-if = "show"/>
@@ -313,20 +320,37 @@ export default {
     align-items: center;
     justify-content: start;
     width: 100%;
-    /*height: 80px;*/
     z-index: 10;
-    gap: 10px;
-    
+    overflow-x: auto;        
+    white-space: nowrap;
+
+    -ms-overflow-style: none;  
+    scrollbar-width: none;
 
   }
 
-  #heading-container p
-  {
-    -webkit-text-stroke: 2px #FF2160;
-    color: var(--bg-color);
+  #model-text-container{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    color: white;
     font-family: 'Inter', sans-serif;
-    font-size: 48px;
+    font-size: 32px;
+    font-weight: 600;
+    padding-left: 20px;
+
   }
+
+  #model-container{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+  }
+
+  
 
   #container
   {
@@ -438,14 +462,17 @@ export default {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      width: 100%;
-      height: 80px;
+      max-width: 100vw;
+      height: auto;
       z-index: 10;
+      gap: 2px;
+      overflow-x: auto;        
+      white-space: nowrap;
     }
 
     #container
     {
-      padding-top: 100px;
+      padding-top: 120px;
       width:100%;
       max-width: 100%;
       background-color: #000000;

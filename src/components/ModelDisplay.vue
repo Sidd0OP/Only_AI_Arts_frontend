@@ -38,22 +38,21 @@ export default {
 <style scoped>
 
 	#main-container{
-		height: 120px;
+		height: 100%;
 		background-color: var(--bg-color);
 		display: flex;
 		flex-direction: row;
 		justify-content: start;
 		align-items: center;
-		padding-left: 10px;
+		padding-left: 0px;
 	}
 
 	#icon-container{
 	   	
 	   	background: #000000;
 		background: radial-gradient(circle, rgba(0, 0, 0, 0.8) 23%, rgba(255, 255, 255, 0) 64%);
-		/*background-color: var(--bg-color);*/
-	    width: 120px;
-	    height: 120px;
+	    width: 100px;
+	    height: 100px;
 	    display: flex;
 	    align-items: center;
 	    justify-content: center;
@@ -67,11 +66,13 @@ export default {
 	  
 
   	#main-container p {
-  		position: absolute;
+  		left: 50%;
+  		transform: translate(-50%, 0%);
+  		position: relative;
   		-webkit-text-stroke: 2px #FF2160;
     	color: var(--bg-color);
   		font-family: 'Inter', sans-serif;
-    	font-size: 120px;
+    	font-size: 100px;
     	font-weight: 400;
     	align-self: center;
   		margin-right: auto;
@@ -79,8 +80,8 @@ export default {
   	}
 
 	#icon-container img{
-		width: 60%;
-		height: 60%;
+		width: 70%;
+		height: 70%;
 
 	}
 	

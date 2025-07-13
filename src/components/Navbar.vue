@@ -2,7 +2,7 @@
   <nav class="navbar" :class="{ 'search-active': isSearchActive }">
     <ul>
       
-      <img id = "logo" src= "/OnlyAiArtsLogo.png" :alt="Only AI Arts Logo" @click="goToHomePage">
+      <img id = "logo" src= "/OnlyAiArtsLogo.png" alt= "Only AI Arts Logo" @click="goToHomePage">
 
       <div id = "search-bar-container">
 

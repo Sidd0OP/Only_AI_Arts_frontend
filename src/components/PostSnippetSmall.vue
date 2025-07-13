@@ -45,7 +45,7 @@
 
         <div id ="left-container">
 
-          <div id ="profile-image" @click="goToProfile">
+          <div id ="profile-image" :alt="name || 'Profile Name'" @click="goToProfile">
               <img v-if = "profileImage" :src="profileImage" />
           </div>
 

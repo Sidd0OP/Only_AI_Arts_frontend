@@ -30,7 +30,7 @@
            <img src="@/assets/maximize.svg" id="maximize-icon" alt="Maximize">
       </div>
       <div class="image-overlay"></div>
-      <img :src="url" loading="lazy"/>
+      <img :src="url" loading="lazy" :alt="title || 'Post image'"/>
     </div>
 
     <div id="body-container">
@@ -53,7 +53,7 @@
         <div id ="left-container">
 
           <div id ="profile-image" @click="goToProfile">
-              <img v-if = "profileImage" :src="profileImage" />
+              <img v-if = "profileImage" :src="profileImage" :alt="name || 'Profile Name'" />
           </div>
 
           <h2 id="media-heading" @click="goToPost">{{ title }}</h2>

@@ -13,9 +13,9 @@
 
 	<div id ="reply-container">
 
-    <p>
-      {{ body }}
-    </p>
+    <pre>
+        {{ body }}
+    </pre>
 
     
 
@@ -31,7 +31,7 @@
           </div>
 
           <div id = "name" @click="goToProfile">
-            <span id= "name-text">{{ name }}</span>
+            <span id= "name-text">~ {{ name }}</span>
           </div>
 
         </div>
@@ -174,26 +174,34 @@
   #reply-container
   {
     padding-top: 20px;
-    width: 85%;
-    border: 1px solid rgba(107, 107, 107, 0.3);
-    /*box-shadow: inset 2px 2px 2px  #222222;*/
+    width: 94.5%;
+    border-left: 1px dashed transparent;
+    background-color: var(--bg-color);
     z-index: 10;
-    background-color: var(--secondary-color);
 
+  
+  border-image: repeating-linear-gradient(
+    to bottom,
+    rgba(77, 77, 77, 0.7) 0,
+    rgba(77, 77, 77, 0.7) 10px,
+    transparent 10px,
+    transparent 20px
+  ) 1;
   }
 
   
 
-  p
+  pre
   {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #FFFFFF;
-    opacity: 0.55;
+    white-space: pre-line;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size: 16px;
+    color: white;
     text-align: left;
-    padding-top: 30px;
-    padding-bottom: 10px;
-    padding-left: 15px;
+    padding-top: 0px;
+    padding-bottom: 30px;
+    padding-left: 20px;
   }
 
   
@@ -204,7 +212,8 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    /*border-bottom: 2px solid #222222;*/
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(77, 77, 77, 0.7);
   }
 
   #left-container
@@ -232,10 +241,10 @@
 
     #name-text
     {
-      font-size: 1rem;
-      font-weight: bold;
-      color: #FFFFFF;
-      opacity: 0.55;
+      font-family: var(--font-family-poppins);
+      font-weight: var(--font-weight-medium);
+      font-size: 16px;
+      color: #055dff;
     }
 
     #right-container
@@ -251,13 +260,13 @@
 
   #profile-image
   {
-    width: 25px;
-    height: 25px;
-    background-color: blue;
+    width: 40px;
+    height: 40px;
+    background-color: var(--bg-color);
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
-    background-color: var(--bg-color);
+    border: 1px solid rgba(255, 255, 255, 0.25);
   }
 
   .dates
@@ -276,9 +285,11 @@
       }
 
   small {
-      font-size: 0.7rem;
-      font-weight: bold;
-      color: #888;
+      font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size:10px;
+    color: white;
+    opacity: 0.7;
 
   }
 
@@ -311,9 +322,10 @@
   }
 
   .dates div div {
-      font-size: 0.5rem;
-      font-weight: bold;
-      color: #fff; 
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size:12px;
+    color: white;
   }
 
 

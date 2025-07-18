@@ -79,7 +79,7 @@ export default {
 <style scoped>
 
   #post-button{
-    background-color: rgba(0, 0, 0, 0.0);
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -93,7 +93,7 @@ export default {
   #post-button:hover{
 
     border-radius: 15px;
-    background-color: var(--tertiary-color);
+    background-color: white;
 
   }
 

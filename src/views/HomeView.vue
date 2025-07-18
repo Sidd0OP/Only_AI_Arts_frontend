@@ -3,7 +3,7 @@
   <Navbar ref="navbar" @login-status-checked="onNavbarReady" />
   <div id="tag-container">
     <TrendingTagPill
-      tag="All"
+      tag="All Topics"
       :isActive="activeTag === 'All'"
       @click="setActiveTag('All')"
     />
@@ -18,12 +18,12 @@
   <SidePanel />
   <main>
     <div id = "container">
-      <div id="heading-container">
-        <div id="model-text-container">
-          <p>Top</p>
-          <p>Trends</p>
-        </div>
-        
+  
+
+
+      <div id="heading-container">    
+        <div id="sub-container">
+          <p>Art Tools Everyone’s Loving Right Now</p> 
         <div id="model-container">
           <ModelDisplay
           v-for="(tool, index) in trendingTools"
@@ -32,6 +32,8 @@
           :iconName="tool"
         />
         </div>
+        </div>
+        
       </div>
       
       <PostSnippetSkeleton v-if = "show"/>
@@ -295,9 +297,7 @@ export default {
     justify-content: start;
     padding-bottom: 15px;
     z-index: 100;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
+    background-color: var(--bg-color);
     gap: 16px;
 
     overflow-x: auto;
@@ -310,11 +310,15 @@ export default {
     display: none; /* Chrome/Safari/Edge */
   }
     
+  
 
   #heading-container{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
     background-color: var(--bg-color);
     border-radius: 15px;
-    border: 1px solid #222222;
+    /*border: 1px solid #222222;*/
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -323,24 +327,30 @@ export default {
     z-index: 10;
     overflow-x: auto;        
     white-space: nowrap;
-
     -ms-overflow-style: none;  
     scrollbar-width: none;
 
   }
 
-  #model-text-container{
+
+  #sub-container{
     display: flex;
     flex-direction: column;
-    align-items: start;
     justify-content: center;
-    color: white;
-    font-family: 'Inter', sans-serif;
-    font-size: 32px;
-    font-weight: 600;
-    padding-left: 20px;
+    align-items: start;
+    gap: 20px;
 
   }
+
+  #sub-container p{
+
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size: 24px;
+    color: white;
+  }
+
+  
 
   #model-container{
     height: 100%;
@@ -348,6 +358,7 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: start;
+    gap: 40px;
   }
 
   
@@ -426,9 +437,9 @@ export default {
     width: 125px;
     height: 45px;
     cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 15px;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size: 16px;
     transition: background-color 0.2s ease;
     display: flex;
     flex-direction: row;
@@ -486,27 +497,25 @@ export default {
 
 
     #tag-container{
-    position: fixed;
-    height: 120px;
-    width: 100%;
-    top: 0px;
-    left: 0px;
-    display: flex;
-    flex-direction: row;
-    align-items: end;
-    justify-content: start;
-    padding-bottom: 15px;
-    padding-left: 16px;
-    padding-right: 16px;
-    z-index: 100;
-    background-color: var(--bg-color);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    gap: 14px;
+      position: fixed;
+      height: 120px;
+      width: 100%;
+      top: 0px;
+      left: 0px;
+      display: flex;
+      flex-direction: row;
+      align-items: end;
+      justify-content: start;
+      padding-bottom: 15px;
+      padding-left: 16px;
+      padding-right: 16px;
+      z-index: 100;
+      background-color: var(--bg-color);
+      gap: 14px;
 
-    overflow-x: auto;
-    white-space: nowrap;
-    scrollbar-width: none;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
   }
 
 

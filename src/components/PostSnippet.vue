@@ -33,6 +33,10 @@
       <img :src="url" loading="lazy" :alt="title || 'Post image'"/>
     </div>
 
+    <div id="tag-container">
+    <TagPill v-for="(tag, index) in tagList" :key="index" :tag="tag" />
+   </div>
+
     <div id="body-container">
       <p>
         {{ body }}
@@ -40,9 +44,7 @@
     </div>
     
 
-   <div id="tag-container">
-    <TagPill v-for="(tag, index) in tagList" :key="index" :tag="tag" />
-   </div>
+   
 
 
     <div id ="post-footer">
@@ -56,10 +58,10 @@
               <img v-if = "profileImage" :src="profileImage" :alt="name || 'Profile Name'" />
           </div>
 
-          <h2 id="media-heading" @click="goToPost">{{ title }}</h2>
+          
 
           <div id = "name" @click="goToProfile">
-            <span id= "name-text">{{ name }}</span>
+            <span id= "name-text">~ {{ name }}</span>
           </div>
 
         </div>
@@ -73,51 +75,7 @@
 
           <div v-if = "rated" id = "icon-container">
             <img src="@/assets/waist.svg" id="comments-icon" alt="Rated">
-          </div>
-          <div id = "icon-container">
-            <img v-if = "!hearted" src ="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart" @click="heartComment">
-            <img v-if = "hearted" src ="@/assets/heart-solid.svg" id="heart-icon" alt="Heart">
-            <!-- <p>{{ heart }}</p> -->
-          </div>
-          <div id = "icon-container">
-            <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="postComment">
-            <!-- <p>{{ commentCount }}</p> -->
-          </div>
-          
-          <div class="dates">
-              <div>
-                  <small>Posted</small>
-                  <div>{{ formattedCreated }}</div>
-              </div>
-              <div id = "time-wrapper">
-                  <small>At</small>
-                  <div id = "time">{{ timePosted }}</div>
-              </div>
-
-              <div v-if="post.edited">
-                  <small>Edited</small>
-                  <div>{{ formattedEdited }}</div>
-              </div>
-              <div id = "time-wrapper" v-if="post.edited">
-                  <small>At</small>
-                  <div id = "time">{{ timePosted }}</div>
-              </div>
-
-          </div>
-        </div>
-
-      </div>
-
-
-
-      <div id="bottom-right-container">
-          <button v-if = "editable" id = "edit-button" @click = "editComment">
-            
-            <img id = "edit-icon" src="@/assets/edit-pencil.svg" alt="Edit">
-
-          </button>
-          <div v-if = "rated" id = "icon-container">
-            <img src="@/assets/waist.svg" id="comments-icon" alt="Rated">
+            <p>NSFW</p>
           </div>
           <div id = "icon-container">
             <img v-if = "!hearted" src ="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart" @click="heartComment">
@@ -134,21 +92,94 @@
                   <small>Posted</small>
                   <div>{{ formattedCreated }}</div>
               </div>
-              <div id = "time-wrapper">
+              <!-- <div id = "time-wrapper">
                   <small>At</small>
                   <div id = "time">{{ timePosted }}</div>
-              </div>
+              </div> -->
 
               <div v-if="post.edited">
                   <small>Edited</small>
                   <div>{{ formattedEdited }}</div>
               </div>
-              <div id = "time-wrapper" v-if="post.edited">
-                  <small>At</small>
-                  <div id = "time">{{ timePosted }}</div>
-              </div>
+             
 
           </div>
+        </div>
+
+      </div>
+
+
+
+      <div id="bottom-right-container">
+
+
+          <div id="media-user-data-container">
+
+            <div id ="profile-image" @click="goToProfile">
+              <img v-if = "profileImage" :src="profileImage" :alt="name || 'Profile Name'" />
+            </div>
+            <div id = "name" @click="goToProfile">
+              <span id= "name-text">~ {{ name }}</span>
+            </div>
+
+          </div>
+
+
+          <div id="media-description" @click="goToPost">
+            
+              <p>
+                {{ body }}
+              </p>
+            
+          </div>
+
+          
+
+          <div id="post-footer-container">
+
+            <button v-if = "editable" id = "edit-button" @click = "editComment">
+            
+            <img id = "edit-icon" src="@/assets/edit-pencil.svg" alt="Edit">
+
+            </button>
+            <div v-if = "rated" id = "icon-container">
+              <img src="@/assets/waist.svg" id="comments-icon" alt="Rated">
+            </div>
+            <div id = "icon-container">
+              <img v-if = "!hearted" src ="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart" @click="heartComment">
+              <img v-if = "hearted" src ="@/assets/heart-solid.svg" id="heart-icon" alt="Heart">
+              <p>{{ heart }}</p>
+            </div>
+            <div id = "icon-container">
+              <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="postComment">
+              <p>{{ commentCount }}</p>
+            </div>
+            
+            <div class="dates">
+                <div>
+                    <small>Posted</small>
+                    <div>{{ formattedCreated }}</div>
+                </div>
+                <div id = "time-wrapper">
+                    <small>At</small>
+                    <div id = "time">{{ timePosted }}</div>
+                </div>
+
+                <div v-if="post.edited">
+                    <small>Edited</small>
+                    <div>{{ formattedEdited }}</div>
+                </div>
+                <div id = "time-wrapper" v-if="post.edited">
+                    <small>At</small>
+                    <div id = "time">{{ timePosted }}</div>
+                </div>
+
+          </div>
+
+          </div>
+
+          
+          
         </div>
 
 
@@ -443,9 +474,7 @@ export default {
 
 
 
-  #media-heading{
-    display: none;
-  }
+  
 
 
   #bottom-right-container{
@@ -465,8 +494,9 @@ export default {
 
   #normal-heading
   {
-    font-size: 2rem;
-    font-weight: bold;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-bold);
+    font-size: 32px;
     margin-bottom: 12px;
     color: #ffffff;
     text-align: left;
@@ -477,26 +507,34 @@ export default {
 
 
   #body-container{
-    background-color: var(--secondary-color);
-    padding-top: 5px;
-    padding-bottom: 5px;
+    background-color: var(--bg-color);
+    padding-top: 10px;
+    padding-bottom:10px;
+    padding-left: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: start;
-    margin: 20px;
-    border-radius: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-color: rgba(77, 77, 77, 0.5);
+    border-width: 0px 0px 2px 0px; 
+    border-style: solid;
+
+
   }
 
 
   p
   {
-    font-size: 1rem;
-    font-weight: bold;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size: 16px;
     color: #FFFFFF;
-    opacity: 0.55;
     text-align: left;
-    padding-left: 15px;
+    padding-left: 0px;
   }
 
 
@@ -504,7 +542,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     padding-left: 20px;
-    margin-bottom: 5px;
+    margin-top: 20px;
 }
 
 
@@ -544,31 +582,35 @@ export default {
 
     #name-text
     {
-      font-size: 1rem;
-      font-weight: bold;
-      color: #FFFFFF;
-      opacity: 0.55;
+      font-family: var(--font-family-poppins);
+      font-weight: var(--font-weight-medium);
+      font-size: 16px;
+      color: #055dff;
+      
     }
 
     #right-container
     {
+      width: 70%;
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: center;
+      justify-content: end;
       margin-right: 35px;
       margin-bottom: 10px;
       gap: 10px;
+      
     }
 
   #profile-image
   {
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
     background-color: var(--bg-color);
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.25);
     
   }
 
@@ -576,26 +618,34 @@ export default {
 
     width: 100%;
     height: 100%;
-
   }
 
   #icon-container{
 
-    width: 40px;
-    height: 40px;
+    background-color: rgb(66, 66, 66 , 0.4);
+    height: 36px;
     display: flex;
+    padding-left: 12px;
+    padding-right: 12px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 16px;
     cursor: pointer;
-    border-radius: 100%;
+    border-radius: 50px;
     transition: background-color 0.3s ease;
+
   }
 
-  #icon-container:hover{
-    
-    background-color: rgb(66, 66, 66 , 0.5);
+
+  #icon-container p {
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size: 16px;
+    color: white;
   }
+
+ 
 
   #comments-icon {
     width: 20px;
@@ -625,30 +675,35 @@ export default {
     }
 
   small {
-      font-size: 0.7rem;
-      font-weight: bold;
-      color: #888;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size:10px;
+    color: white;
+    opacity: 0.7;
 
   }
 
   .dates div div {
-      font-size: 0.5rem;
-      font-weight: bold;
-      color: #fff; 
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size:12px;
+    color: white;
   }
 
   #time-wrapper{
     display: start;
     flex-direction: column;
-    justify-content: end;
+    justify-content: center;
     align-items: start;
     height: 30px;
     
   }
 
   #time{
-    font-size: 0.5rem;
-    opacity: 1.0;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size:12px;
+    color: white;
 
   }
 
@@ -747,8 +802,61 @@ export default {
 
 @media (max-width: 767px) {
 
+  #meta{
+    display: none;
+  }
+
   .image-overlay {
     display: none;
+  }
+
+
+  #bottom-right-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap: 24px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+
+    
+  }
+
+
+  #media-user-data-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    padding-top: 20px;
+    padding-left: 10px;
+    gap: 10px;
+  }
+
+
+  #media-description{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding-left: 10px;
+    gap: 10px;
+  }
+
+
+  
+
+
+  #media-description p{
+
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size: 16px;
+    text-align: left;
+    color: white;
   }
 
   #image-container {
@@ -782,23 +890,26 @@ export default {
   
   #icon-container{
 
-    width: 30px;
-    height: 30px;
+    background-color: rgb(66, 66, 66 , 0.4);
+    height: 36px;
     display: flex;
+    padding-left: 12px;
+    padding-right: 12px;
     flex-direction: row;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
+    gap: 16px;
     cursor: pointer;
-    border-radius: 100%;
+    border-radius: 50px;
     transition: background-color 0.3s ease;
   }
 
   #icon-container p{
     color: white;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 13px;
-    opacity: 0.8;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size: 12px;
+    color: white;
    
   }
 
@@ -811,9 +922,7 @@ export default {
     display: none;
   }
 
-  #name{
-    display: none;
-  }
+  
 
   #time-wrapper{
     display: none;
@@ -838,29 +947,23 @@ export default {
   }
 
 
-  #meta{
-    padding-top: 10px;
-  }
+  
 
-  #media-heading {
-    display: flex;
-    padding-left: 20px;
-
-    font-size: 1.0rem;
-    font-weight: bold;
-    color: #ffffff;
-  }
+  
 
 
-  #bottom-right-container{
+  
+
+  #post-footer-container{
+
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: start;
     align-items: center;
     gap: 24px;
     padding-bottom: 35px;
-    padding-left: 64px;
-    
+    padding-left: 10px;
   }
 
   #bottom-right-container small{
@@ -873,8 +976,8 @@ export default {
     flex-direction: column;
     justify-content: center;
     height: 50vh;
-    border-radius: 10px;
-    margin: 10px;
+    border-radius: 0px;
+    margin: 0px;
     overflow: hidden;
     background-size: cover; 
     background-position: center;

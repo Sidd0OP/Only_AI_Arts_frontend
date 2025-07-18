@@ -20,9 +20,9 @@
 	<div id ="comment-container">
 
     <div id = "body-container">
-      <p>
+      <pre>
         {{ body }}
-      </p>
+      </pre>
     </div>
 
     <div id ="comment-footer">
@@ -35,7 +35,7 @@
           </div>
 
           <div id = "name" @click="goToProfile">
-            <span id= "name-text">{{ name }}</span>
+            <span id= "name-text">~ {{ name }}</span>
           </div>
 
         </div>
@@ -48,6 +48,8 @@
 
           <div id = "icon-container">
             <img src="@/assets/reply.svg" id="reply-icon" alt="Reply" @click="postReply">
+            <p id="reply-text">Reply</p>
+            
           </div>
           <div class="dates">
               <div>
@@ -260,7 +262,7 @@
 
 	#comment-container
   {
-    border: 2px solid #222222;
+    border-top: 1px solid rgba(77, 77, 77, 0.7);
     padding-top: 20px;
     width: 100%;
     background: var(--bg-color);
@@ -268,6 +270,8 @@
     flex-direction: column;
     align-items: end;
     z-index: 10;
+
+    
     
   }
 
@@ -277,18 +281,22 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 2px solid #222222;
+    border-bottom: 1px solid rgba(77, 77, 77, 0.5);
+    
   }
 
-  p
+  #body-container pre
   {
-    font-size: 1rem;
-    font-weight: bold;
+
+    white-space: pre-line; 
     margin-bottom: 32px;
-    color: #FFFFFF;
-    opacity: 0.55;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size: 16px;
+    color: white;    
     text-align: left;
-    padding-left: 15px;
+    padding-left: 20px;
+    box-sizing: border-box;
     padding-top: 15px;
   }
 
@@ -303,7 +311,6 @@
     width: 97%;
     margin: 10px auto;
     opacity: 0.4;
-    border-top: 1px solid #999999;
 
   }
 
@@ -339,10 +346,10 @@
 
     #name-text
     {
-      font-size: 1rem;
-      font-weight: bold;
-      color: #FFFFFF;
-      opacity: 0.55;
+      font-family: var(--font-family-poppins);
+      font-weight: var(--font-weight-medium);
+      font-size: 16px;
+      color: #055dff;
     }
 
     #right-container
@@ -358,21 +365,22 @@
 
   #icon-container{
 
-    width: 40px;
-    height: 40px;
+    background-color: rgb(66, 66, 66 , 0.4);
+    height: 36px;
+    
+    padding-left: 12px;
+    padding-right: 12px;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    border-radius: 100%;
-    transition: background-color 0.3s ease;
-     background-color: rgb(66, 66, 66 , 0.2);
-  }
 
-  #icon-container:hover{
     
-    background-color: rgb(66, 66, 66 , 0.5);
+    gap: 16px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
   }
 
   #reply-icon {
@@ -380,15 +388,31 @@
     height: 20px;
   }
 
+
+  #reply-text {
+
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size: 14px;
+    color: white;
+  }
+
+  #icon-container:hover{
+    
+    background-color: rgb(66, 66, 66 , 0.5);
+  }
+
+  
+
   #profile-image
   {
-    width: 25px;
-    height: 25px;
-    background-color: blue;
+    width: 40px;
+    height: 40px;
+    background-color: var(--bg-color);
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
-    background-color: var(--bg-color);
+    border: 1px solid rgba(255, 255, 255, 0.25);
   }
 
   .dates
@@ -407,9 +431,11 @@
       }
 
   small {
-      font-size: 0.7rem;
-      font-weight: bold;
-      color: #888;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size:10px;
+    color: white;
+    opacity: 0.7;
 
   }
 
@@ -442,9 +468,10 @@
   
 
   .dates div div {
-      font-size: 0.5rem;
-      font-weight: bold;
-      color: #fff; /* White text for readability */
+      font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size:12px;
+    color: white;
   }
 
 

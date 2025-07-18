@@ -38,58 +38,7 @@
 
 
 
-    <div id ="post-footer">
-
-
-      <div id ="meta">
-
-        <div id ="left-container">
-
-          <div id ="profile-image" :alt="name || 'Profile Name'" @click="goToProfile">
-              <img v-if = "profileImage" :src="profileImage" />
-          </div>
-
-
-        </div>
-
-
-        <div id="right-container">
-          <button v-if = "editable" id = "edit-button" @click = "editComment">Edit</button>
-          <div v-if = "rated" id = "icon-container">
-            <img src="@/assets/waist.svg" id="comments-icon" alt="Rated">
-          </div>
-          <div id = "icon-container">
-            <img v-if = "!hearted" src ="@/assets/heart-stroked.svg" id="heart-icon" alt="Heart" @click="heartComment">
-            <img v-if = "hearted" src ="@/assets/heart-solid.svg" id="heart-icon" alt="Heart">
-          </div>
-          <div id = "icon-container">
-            <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="postComment">
-          </div>
-          
-          <div class="dates">
-              <div>
-                  <small>Posted</small>
-                  <div>{{ formattedCreated }}</div>
-              </div>
-              <div id = "time-wrapper">
-                  <small>At</small>
-                  <div id = "time">{{ timePosted }}</div>
-              </div>
-
-              <!-- <div v-if="post.edited">
-                  <small>Edited</small>
-                  <div>{{ formattedEdited }}</div>
-              </div> -->
-              <!-- <div id = "time-wrapper" v-if="post.edited">
-                  <small>At</small>
-                  <div id = "time">{{ timePosted }}</div>
-              </div> -->
-
-          </div>
-        </div>
-
-      </div>
-    </div>
+    
   </div>
 </template>
 
@@ -345,7 +294,10 @@ export default {
     font-size: 1rem;
     font-weight: bold;
     margin-bottom: 12px;
-    color: #ffffff;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-bold);
+    font-size: 16px;
+    color: white;
     text-align: left;
     padding-top: 10px;
     padding-left: 15px;

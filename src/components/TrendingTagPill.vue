@@ -24,8 +24,8 @@ export default {
   background-color: var(--tertiary-color);
   border-radius: 10px;
   padding: 6px 12px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-regular);
   font-size: 14px;
   color: white;
   cursor: pointer;

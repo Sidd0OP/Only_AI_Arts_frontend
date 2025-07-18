@@ -1,9 +1,12 @@
 <template>
-	<div id="main-container">
+	<div id="conatainer">
+		<div id="main-container">
 		 <p id="number">{{ number }}</p>
 		<div id="icon-container">
 			<img :src="getIconPath(iconName)" :alt="iconName" />
 		</div>
+	</div>
+	<p id="mode-name">{{ iconName }}</p>
 	</div>
 	
 </template>
@@ -37,28 +40,55 @@ export default {
 </script>
 <style scoped>
 
+	#container{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 15px;
+		
+	}
+
+
+	#container p{
+		padding-top: 50px;
+		font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size: 16px;
+    left: -50%;
+    color: white;
+	}
+
 	#main-container{
-		height: 100%;
+		height: 120px;
+		width: 180px;
 		background-color: var(--bg-color);
 		display: flex;
 		flex-direction: row;
 		justify-content: start;
-		align-items: center;
+		align-items: start;
 		padding-left: 0px;
+		border-radius: 15px;
+		
 	}
 
+
+
+
 	#icon-container{
-	   	
+	   	left: 60%;
+	   	transform: translate(-30%, 0%);
 	   	background: #000000;
-		background: radial-gradient(circle, rgba(0, 0, 0, 0.8) 23%, rgba(255, 255, 255, 0) 64%);
-	    width: 100px;
-	    height: 100px;
+			background: radial-gradient(circle, rgba(0, 0, 0, 0.8) 23%, rgba(255, 255, 255, 0) 64%);
+	    width: 180px;
+	    height: 160px;
 	    display: flex;
-	    align-items: center;
-	    justify-content: center;
+	    align-items: start;
+	    justify-content: start;
 	    border-radius: 100px;
 	    z-index: 100;
 	    margin-left: 0px;
+	    
   	}
 
 
@@ -66,13 +96,13 @@ export default {
 	  
 
   	#main-container p {
-  		left: 50%;
+  		left: 40%;
   		transform: translate(-50%, 0%);
   		position: relative;
   		-webkit-text-stroke: 2px #FF2160;
     	color: var(--bg-color);
   		font-family: 'Inter', sans-serif;
-    	font-size: 100px;
+    	font-size: 180px;
     	font-weight: 400;
     	align-self: center;
   		margin-right: auto;
@@ -80,8 +110,8 @@ export default {
   	}
 
 	#icon-container img{
-		width: 70%;
-		height: 70%;
+		width: 140px;
+		height: 140px;
 
 	}
 	

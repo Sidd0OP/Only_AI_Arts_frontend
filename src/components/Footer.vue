@@ -4,9 +4,32 @@
       <p>© 2025 OnlyAiArts. All rights reserved.</p>
 
       <div class="footer-links">
-          <img src="@/assets/github-circle.svg" id="Github-icon" alt="github">
-          <img src="@/assets/youtube.svg" id="Youtube-icon" alt="youtube">
-          <img src="@/assets/x.svg" id="X-icon" alt="x">
+      <a href="https://github.com/your-username" target="_blank" rel="noopener">
+          GitHub
+      </a>
+
+      <a href="https://youtube.com/your-channel" target="_blank" rel="noopener">
+        YouTube
+      </a>
+
+      <a href="https://x.com/your-handle" target="_blank" rel="noopener">
+        X (Twitter)
+      </a>
+
+
+      <a href="https://github.com/your-username" target="_blank" rel="noopener">
+        Policy
+      </a>
+
+      <a href="https://youtube.com/your-channel" target="_blank" rel="noopener">
+        Terms and Condition
+      </a>
+
+      <a href="https://x.com/your-handle" target="_blank" rel="noopener">
+        Support
+      </a>
+
+
       </div>
       
     </div>
@@ -33,7 +56,7 @@ export default {
   background-color: var(--bg-color);
   width: 100%;
   color: #ccc;
-  padding: 20px 40px;
+  padding: 20px 30px;
   text-align: center;
   bottom: 0;
   z-index: 1000;
@@ -47,25 +70,39 @@ export default {
   justify-content: center;
 }
 
+
+.footer-content p 
+{
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-regular);
+  font-size: 12px;
+  opacity: 0.3;
+  color: white;
+}
+
 .footer-links {
   width: 100%;
-  padding: 10px;
+  padding: 0px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 50px;
+  gap: 30px;
   
 }
 
-.footer-links img {
-  opacity: 0.5;
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
+.footer-links a {
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-regular);
+  font-size: 10px;
+  opacity: 0.4;
+  color: white;
+  text-decoration: none;
 }
 
 .footer-links a:hover {
-  color: white;
+  opacity: 1.0;
 }
+
+
 </style>

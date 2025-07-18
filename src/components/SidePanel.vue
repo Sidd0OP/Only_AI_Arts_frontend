@@ -4,10 +4,12 @@
 		
       	<div id = "icon-container">
 	        <img src="@/assets/post.svg" id="post-icon" alt="Trending" @click="goTrending">
+	        <p>Trending</p>
       	</div>
       	<CreatePost />
       	<div id = "icon-container">
 	        <img src="@/assets/view-grid.svg" id="grid-icon" alt="Gallery" @click="goGallery">
+	        <p>Gallery</p>
       	</div>
       	
       	
@@ -73,11 +75,23 @@
 	#icon-container{
 		background-color: var(--bg-color);
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		gap: 12px;
 		padding: 10px;
 		border-radius: 10px;
 		transition: 0.4s ease;
+	}
+
+
+	#icon-container p {
+
+		font-family: var(--font-family-poppins);
+    	font-weight: var(--font-weight-medium);
+    	font-size:12px;
+    	color: white;
+    	opacity: 0.6;
 	}
 
 	#icon-container:hover{
@@ -111,7 +125,7 @@
 	  top: auto;
 	  bottom: 0;
 	  width: 100%;
-	  height: 80px;
+	  height: 100px;
 	  box-sizing: border-box;
 	  z-index: 999;
 	  display: flex;
@@ -130,6 +144,7 @@
 		width: 24px;
 		height: 24px;
 		opacity: 0.8;
+		gap: 5px;
 		cursor: pointer;
 
 	}
@@ -137,11 +152,13 @@
 	#icon-container{
 		background-color: rgba(0, 0, 0, 0.0);
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		padding: 10px;
 		border-radius: 10px;
 		transition: 0.4s ease;
+
 	}
 	
   }

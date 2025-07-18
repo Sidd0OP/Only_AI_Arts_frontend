@@ -25,6 +25,13 @@
           Remember Me
         </label>
 
+        <div id = "option-container">
+          <p id = "forgot" @click = "forgot" >Forgot Password ?</p>
+          <p id = "new" @click = "register">New Here ?</p>
+        </div>
+        
+        <button type="submit">Login</button>
+
         <p class="or-text">Or</p>
 
 
@@ -35,20 +42,9 @@
           </p>
         </button>
 
-        <div id = "option-container">
-          <p id = "forgot" @click = "forgot" >Forgot Password ?</p>
-          <p id = "new" @click = "register">New Here ?</p>
-        </div>
         
-        <button type="submit">Login</button>
 
-        <button id = "skip" @click.prevent = "goToHome">
-          
-          <p>
-            Skip
-          </p>
-          <img src="@/assets/arrow-right-circle.svg" id="google-icon" alt="google">
-        </button>
+
 
         <p v-if="error" class="error">{{ error }}</p>
       </form>
@@ -264,10 +260,10 @@ const goToHome = () => {
   align-items: start;
   padding: 20px;
   gap: 14px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 12px;
-  color: #888888;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
+  font-size: 14px;
+  color: white;
 
 }
 
@@ -285,9 +281,9 @@ input[type="password"] {
   border-radius: 10px;
   border: 1px solid rgba(136, 136, 136, 0.1);
   color: white;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 12px;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
+  font-size: 14px;
 }
 
 input:focus {
@@ -298,8 +294,8 @@ input:focus {
 .remember-me {
   display: flex;
   align-items: center;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
+  ffont-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
   font-size: 12px;
   color: #888888;
   

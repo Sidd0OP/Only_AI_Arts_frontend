@@ -224,6 +224,12 @@ export default {
 
       type: Boolean,
       default: false
+    },
+
+    page: {
+      type: Number,
+      default: 1,
+      required: false
     }
 
 
@@ -394,10 +400,11 @@ export default {
     goToPost() {
       if (this.postId) {
         const slug = this.post.title
-        .replace(/\s+/g, '_')            
+        .replace(/\s+/g, '-')            
         .replace(/[^a-zA-Z0-9-_]/g, ''); 
 
-        this.$router.push(`/post/${this.postId}/${slug}`);
+        this.$router.push({ path: `/post/${this.postId}/${slug}`, query: { page: this.page } });
+
 
       } 
     },
@@ -439,7 +446,13 @@ export default {
       try {
       
         const response = await axiosObj.post(`/heart/${this.postId}`);
-        this.hearted = true;
+
+        if (response.status === 200) {
+          this.hearted = true;
+          
+          
+          this.post.heart += 1;
+        }
         
       } catch (error) {
         console.error('Error hearting', error);
@@ -510,7 +523,7 @@ export default {
     background-color: var(--bg-color);
     padding-top: 10px;
     padding-bottom:10px;
-    padding-left: 10px;
+    padding-left: 0px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -585,7 +598,7 @@ export default {
       font-family: var(--font-family-poppins);
       font-weight: var(--font-weight-medium);
       font-size: 16px;
-      color: #055dff;
+      color: white;
       
     }
 
@@ -816,7 +829,7 @@ export default {
     flex-direction: column;
     justify-content: start;
     align-items: start;
-    gap: 24px;
+    gap: 16px;
     padding-bottom: 15px;
     padding-left: 10px;
 
@@ -832,7 +845,7 @@ export default {
     align-items: center;
     padding-top: 20px;
     padding-left: 10px;
-    gap: 10px;
+    gap: 5px;
   }
 
 
@@ -945,12 +958,6 @@ export default {
     border: none;
     z-index: 10;
   }
-
-
-  
-
-  
-
 
   
 

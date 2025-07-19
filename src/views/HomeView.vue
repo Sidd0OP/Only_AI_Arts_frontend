@@ -20,10 +20,11 @@
     <div id = "container">
   
 
-
+      <div id="heading-container">
+        <p>Top 5 Art Tools Everyone’s Loving Right Now</p> 
+      </div>
       <div id="heading-container">    
-        <div id="sub-container">
-          <p>Art Tools Everyone’s Loving Right Now</p> 
+        
         <div id="model-container">
           <ModelDisplay
           v-for="(tool, index) in trendingTools"
@@ -32,7 +33,7 @@
           :iconName="tool"
         />
         </div>
-        </div>
+        
         
       </div>
       
@@ -41,7 +42,7 @@
       <PostSnippetSkeleton v-if = "show"/>
       <PostSnippetSkeleton v-if = "show"/>
 
-      <PostSnippet  v-for= "post in posts" :post = post :hearts="hearts"/>
+      <PostSnippet  v-for= "post in posts" :post = post :hearts="hearts" :page="page"/>
     </div>
 
     
@@ -215,6 +216,9 @@ export default {
         this.posts.push(...newPosts);
         this.page++;
         this.hasMore = newPosts.length > 0;
+
+        
+
       } catch (error) {
         console.error('Error loading more posts:', error);
       } finally {
@@ -325,7 +329,8 @@ export default {
     justify-content: start;
     width: 100%;
     z-index: 10;
-    overflow-x: auto;        
+    overflow-x: auto;   
+    overflow-y: hidden;     
     white-space: nowrap;
     -ms-overflow-style: none;  
     scrollbar-width: none;
@@ -333,14 +338,17 @@ export default {
   }
 
 
-  #sub-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-    gap: 20px;
+  #heading-container p{
+
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-bold);
+    font-size: 20px;
+    color: white;
 
   }
+
+
+  
 
   #sub-container p{
 
@@ -495,6 +503,14 @@ export default {
 
     }
 
+    #sub-container p{
+
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size: 16px;
+    color: white;
+  }
+
 
     #tag-container{
       position: fixed;
@@ -518,6 +534,16 @@ export default {
       scrollbar-width: none;
   }
 
+
+     #heading-container p{
+
+      font-family: var(--font-family-poppins);
+      font-weight: var(--font-weight-bold);
+      font-size: 14px;
+      color: white;
+      padding-left: 20px;
+
+    }
 
 
   }

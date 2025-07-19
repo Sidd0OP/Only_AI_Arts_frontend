@@ -60,7 +60,7 @@ export default {
 	}
 
 	#main-container{
-		height: 120px;
+		height: 90px;
 		width: 180px;
 		background-color: var(--bg-color);
 		display: flex;
@@ -115,4 +115,53 @@ export default {
 
 	}
 	
+
+	@media (min-width: 768px) and (max-width: 1024px){
+    
+     
+     
+    
+} 
+
+@media (max-width: 767px) {
+
+
+	#icon-container{
+	   	left: 60%;
+	   	transform: translate(-10%, 0%);
+	   	background: #000000;
+			background: radial-gradient(circle, rgba(0, 0, 0, 0.8) 23%, rgba(255, 255, 255, 0) 64%);
+	    width: 180px;
+	    height: 160px;
+	    display: flex;
+	    align-items: start;
+	    justify-content: start;
+	    border-radius: 100px;
+	    z-index: 100;
+	    margin-left: 0px;
+	    
+  	}
+
+	#main-container p {
+  		left: 40%;
+  		transform: translate(-50%, 0%);
+  		position: relative;
+  		-webkit-text-stroke: 2px #FF2160;
+    	color: var(--bg-color);
+  		font-family: 'Inter', sans-serif;
+    	font-size: 120px;
+    	font-weight: 400;
+    	align-self: center;
+  		margin-right: auto;
+  		
+  	}
+
+	#icon-container img{
+		width: 80px;
+		height: 80px;
+
+	}
+
+
+}
 </style>

@@ -3,18 +3,27 @@
 	<div v-if="visible" id = "container">
 		
 		<div id = "input-container">
-
+			<p id="replying-text">
+				Replying to 
+			</p>
 			<div id="button-container">
-				<button id = "cancel" @click="$emit('close')" :disabled="loading">
-					<img src="@/assets/xmark.svg" id="cancel-icon" alt="Cancel">
-				</button>
-				<button id = "submit" @click = "sendData" :disabled="loading">
-					<p v-if="!loading">Send</p>
-					<div v-if="loading" id="loading"></div>
-				</button>
+
+				<p id="replying-text-value">
+					
+				</p>
+				<div id="top-right-container">
+					<button id = "cancel" @click="$emit('close')" :disabled="loading">
+						<p>Cancel</p>
+					</button>
+					<button id = "submit" @click = "sendData" :disabled="loading">
+						<p v-if="!loading">Send</p>
+						<div v-if="loading" id="loading"></div>
+					</button>
+				</div>
+				
 			</div>
 			
-			<textarea v-model="body" name="add-comment" placeholder="Body. . . " class="comment-input"></textarea>
+			<textarea v-model="body" name="add-comment" placeholder="Message.... " class="comment-input"></textarea>
 		</div>
 	</div>
 	</transition>
@@ -112,20 +121,31 @@
 <style scoped>
 	#container{
 		position: fixed;
-		left: 0;
-		bottom: 0;
-		width: 100vw;
-		height: 60vh;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 50vw;
+		height: 300px;
 		z-index: 200;
 		display: flex;
-		flex-direction: row;
 		align-items: center;
+	}
+
+
+	#input-container{
+		
+		padding: 10px;
+		width: 100%;
+		height: 100%;
+		background-color: var(--bg-color);
+		display: flex;
+		flex-direction: column;
+		align-items: start;
 		justify-content: center;
-		gap: 50px;
-		background-color: rgba(0, 0, 0, 0.5);
-  		backdrop-filter: blur(40px);
-  		-webkit-backdrop-filter: blur(40px);
+		gap: 10px;
+		border-radius: 20px;
 		border: 1px solid rgba(107, 107, 107, 0.3);
+
 		
 	}
 
@@ -136,18 +156,17 @@
 
 	  padding: 20px;
 	  width: 100%;
-	  max-width: 100%;
-	  height: 70%;
+	  height: 100%;
 	  border-radius: 15px;
 	  font-size: 32px;
 	  color: white;
-	  background-color: var(--secondary-color);
+	  background-color: rgb(66, 66, 66 , 0.4);
 	  color: white;
 	  border: none;
-	  font-family: 'Inter', sans-serif;
-      font-weight: 800;
-	  font-size: px;
-
+	  font-family: var(--font-family-poppins);
+	  font-weight: var(--font-weight-medium);
+	  font-size: 24px;
+	  color: white;
 	}
 
 	.comment-input:focus {
@@ -157,23 +176,6 @@
 
 	
 
-	#input-container{
-		
-		padding-left: 20px;
-		padding-right: 20px;
-		padding-bottom: 10px;
-		width: 90%;
-		height: 100%;
-		background-color: var(--bg-color);
-		display: flex;
-		flex-direction: column;
-		align-items: end;
-		justify-content: center;
-		gap: 10px;
-		border-radius: 20px;
-
-		
-	}
 
 
 	#button-container{
@@ -181,8 +183,37 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		justify-content: end;
+		justify-content: space-between;
+		padding: 10px;
 		gap: 10px;
+		background-color: rgb(66, 66, 66 , 0.4);
+		border-radius: 15px;
+	}
+
+	#replying-text{
+	  font-family: var(--font-family-poppins);
+	  font-weight: var(--font-weight-medium);
+	  font-size: 16px;
+	  color: white;
+	  opacity: 0.6;
+	}
+
+
+	#replying-text-value{
+	  font-family: var(--font-family-poppins);
+	  font-weight: var(--font-weight-medium);
+	  font-size: 16px;
+	  color: white;
+	  text-align: left;
+	}
+
+	#top-right-container{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+		border-radius: 100px;
 	}
 
 	#button-container button[disabled] {
@@ -192,18 +223,18 @@
 
 	#submit{
 		  
-		background-color: #0F0F0F;
-		color: white;
+		background-color: white;
+		color: black;
 		border-radius: 100px;
-		border: 1px solid rgba(107, 107, 107, 0.3);
 		width: 125px;
-		height: 45px;
+		height: 35px;
 		cursor: pointer;
-		font-family: 'Inter', sans-serif;
-		font-weight: 800;
-		font-size: 12px;
+		font-family: var(--font-family-poppins);
+	  	font-weight: var(--font-weight-regular);
+	  	font-size: 18px;
 		transition: background-color 0.2s ease;
 		box-shadow: none;
+		border: none;
 	}
 
 	#submit:hover {
@@ -212,44 +243,25 @@
 
 	#cancel{
 
-		width: 60px;
-		height: 60px;
-		border: none;
-		padding: 20px;
-		border-radius: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: var(--bg-color);
+		background-color: black;
+		color: white;
+		border-radius: 100px;
+		width: 125px;
+		height: 35px;
+		cursor: pointer;
+		font-family: var(--font-family-poppins);
+	  	font-weight: var(--font-weight-regular);
+	  	font-size: 18px;
 		transition: background-color 0.2s ease;
+		box-shadow: none;
+		border: none;
 	}
 
 	#cancel:hover{
 		background-color: var(--tertiary-color);
 	}
 
-	.slide-up-enter-from {
-	transform: translateY(100%);
-	opacity: 0;
-	}
-	.slide-up-enter-active {
-		transition: transform 0.4s ease-out, opacity 0.4s ease-out;
-	}
-	.slide-up-enter-to {
-		transform: translateY(0);
-		opacity: 1;
-	}
-	.slide-up-leave-from {
-		transform: translateY(0);
-		opacity: 1;
-	}
-	.slide-up-leave-active {
-		transition: transform 0.3s ease-in, opacity 0.3s ease-in;
-	}
-	.slide-up-leave-to {
-		transform: translateY(100%);
-		opacity: 0;
-	}
+	
 
 	#loading {
 	  display: inline-block;
@@ -325,7 +337,7 @@
 	  border-radius: 10px;
 	  font-size: 32px;
 	  color: white;
-	  background-color: var(--secondary-color);
+	  background-color: var(--bg-color);
 	  color: white;
 	  border: none;
 	  font-family: 'Inter', sans-serif;

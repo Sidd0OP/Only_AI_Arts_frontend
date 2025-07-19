@@ -4,7 +4,7 @@
 		
       	<div id = "icon-container">
 	        <img src="@/assets/post.svg" id="post-icon" alt="Trending" @click="goTrending">
-	        <p>Trending</p>
+	        <p>Trends</p>
       	</div>
       	<CreatePost />
       	<div id = "icon-container">
@@ -130,8 +130,9 @@
 	  z-index: 999;
 	  display: flex;
 	  flex-direction: row;
-	  align-items: center;
+	  align-items: start;
 	  justify-content: center;
+	  padding-top: 20px;
 	  gap: 80px;
 	  background-color: var(--bg-color);
 	  backdrop-filter: none;
@@ -144,7 +145,7 @@
 		width: 24px;
 		height: 24px;
 		opacity: 0.8;
-		gap: 5px;
+		gap: 2px;
 		cursor: pointer;
 
 	}
@@ -155,7 +156,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		padding: 10px;
+		padding: 5px;
 		border-radius: 10px;
 		transition: 0.4s ease;
 

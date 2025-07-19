@@ -14,6 +14,15 @@
         <div id="gap-container"></div>
 
         <div v-if = "comments" id = comment-reply-container>
+          <div id="comment-input-container">
+
+            <input id="comment-input" type="text" name="comment-input" placeholder="Add a comment...." v-model="body">
+
+            <button  id = "submit-button" @click = "submitComment">
+              <p>Submit</p>
+            </button>
+
+          </div>
           <Comment  v-for= "comment in comments" 
             :comments="comment.comment"
             :replies="comment.replies"
@@ -31,7 +40,11 @@
             <PostSnippetSkeleton v-if = "show"/>
             <p>Similar Images</p>
           </div>
+          
+          <!-- <Profile :imageUrl = "Hi" :name = "Sid" :joined = "9/10/11" :bio = "Hi" /> -->
+
           <PostSnippet  v-for= "post in similarPosts" :post = post />
+
           <div id="side-container-normal">
             <div  id="heading-container">
               <p>Continue With More</p>
@@ -67,6 +80,7 @@ import PostSnippetSmall from '../components/PostSnippetSmall.vue'
 import PostSnippetSkeleton from '../components/PostSnippetSkeleton.vue'
 import CreatePost from '../components/CreatePost.vue'
 import SidePanel from '../components/SidePanel.vue'
+import Profile from '../components/Profile.vue'
 
 export default {
   components: {
@@ -76,7 +90,8 @@ export default {
     Comment,
     PostSnippetSkeleton,
     CreatePost,
-    SidePanel
+    SidePanel,
+    Profile
   },
 
   data() {
@@ -92,7 +107,9 @@ export default {
       listOfEditableComments: [],
       listOfEditableReplies: [],
       show: true,
-      hearted: false
+      hearted: false,
+      body: '',
+      loading: false
 
     };
 
@@ -109,12 +126,15 @@ export default {
     refreshPostData() {
       
       const postId = this.$route.params.id;
+      this.page = this.$route.params.page;
       this.fetchPost(postId);
     },
 
     onNavbarReady()
     {
       const postId = this.$route.params.id;
+      this.page = Number(this.$route.query.page) || 0;
+
       this.fetchPost(postId);
       this.loadMorePosts();
 
@@ -156,7 +176,48 @@ export default {
       this.hearted = response.data.hearted;
 
       this.show = false;
-    }
+    },
+
+
+
+
+    async submitComment() {
+
+          if (!this.body.trim()) return;
+
+          const postId = this.post?.id || this.$route.params.id;
+
+
+          console.log(postId);
+
+          try {
+
+            this.loading = true;
+
+
+
+            const formData = new FormData();
+            formData.append('postId', postId);  
+            formData.append('body', this.body);     
+
+            await axiosObj.post('/comment', formData);
+
+          
+
+            this.body = '';
+            this.refreshPostData();
+
+          } catch (err) {
+
+            console.error('Failed to send comment:', err);
+
+          } finally {
+
+          this.loading = false; 
+
+        }
+        
+      }
   }
 
 
@@ -182,6 +243,63 @@ export default {
     justify-content: center;
     
     
+  }
+
+  #comment-input-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    padding: 10px;
+    gap: 10px;
+    
+  }
+
+
+  #comment-input-container input{
+    width: 100%;
+    background-color: rgb(66, 66, 66 , 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    border-radius: 15px;
+    border: none;
+    padding-left: 10px;
+
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size: 14px;
+
+    color: white;
+  }
+
+  #comment-input-container input:focus {
+    outline: none;
+    border: none;
+  }
+
+  
+
+
+
+  #submit-button{
+      
+    background-color: white;
+    color: black;
+    border-radius: 100px;
+    border: 1px solid rgba(107, 107, 107, 0.6);
+    width: 110px;
+    height: 35px;
+    cursor: pointer;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+    box-shadow: none;
+
   }
 
   #container
@@ -397,6 +515,18 @@ export default {
       display: none;
 
     }
+
+    
+    #comment-reply-container{
+
+   
+    border: none;
+    border-radius: 0px;
+    border-top: 1px solid #222222;
+    border-bottom: 1px solid #222222;
+    
+
+  }
 
     #gap-container{
       display: none;

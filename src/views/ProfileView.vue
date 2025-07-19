@@ -8,8 +8,12 @@
       @close="showEditBox = false"
     />
 
+    <div id="profile-container">
+      <Profile :imageUrl = "profileImage" :name = "name" :joined = "formattedCreated" :bio = "bio" />
+    </div>
+    
 
-    <div id = "user-data-container">
+    <!-- <div id = "user-data-container">
 
       <div id = "profile-image-container">
         <img id = "profile-image" :src= "profileImage" :class="{ uploading: isUploading }" alt="Profile Photo" @click = "changeProfileImage"/>
@@ -21,9 +25,6 @@
 
         <div id = "name-data-container">
           <p id = "name">{{ name }}</p>
-          <!-- <div id="icon-container">
-            <img id = "edit-icon-small" src="@/assets/edit-pencil.svg" alt="Edit">
-          </div> -->
         </div>
         
         <p id = "joined">{{ formattedCreated }}</p>
@@ -42,7 +43,7 @@
 
         </div>
     </div>
-
+ -->
 
     <Navbar @login-status-checked="onNavbarReady" />
 
@@ -86,7 +87,7 @@ import PostSnippet from '../components/PostSnippet.vue'
 import Comment from '../components/Comment.vue'
 import Reply from '../components/Reply.vue'
 import EditBox from '../components/EditBox.vue'
-
+import Profile from '../components/Profile.vue'
 
 export default {
   components: {
@@ -94,7 +95,8 @@ export default {
     PostSnippet,
     Comment,
     Reply,
-    EditBox
+    EditBox,
+    Profile
   },
 
 
@@ -240,10 +242,18 @@ export default {
 <style scoped>
 
   #main-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+    gap: 20px;
+  }
+
+#profile-container{
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding-left: 20px;
 }
 
 #content-wrapper {
@@ -456,6 +466,11 @@ export default {
 
   @media (max-width: 767px) {
 
+
+    #profile-container{
+      width: 100%;
+      padding-left: 0px;
+    }
 
     #edit-icon-small{
       width: 25px;

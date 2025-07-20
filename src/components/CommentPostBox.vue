@@ -3,13 +3,12 @@
 	<div v-if="visible" id = "container">
 		
 		<div id = "input-container">
-			<p id="replying-text">
-				Replying to 
-			</p>
+			
+
 			<div id="button-container">
 
-				<p id="replying-text-value">
-					
+				<p id="replying-text">
+					Replying to 
 				</p>
 				<div id="top-right-container">
 					<button id = "cancel" @click="$emit('close')" :disabled="loading">
@@ -20,6 +19,14 @@
 						<div v-if="loading" id="loading"></div>
 					</button>
 				</div>
+				
+			</div>
+
+			<div id="button-container">
+
+				<p id="replying-text-value">
+					SO you dumb guy
+				</p>
 				
 			</div>
 			
@@ -186,7 +193,7 @@
 		justify-content: space-between;
 		padding: 10px;
 		gap: 10px;
-		background-color: rgb(66, 66, 66 , 0.4);
+		background-color: var(--bg-color);
 		border-radius: 15px;
 	}
 
@@ -291,60 +298,75 @@
 
 @media (max-width: 767px) {
 
+
 	#container{
-		padding-top: 60px;
 		position: fixed;
-		left: 0;
-		bottom: 0;
-		width: 100%;
-		height: 100vh;
+		top: 60px;
+		left: 50%;
+		transform: translate(-50%, -0%);
+		width: 100vw;
+		height: 50vh;
 		z-index: 200;
 		display: flex;
-		flex-direction: row;
 		align-items: center;
-		justify-content: center;
-		gap: 50px;
-		background-color: var(--bg-color);
-		border: none;
-		
+		z-index: 1000;
 	}
-
+	
 
 	#input-container{
 		
-		padding-left: 5px;
-		padding-right: 5px;
-		padding-bottom: 10px;
+		padding: 10px;
 		width: 100%;
 		height: 100%;
 		background-color: var(--bg-color);
 		display: flex;
 		flex-direction: column;
 		align-items: start;
-		justify-content: start;
+		justify-content: center;
 		gap: 10px;
-		border-radius: 20px;
+		border: none;
+		border-radius: 0px 0px 20px 20px;
 
 		
 	}
 
-	.comment-input {
-	  position: sticky;
-	  top: 0px;
-	  padding: 20px;
-	  width: 100%;
-	  max-height: 40%;
-	  border-radius: 10px;
-	  font-size: 32px;
-	  color: white;
-	  background-color: var(--bg-color);
-	  color: white;
-	  border: none;
-	  font-family: 'Inter', sans-serif;
-      font-weight: 800;
-	  font-size: 16px;
 
+	#submit{
+		  
+		background-color: white;
+		color: black;
+		border-radius: 100px;
+		width: 80px;
+		height: 35px;
+		cursor: pointer;
+		font-family: var(--font-family-poppins);
+	  	font-weight: var(--font-weight-regular);
+	  	font-size: 14px;
+		transition: background-color 0.2s ease;
+		box-shadow: none;
+		border: none;
 	}
+
+	#submit:hover {
+	  background-color: #357bd8;
+	}
+
+	#cancel{
+
+		background-color: black;
+		color: white;
+		border-radius: 100px;
+		width: 80px;
+		height: 35px;
+		cursor: pointer;
+		font-family: var(--font-family-poppins);
+	  	font-weight: var(--font-weight-regular);
+	  	font-size: 14px;
+		transition: background-color 0.2s ease;
+		box-shadow: none;
+		border: none;
+	}
+
 
 
 }

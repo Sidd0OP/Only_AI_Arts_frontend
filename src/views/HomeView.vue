@@ -23,6 +23,7 @@
       <div id="heading-container">
         <p>Top 5 Art Tools Everyone’s Loving Right Now</p> 
       </div>
+
       <div id="heading-container">    
         
         <div id="model-container">
@@ -34,8 +35,9 @@
         />
         </div>
         
-        
       </div>
+
+      
       
       <PostSnippetSkeleton v-if = "show"/>
       <PostSnippetSkeleton v-if = "show"/>
@@ -319,7 +321,7 @@ export default {
   #heading-container{
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 15px;
+    padding-left: 0px;
     background-color: var(--bg-color);
     border-radius: 15px;
     /*border: 1px solid #222222;*/
@@ -341,7 +343,7 @@ export default {
   #heading-container p{
 
     font-family: var(--font-family-poppins);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-regular);
     font-size: 20px;
     color: white;
 
@@ -466,11 +468,12 @@ export default {
   }
 
   @media (max-width: 767px) {
-  
-    #heading-container p
-    {
-      font-size: 32px;
+    
+    #model-container{
+      
+      gap: 10px;
     }
+    
   
 
     #heading-container {
@@ -505,11 +508,11 @@ export default {
 
     #sub-container p{
 
-    font-family: var(--font-family-poppins);
-    font-weight: var(--font-weight-medium);
-    font-size: 16px;
-    color: white;
-  }
+      font-family: var(--font-family-poppins);
+      font-weight: var(--font-weight-medium);
+      font-size: 16px;
+      color: white;
+    }
 
 
     #tag-container{
@@ -538,8 +541,8 @@ export default {
      #heading-container p{
 
       font-family: var(--font-family-poppins);
-      font-weight: var(--font-weight-bold);
-      font-size: 14px;
+      font-weight: var(--font-weight-regular);
+      font-size: 16px;
       color: white;
       padding-left: 20px;
 

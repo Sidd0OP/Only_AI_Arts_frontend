@@ -6,7 +6,10 @@
 			<img :src="getIconPath(iconName)" :alt="iconName" />
 		</div>
 	</div>
-	<p id="mode-name">{{ iconName }}</p>
+	<div id="model-name-container">
+		<p id="mode-name">{{ iconName }}</p>
+	</div>
+	
 	</div>
 	
 </template>
@@ -50,7 +53,7 @@ export default {
 	}
 
 
-	#container p{
+	#number{
 		padding-top: 50px;
 		font-family: var(--font-family-poppins);
     font-weight: var(--font-weight-regular);
@@ -72,6 +75,24 @@ export default {
 		
 	}
 
+
+	#model-name-container{
+
+  	width: 100%;
+  	border-radius: 10px;
+  	padding: 5px;
+  	background-color: white;
+  	margin-top: 60px;
+  }
+
+
+  #mode-name{
+  	
+  	font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size: 20px;
+  	color: black;
+  }
 
 
 
@@ -126,12 +147,31 @@ export default {
 @media (max-width: 767px) {
 
 
+	#model-name-container{
+
+  	width: 60%;
+  	border-radius: 6px;
+  	padding: 2px;
+  	background-color: white;
+  	margin-top: 30px;
+  	transform: translate(30%, 0%);
+  }
+
+
+  #mode-name{
+  	
+  	font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size: 16px;
+  	color: black;
+  }
+
 	#icon-container{
 	   	left: 60%;
 	   	transform: translate(-10%, 0%);
 	   	background: #000000;
-			background: radial-gradient(circle, rgba(0, 0, 0, 0.8) 23%, rgba(255, 255, 255, 0) 64%);
-	    width: 180px;
+			background: none;
+	    width: 160px;
 	    height: 160px;
 	    display: flex;
 	    align-items: start;
@@ -141,6 +181,8 @@ export default {
 	    margin-left: 0px;
 	    
   	}
+
+
 
 	#main-container p {
   		left: 40%;

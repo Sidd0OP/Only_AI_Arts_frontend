@@ -83,7 +83,7 @@
             <p>{{ heart }}</p>
           </div>
           <div id = "icon-container">
-            <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="postComment">
+            <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="goToPost">
             <p>{{ commentCount }}</p>
           </div>
           
@@ -151,7 +151,7 @@
               <p>{{ heart }}</p>
             </div>
             <div id = "icon-container">
-              <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="postComment">
+              <img src="@/assets/message-text.svg" id="comments-icon" alt="Comment" @click="goToPost">
               <p>{{ commentCount }}</p>
             </div>
             
@@ -830,7 +830,6 @@ export default {
     justify-content: start;
     align-items: start;
     gap: 16px;
-    padding-bottom: 15px;
     padding-left: 10px;
 
     

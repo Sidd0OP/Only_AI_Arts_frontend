@@ -3,6 +3,7 @@
   <CommentPostBox :visible="showCommentBox" 
   :postId = "this.postId" 
   :commentId = "this.commentId" 
+  :replyText = "body"
   @close="this.showCommentBox = false"
   @updated="posted()"/>
 
@@ -349,7 +350,7 @@
       font-family: var(--font-family-poppins);
       font-weight: var(--font-weight-medium);
       font-size: 16px;
-      color: #055dff;
+      color: white;
     }
 
     #right-container
@@ -494,20 +495,23 @@
       
     #icon-container{
 
+    background-color: rgb(66, 66, 66 , 0.4);
+    height: 36px;
+    
+    padding-left: 12px;
+    padding-right: 12px;
 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 
-
-      width: 35px;
-      height: 35px;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      border-radius: 100%;
-      transition: background-color 0.3s ease;
-      background-color: var(--bg-color);
-    }
+    
+    gap: 16px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
+  }
     
 
   }

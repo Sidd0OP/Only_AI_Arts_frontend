@@ -4,30 +4,23 @@
       <p>© 2025 OnlyAiArts. All rights reserved.</p>
 
       <div class="footer-links">
-      <a href="https://github.com/your-username" target="_blank" rel="noopener">
+      <a href="https://github.com/Sidd0OP" target="_blank" rel="noopener">
           GitHub
       </a>
 
-      <a href="https://youtube.com/your-channel" target="_blank" rel="noopener">
-        YouTube
-      </a>
-
-      <a href="https://x.com/your-handle" target="_blank" rel="noopener">
+      <a href="https://x.com/Sidd0p" target="_blank" rel="noopener">
         X (Twitter)
       </a>
 
 
-      <a href="https://github.com/your-username" target="_blank" rel="noopener">
+      <a href="" target="_blank" rel="noopener">
         Policy
       </a>
 
-      <a href="https://youtube.com/your-channel" target="_blank" rel="noopener">
+      <a href="" target="_blank" rel="noopener">
         Terms and Condition
       </a>
 
-      <a href="https://x.com/your-handle" target="_blank" rel="noopener">
-        Support
-      </a>
 
 
       </div>

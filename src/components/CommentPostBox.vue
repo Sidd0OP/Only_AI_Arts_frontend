@@ -25,7 +25,7 @@
 			<div id="button-container">
 
 				<p id="replying-text-value">
-					SO you dumb guy
+					{{ trimmedReplyText }}
 				</p>
 				
 			</div>
@@ -59,6 +59,11 @@
 		    commentId: {
 		    	type: Number,
 		    	required: false
+		    },
+
+		    replyText: {
+		    	type: String,
+		    	required: false
 		    }
 
 		  },
@@ -72,6 +77,14 @@
 		      loading: false
 		    };
 		 },
+
+		computed: {
+		  trimmedReplyText() {
+		    if (!this.replyText) return '';
+		    const words = this.replyText.split(/\s+/).slice(0, 5);
+		    return words.join(' ') + '...';
+		  }
+		},
 
 		methods: {
 

@@ -5,7 +5,7 @@
   <SidePanel />
     <div id="create-page">
       <div id = "hint-text-container">
-          <p  id = "heading">Important things to follow</p>
+          <p  id = "heading">Ready to drop something epic? Just peep the rules first!</p>
           <li>Supported file formats: <strong>.png</strong>, <strong>.gif</strong>, <strong>.jpeg</strong></li>
           <li>Maximum file size: <strong>10 MB</strong></li>
           <li>Recommended resolution: <strong>at least 800x600</strong> for best quality</li>
@@ -344,16 +344,16 @@ export default {
 #hint-text-container p {
   padding-left: 5px;
   color: white;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
   font-size: 32px;
 }
 
 #hint-text-container li {
   padding-left: 10px;
   color: var(--text-color);
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
   font-size: 16px;
 }
 
@@ -392,9 +392,11 @@ export default {
   border: none;
   margin-top: 30px;
   padding-left: 20px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
   font-size: 24px;
+  color: white;
+
 
 }
 
@@ -406,9 +408,9 @@ export default {
     align-items: start;
     justify-content: start;
     padding-top: 20px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 32px;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-regular);
+    font-size: 24px;
     color: white;
   }
 
@@ -420,9 +422,9 @@ export default {
   justify-content: center;
   align-items: start;
   gap: 10px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 32px;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-regular);
+  font-size: 24px;
   color: white;
 }
 
@@ -435,9 +437,10 @@ export default {
       padding-top: 20px;
       padding-bottom: 20px;
       padding-left: 20px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
-      font-size: 32px;
+      font-family: var(--font-family-poppins);
+      font-weight: var(--font-weight-regular);
+      font-size: 24px;
+      color: white;
 }
 
 #model-selection-container{
@@ -448,8 +451,8 @@ export default {
   align-items: start;
   flex-direction: column;
   gap: 20px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
   font-size: 32px;
   color: white;
 }
@@ -506,10 +509,11 @@ export default {
   padding-left: 5px;
   padding-top: 30px;
   padding-bottom: 30px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 50px;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
+  font-size: 48px;
   color: white;
+  
 }
 
 #form-container{
@@ -531,9 +535,9 @@ export default {
   background-color: #0F0F0F;
   border-radius: 20px;
   border: 2px dashed #575757;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 18px;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
+  font-size: 24px;
   color: white;
 
 }
@@ -554,31 +558,27 @@ export default {
 
 .Adult_Content{
   
-  background-color: white;
+  background-color: var(--bg-color);
   display: flex;
   flex-direction: row;
   justify-content: start;
   align-items: center;
   position: relative;
   margin-top: 10px;
-  background-color: white;
-  width: 95%;
+  margin-left: 10px;
+  width: 800px;
   border-radius: 15px;
-  padding-left: 30px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 24px;
   gap: 30px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .Adult_Content p{
 
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
   font-size: 24px;
-  color: var(--bg-color);
+  color: white;
 }
 
 .Adult_Content input[type="checkbox"] {
@@ -649,8 +649,8 @@ export default {
   width: 140px;
   height: 60px;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
   font-size: 12px;
   transition: background-color 0.2s ease;
 }
@@ -666,9 +666,9 @@ export default {
   margin-top: 10px;
   margin-bottom: 20px;
   text-align: center;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 18px;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
+  font-size: 20px;
 }
 
 
@@ -770,17 +770,17 @@ export default {
   #hint-text-container p {
     padding-left: 5px;
     color: white;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
     font-size: 24px;
   }
 
   #hint-text-container li {
     padding-left: 10px;
     color: var(--text-color);
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 10px;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size: 12px;
   }
 
 
@@ -807,9 +807,9 @@ export default {
     padding-left: 0px;
     padding-top: 30px;
     padding-bottom: 30px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 32px;
+    font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
+  font-size: 32px;
     color: white;
   }
 
@@ -843,9 +843,9 @@ export default {
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 20px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 16px;
+    font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
+  font-size: 16px;
 
   }
 
@@ -858,8 +858,8 @@ export default {
   align-items: start;
   flex-direction: column;
   gap: 20px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
   font-size: 24px;
   color: white;
 }
@@ -871,9 +871,9 @@ export default {
     align-items: start;
     justify-content: start;
     padding-top: 20px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 24px;
+    font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
+  font-size: 24px;
     color: white;
   }
 
@@ -887,9 +887,9 @@ export default {
       padding-top: 15px;
       padding-bottom: 15px;
       padding-left: 20px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
-      font-size: 18px;
+      font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
+  font-size: 20px;
   }
 
 
@@ -901,9 +901,9 @@ export default {
     justify-content: center;
     align-items: start;
     gap: 10px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: 24px;
+    font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
+  font-size: 24px;
     color: white;
   }
 
@@ -915,18 +915,16 @@ export default {
       margin-top: 10px;
       padding-top: 15px;
       padding-bottom: 15px;
-      padding-left: 20px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 800;
-      font-size: 18px;
+      padding-left: 0px;
+      
   }
 
   .Adult_Content p{
 
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
   font-size: 16px;
-  color: var(--bg-color);
+  color: white;
 }
 
   }

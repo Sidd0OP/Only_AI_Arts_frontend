@@ -244,17 +244,18 @@
       font-family: var(--font-family-poppins);
       font-weight: var(--font-weight-medium);
       font-size: 16px;
-      color: #055dff;
+      color: white;
+      opacity: 0.7;
     }
 
     #right-container
     {
+      height: 100%;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
       margin-right: 35px;
-      margin-bottom: 10px;
       gap: 10px;
     }
 
@@ -271,9 +272,11 @@
 
   .dates
   {
+    height: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 15px;
 
   }
@@ -285,7 +288,7 @@
       }
 
   small {
-      font-family: var(--font-family-poppins);
+    font-family: var(--font-family-poppins);
     font-weight: var(--font-weight-regular);
     font-size:10px;
     color: white;
@@ -326,6 +329,7 @@
     font-weight: var(--font-weight-medium);
     font-size:12px;
     color: white;
+    opacity: 0.7;
   }
 
 
@@ -342,17 +346,47 @@
     small {
      display: none;
 
-  }
+    }
 
+    #profile-image
+    {
+      width: 30px;
+      height: 30px;
+      background-color: var(--bg-color);
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
 
+    #reply-container
+    {
+      padding-top: 20px;
+      /*width: 100%;*/
+      /*margin-left: 30px;*/
+      width: calc(100% - 40px);
+      margin-left: 40px;
+      border-left: 2px dashed transparent;
+      background-color: var(--bg-color);
+      z-index: 10;
+
+    
+    border-image: repeating-linear-gradient(
+      to bottom,
+      rgba(77, 77, 77, 0.9) 0,
+      rgba(77, 77, 77, 0.9) 10px,
+      transparent 10px,
+      transparent 20px
+    ) 1;
+    }
       
     #icon-container{
 
 
 
 
-      width: 35px;
-      height: 35px;
+      width: 25px;
+      height: 25px;
       display: flex;
       flex-direction: row;
       justify-content: center;

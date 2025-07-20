@@ -92,6 +92,21 @@ export default {
       required: true,
     },
 
+    posts: {
+      type: String,
+      required: false,
+    },
+
+    replies: {
+      type: String,
+      required: false,
+    },
+
+    hearts: {
+      type: String,
+      required: false,
+    },
+
 
   },
 
@@ -393,7 +408,7 @@ export default {
 
 
 	#name{
-    font-size: 16px;
+    font-size: 18px;
     color: white;
 	}
 
@@ -413,7 +428,7 @@ export default {
 		white-space: pre-line; 
 		font-family: var(--font-family-poppins);
     font-weight: var(--font-weight-regular);
-    font-size: 12px;
+    font-size: 14px;
     color: white;
 	}
 
@@ -424,7 +439,7 @@ export default {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 3px;
     
 	}
 
@@ -437,8 +452,13 @@ export default {
 
 	#icon-container p {
 
-    font-size: 10px;
+    font-size: 14px;
     
+	}
+
+	#date-container{
+		
+		gap: 10px;
 	}
 
 

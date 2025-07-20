@@ -81,7 +81,7 @@ export default {
   	width: 100%;
   	border-radius: 10px;
   	padding: 5px;
-  	background-color: white;
+  	background-color: rgb(66, 66, 66 , 0.4);
   	margin-top: 60px;
   }
 
@@ -91,7 +91,7 @@ export default {
   	font-family: var(--font-family-poppins);
     font-weight: var(--font-weight-medium);
     font-size: 20px;
-  	color: black;
+  	color: white;
   }
 
 
@@ -152,7 +152,7 @@ export default {
   	width: 60%;
   	border-radius: 6px;
   	padding: 2px;
-  	background-color: white;
+  	background-color: rgb(66, 66, 66 , 0.4);
   	margin-top: 30px;
   	transform: translate(30%, 0%);
   }
@@ -163,7 +163,7 @@ export default {
   	font-family: var(--font-family-poppins);
     font-weight: var(--font-weight-medium);
     font-size: 16px;
-  	color: black;
+  	color: white;
   }
 
 	#icon-container{

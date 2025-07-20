@@ -37,6 +37,19 @@
         
       </div>
 
+
+      <!-- <div id="heading-container"> -->
+        <div id="sort-dropdown" @click="toggleDropdown" :class="{ open: showSortDropdown }">
+          <span>{{ selectedSort }}</span>
+          <img src="@/assets/nav-arrow-down.svg" id="nav-icon" alt="Nav-Icon">
+
+          <div v-if="showSortDropdown" class="dropdown-menu">
+            <div class="dropdown-item" @click.stop="selectSort('Best')">Best</div>
+            <div class="dropdown-item" @click.stop="selectSort('Latest')">Latest</div>
+          </div>
+        </div>
+      <!-- </div> -->
+
       
       
       <PostSnippetSkeleton v-if = "show"/>
@@ -44,7 +57,29 @@
       <PostSnippetSkeleton v-if = "show"/>
       <PostSnippetSkeleton v-if = "show"/>
 
-      <PostSnippet  v-for= "post in posts" :post = post :hearts="hearts" :page="page"/>
+      
+
+      <template v-if="selectedSort === 'Best'">
+        <PostSnippet
+          v-for="post in posts"
+          :key="post.id"
+          :post="post"
+          :hearts="hearts"
+          :page="page"
+        />
+      </template>
+
+      <template v-if="selectedSort === 'Latest'">
+        <PostSnippet
+          v-for="post in latestPosts"
+          :key="post.id"
+          :post="post"
+          :hearts="hearts"
+          :page="page"
+        />
+      </template>
+
+      
     </div>
 
     
@@ -94,6 +129,7 @@ export default {
   data() {
     return {
       posts: [],
+      latestPosts: [],
       page: 1,         
       usingSnippetsApi: false,
       userLoggedIn: false,
@@ -104,7 +140,9 @@ export default {
       trendingTools: [],
       activeTag: 'All',
       hasMore: true,
-      throttledScroll: null
+      throttledScroll: null,
+      selectedSort: 'Best',
+      showSortDropdown: false,
     }
   },
 
@@ -117,12 +155,23 @@ export default {
 
   
   beforeUnmount() {
-    console.log("brefore unmount called");
+
     window.removeEventListener('scroll', this.handleScroll);
   },
 
 
   methods: {
+
+    toggleDropdown() {
+      this.showSortDropdown = !this.showSortDropdown;
+    },
+    selectSort(option) {
+      this.selectedSort = option;
+      this.showSortDropdown = false;
+
+      // Optional: trigger sorting logic here
+      // this.sortPosts(option);
+    },
 
     setActiveTag(tag) {
       if (this.activeTag === tag) return;
@@ -167,6 +216,8 @@ export default {
         const response = await axiosObj.get('/home');
 
         this.posts = response.data.postSnippets;
+        this.latestPosts = response.data.latestPostSnippets;
+
         this.show = false;
 
         this.hearts = response.data.heartedPost;
@@ -290,6 +341,61 @@ export default {
 
 
 <style scoped>
+
+  #sort-dropdown {
+    width: 110px;
+    position: relative;
+    background-color: white;
+    color: black;
+    border-radius: 100px;
+    padding: 10px 10px;
+    cursor: pointer;
+    font-family: var(--font-family-poppins);
+    font-weight: var(--font-weight-medium);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    user-select: none;
+  }
+
+#sort-dropdown img{
+
+  width: 20px;
+  height: 20px;
+
+}
+
+
+
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background-color: rgb(66, 66, 66 , 1.0);
+  border-radius: 10px;
+  z-index: 1000;
+  min-width: 100%;
+}
+
+.dropdown-item {
+  padding: 10px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: var(--font-family-poppins);
+  font-weight: var(--font-weight-medium);
+  font-size: 16px;
+  color: white;
+  transition: background-color 0.2s ease;
+  z-index: 1000;
+  border-radius: 5px;
+}
+
+.dropdown-item:hover {
+  background-color: #2c2c2e;
+}
+
 
   #tag-container{
     position: fixed;
@@ -474,6 +580,15 @@ export default {
       gap: 10px;
     }
     
+    #sort-dropdown {
+      width: 80px;
+      padding: 5px 10px;
+      gap: 5px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      margin-left: 10px;
+      font-size: 14px;
+  }
   
 
     #heading-container {
